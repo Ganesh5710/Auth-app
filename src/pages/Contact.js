@@ -1,6 +1,14 @@
-import React, { useState } from "react";
+import React, {
+  useState,
+} from "react";
 
 import GlobalLayout from "../components/GlobalLayout";
+
+import {
+  useLanguage,
+} from "../context/LanguageContext";
+
+import translationsData from "../utils/translations";
 
 import {
   Mail,
@@ -13,6 +21,14 @@ import {
 } from "lucide-react";
 
 export default function Contact() {
+
+  const {
+    language,
+    isRTL,
+  } = useLanguage();
+
+  const translations =
+    translationsData[language];
 
   const [formData, setFormData] =
     useState({
@@ -35,7 +51,10 @@ export default function Contact() {
 
     e.preventDefault();
 
-    alert("Message Sent Successfully!");
+    alert(
+      translations.messageSent ||
+      "Message Sent Successfully!"
+    );
 
     setFormData({
       name: "",
@@ -50,7 +69,17 @@ export default function Contact() {
 
     <GlobalLayout>
 
-      <div className="min-h-screen overflow-hidden text-gray-900 dark:text-white transition-all duration-500">
+      <div
+        dir={isRTL ? "rtl" : "ltr"}
+        className="
+          min-h-screen
+          overflow-hidden
+          text-gray-900
+          dark:text-white
+          transition-all
+          duration-500
+        "
+      >
 
         {/* HERO */}
 
@@ -62,21 +91,50 @@ export default function Contact() {
 
           <div className="absolute bottom-0 right-0 w-[350px] h-[350px] bg-blue-500/20 blur-[140px] rounded-full"></div>
 
-          <div className="relative z-10 max-w-7xl mx-auto text-center">
+          <div className={`
+            relative
+            z-10
+            max-w-7xl
+            mx-auto
+            ${
+              isRTL
+                ? "text-right"
+                : "text-center"
+            }
+          `}>
 
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 mb-8">
+            <div className={`
+              inline-flex
+              items-center
+              gap-3
+              px-6
+              py-3
+              rounded-full
+              bg-cyan-500/10
+              border
+              border-cyan-500/20
+              text-cyan-300
+              mb-8
+              ${
+                isRTL
+                  ? "flex-row-reverse"
+                  : ""
+              }
+            `}>
 
               <MessageSquare size={18} />
 
               <span>
-                24/7 Customer Support
+                {translations.customerSupport ||
+                  "24/7 Customer Support"}
               </span>
 
             </div>
 
             <h1 className="text-5xl md:text-7xl font-black leading-tight">
 
-              Contact
+              {translations.contact ||
+                "Contact"}
 
               <span className="bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
 
@@ -88,8 +146,8 @@ export default function Contact() {
 
             <p className="text-gray-700 dark:text-gray-300 text-lg md:text-2xl mt-8 max-w-4xl mx-auto leading-relaxed">
 
-              We help businesses transform digitally with AI-powered solutions,
-              modern web applications, cybersecurity, and cloud technologies.
+              {translations.contactHeroDesc ||
+                "We help businesses transform digitally with AI-powered solutions, modern web applications, cybersecurity, and cloud technologies."}
 
             </p>
 
@@ -107,19 +165,25 @@ export default function Contact() {
 
             <div className="space-y-8">
 
-              <div>
+              <div className={`
+                ${
+                  isRTL
+                    ? "text-right"
+                    : "text-left"
+                }
+              `}>
 
                 <h2 className="text-4xl font-bold mb-6">
 
-                  Let's Talk
+                  {translations.letsTalk ||
+                    "Let's Talk"}
 
                 </h2>
 
                 <p className="text-gray-600 dark:text-gray-400 leading-8 text-lg">
 
-                  Reach out to our team for business inquiries,
-                  AI solutions, cloud services, application development,
-                  and digital transformation consulting.
+                  {translations.contactDesc ||
+                    "Reach out to our team for business inquiries, AI solutions, cloud services, application development, and digital transformation consulting."}
 
                 </p>
 
@@ -128,37 +192,64 @@ export default function Contact() {
               {/* CARDS */}
 
               <ContactCard
+                isRTL={isRTL}
                 icon={<Mail size={28} />}
-                title="Email Address"
-                value="support@enkonix.in"
+                title={
+                  translations.emailAddress ||
+                  "Email Address"
+                }
+                value={
+                  translations.supportEmail ||
+                  "support@enkonix.in"
+                }
               />
 
               <ContactCard
+                isRTL={isRTL}
                 icon={<Phone size={28} />}
-                title="Phone Number"
-                value="+91 123654789"
+                title={
+                  translations.phoneNumber ||
+                  "Phone Number"
+                }
+                value={
+                  translations.supportPhone ||
+                  "+91 123654789"
+                }
               />
 
               <ContactCard
+                isRTL={isRTL}
                 icon={<MapPin size={58} />}
-                title="Office Address"
-                value="Enkonix Software Services
-1st Floor, Novel Office,
-MSR Tech Park,
-Subbaiah Reddy Colony, Marathahalli Village,
-Marathahalli, Bengaluru,
-Karnataka 560036, India"
+                title={
+                  translations.officeAddress ||
+                  "Office Address"
+                }
+                value={
+                  translations.companyAddress ||
+                  "Enkonix Software Services"
+                }
               />
 
               <ContactCard
+                isRTL={isRTL}
                 icon={<Clock size={28} />}
-                title="Business Hours"
-                value="Mon - Fri : 10 AM - 7 PM"
+                title={
+                  translations.businessHours ||
+                  "Business Hours"
+                }
+                value={
+                  translations.businessHoursValue ||
+                  "Mon - Fri : 10 AM - 7 PM"
+                }
               />
 
               <ContactCard
+                isRTL={isRTL}
                 icon={<Globe size={28} />}
-                title="Website"
+                title={
+                  translations.website ||
+                  "Website"
+                }
                 value="www.enkonix.in"
               />
 
@@ -177,9 +268,19 @@ Karnataka 560036, India"
               "
             >
 
-              <h2 className="text-4xl font-bold mb-8">
+              <h2 className={`
+                text-4xl
+                font-bold
+                mb-8
+                ${
+                  isRTL
+                    ? "text-right"
+                    : "text-left"
+                }
+              `}>
 
-                Send Message
+                {translations.sendMessage ||
+                  "Send Message"}
 
               </h2>
 
@@ -192,9 +293,20 @@ Karnataka 560036, India"
 
                 <div>
 
-                  <label className="block mb-3 text-gray-700 dark:text-gray-300">
+                  <label className={`
+                    block
+                    mb-3
+                    text-gray-700
+                    dark:text-gray-300
+                    ${
+                      isRTL
+                        ? "text-right"
+                        : "text-left"
+                    }
+                  `}>
 
-                    Full Name
+                    {translations.fullName ||
+                      "Full Name"}
 
                   </label>
 
@@ -203,9 +315,12 @@ Karnataka 560036, India"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Enter your name"
+                    placeholder={
+                      translations.enterName ||
+                      "Enter your name"
+                    }
                     required
-                    className="
+                    className={`
                       w-full
                       bg-white dark:bg-[#111c38]
                       text-black dark:text-white
@@ -217,7 +332,12 @@ Karnataka 560036, India"
                       outline-none
                       focus:border-cyan-400
                       transition-all
-                    "
+                      ${
+                        isRTL
+                          ? "text-right"
+                          : "text-left"
+                      }
+                    `}
                   />
 
                 </div>
@@ -226,9 +346,20 @@ Karnataka 560036, India"
 
                 <div>
 
-                  <label className="block mb-3 text-gray-700 dark:text-gray-300">
+                  <label className={`
+                    block
+                    mb-3
+                    text-gray-700
+                    dark:text-gray-300
+                    ${
+                      isRTL
+                        ? "text-right"
+                        : "text-left"
+                    }
+                  `}>
 
-                    Email Address
+                    {translations.emailAddress ||
+                      "Email Address"}
 
                   </label>
 
@@ -237,9 +368,12 @@ Karnataka 560036, India"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Enter your email"
+                    placeholder={
+                      translations.enterEmail ||
+                      "Enter your email"
+                    }
                     required
-                    className="
+                    className={`
                       w-full
                       bg-white dark:bg-[#111c38]
                       text-black dark:text-white
@@ -251,7 +385,12 @@ Karnataka 560036, India"
                       outline-none
                       focus:border-cyan-400
                       transition-all
-                    "
+                      ${
+                        isRTL
+                          ? "text-right"
+                          : "text-left"
+                      }
+                    `}
                   />
 
                 </div>
@@ -260,9 +399,20 @@ Karnataka 560036, India"
 
                 <div>
 
-                  <label className="block mb-3 text-gray-700 dark:text-gray-300">
+                  <label className={`
+                    block
+                    mb-3
+                    text-gray-700
+                    dark:text-gray-300
+                    ${
+                      isRTL
+                        ? "text-right"
+                        : "text-left"
+                    }
+                  `}>
 
-                    Subject
+                    {translations.subject ||
+                      "Subject"}
 
                   </label>
 
@@ -271,9 +421,12 @@ Karnataka 560036, India"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    placeholder="Enter subject"
+                    placeholder={
+                      translations.enterSubject ||
+                      "Enter subject"
+                    }
                     required
-                    className="
+                    className={`
                       w-full
                       bg-white dark:bg-[#111c38]
                       text-black dark:text-white
@@ -285,7 +438,12 @@ Karnataka 560036, India"
                       outline-none
                       focus:border-cyan-400
                       transition-all
-                    "
+                      ${
+                        isRTL
+                          ? "text-right"
+                          : "text-left"
+                      }
+                    `}
                   />
 
                 </div>
@@ -294,9 +452,20 @@ Karnataka 560036, India"
 
                 <div>
 
-                  <label className="block mb-3 text-gray-700 dark:text-gray-300">
+                  <label className={`
+                    block
+                    mb-3
+                    text-gray-700
+                    dark:text-gray-300
+                    ${
+                      isRTL
+                        ? "text-right"
+                        : "text-left"
+                    }
+                  `}>
 
-                    Message
+                    {translations.message ||
+                      "Message"}
 
                   </label>
 
@@ -305,9 +474,12 @@ Karnataka 560036, India"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Write your message..."
+                    placeholder={
+                      translations.writeMessage ||
+                      "Write your message..."
+                    }
                     required
-                    className="
+                    className={`
                       w-full
                       bg-white dark:bg-[#111c38]
                       text-black dark:text-white
@@ -320,7 +492,12 @@ Karnataka 560036, India"
                       resize-none
                       focus:border-cyan-400
                       transition-all
-                    "
+                      ${
+                        isRTL
+                          ? "text-right"
+                          : "text-left"
+                      }
+                    `}
                   ></textarea>
 
                 </div>
@@ -329,7 +506,7 @@ Karnataka 560036, India"
 
                 <button
                   type="submit"
-                  className="
+                  className={`
                     w-full
                     py-5
                     rounded-2xl
@@ -345,12 +522,18 @@ Karnataka 560036, India"
                     items-center
                     justify-center
                     gap-3
-                  "
+                    ${
+                      isRTL
+                        ? "flex-row-reverse"
+                        : ""
+                    }
+                  `}
                 >
 
                   <Send size={20} />
 
-                  Send Message
+                  {translations.sendMessage ||
+                    "Send Message"}
 
                 </button>
 
@@ -380,7 +563,7 @@ Karnataka 560036, India"
             >
 
               <iframe
-                title="Stackly Office Location"
+                title="Enkonix Office Location"
                 src="https://maps.google.com/maps?q=Enkonix%20India&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="500"
@@ -410,12 +593,13 @@ function ContactCard({
   icon,
   title,
   value,
+  isRTL,
 }) {
 
   return (
 
     <div
-      className="
+      className={`
         bg-white dark:bg-[#0f172a]
         border
         border-gray-300 dark:border-white/10
@@ -427,7 +611,12 @@ function ContactCard({
         hover:border-cyan-400/30
         transition-all
         duration-300
-      "
+        ${
+          isRTL
+            ? "flex-row-reverse text-right"
+            : "text-left"
+        }
+      `}
     >
 
       <div

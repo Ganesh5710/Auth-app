@@ -3,33 +3,54 @@ import React from "react";
 import GlobalLayout from "../../components/GlobalLayout";
 
 import {
+  useLanguage,
+} from "../../context/LanguageContext";
+
+import translationsData from "../../utils/translations";
+
+import {
   Smartphone,
   ShieldCheck,
   Cloud,
   Cpu,
   Rocket,
   CheckCircle2,
-  ArrowRight,
-  Globe,
-  Database,
-  Workflow,
-  BarChart3,
-  Layers3,
-  PlayCircle,
-  Star,
 } from "lucide-react";
 
 export default function AppDevelopment() {
 
+  const {
+    language,
+    isRTL,
+  } = useLanguage();
+
+  const translations =
+    translationsData[language];
+
   const features = [
 
+    translations.crossPlatformApps ||
     "Cross Platform Mobile Apps",
+
+    translations.androidIOSDevelopment ||
     "Android & iOS Development",
+
+    translations.aiPoweredApplications ||
     "AI Powered Applications",
+
+    translations.cloudIntegratedBackend ||
     "Cloud Integrated Backend",
+
+    translations.realTimeNotifications ||
     "Real-time Notifications",
+
+    translations.secureAuthentication ||
     "Secure Authentication System",
+
+    translations.fastPerformanceOptimization ||
     "Fast Performance Optimization",
+
+    translations.modernUIDesign ||
     "Modern UI/UX Design",
 
   ];
@@ -51,22 +72,30 @@ export default function AppDevelopment() {
 
     {
       number: "250+",
-      title: "Mobile Apps",
+      title:
+        translations.mobileApps ||
+        "Mobile Apps",
     },
 
     {
       number: "99%",
-      title: "Client Satisfaction",
+      title:
+        translations.clientSatisfaction ||
+        "Client Satisfaction",
     },
 
     {
       number: "24/7",
-      title: "Support",
+      title:
+        translations.support ||
+        "Support",
     },
 
     {
       number: "150+",
-      title: "Enterprise Clients",
+      title:
+        translations.enterpriseClients ||
+        "Enterprise Clients",
     },
 
   ];
@@ -75,7 +104,15 @@ export default function AppDevelopment() {
 
     <GlobalLayout>
 
-      <div className="min-h-screen text-gray-900 dark:text-white overflow-hidden">
+      <div
+        dir={isRTL ? "rtl" : "ltr"}
+        className="
+          min-h-screen
+          text-gray-900
+          dark:text-white
+          overflow-hidden
+        "
+      >
 
         {/* HERO SECTION */}
 
@@ -87,35 +124,61 @@ export default function AppDevelopment() {
 
           <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-blue-500/20 blur-[160px] rounded-full"></div>
 
-          <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+          <div className={`
+            relative
+            z-10
+            max-w-7xl
+            mx-auto
+            grid
+            lg:grid-cols-2
+            gap-20
+            items-center
+            ${
+              isRTL
+                ? "text-right"
+                : "text-left"
+            }
+          `}>
 
             {/* LEFT SIDE */}
 
             <div>
 
-              
-
               <h1 className="text-6xl md:text-7xl font-black leading-tight mb-8">
 
-                Next Gen
+                {translations.nextGen ||
+                  "Next Gen"}
 
                 <span className="bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
-                  {" "}App Development
+
+                  {" "}
+                  {translations.appDevelopment ||
+                    "App Development"}
+
                 </span>
 
               </h1>
 
               <p className="dark:text-gray-300 text-gray-700 text-xl leading-10 max-w-2xl">
 
-                We build ultra-modern Android, iOS, and cross-platform
-                applications powered by AI, cloud technologies,
-                 UI/UX systems, and enterprise infrastructure.
+                {translations.appDevelopmentHeroDesc ||
+                  "We build ultra-modern Android, iOS, and cross-platform applications powered by AI, cloud technologies, UI/UX systems, and enterprise infrastructure."}
 
               </p>
 
               {/* BUTTONS */}
 
-              <div className="flex flex-wrap gap-5 mt-12">
+              <div className={`
+                flex
+                flex-wrap
+                gap-5
+                mt-12
+                ${
+                  isRTL
+                    ? "justify-end"
+                    : ""
+                }
+              `}>
 
                 <button
                   className="
@@ -136,7 +199,8 @@ export default function AppDevelopment() {
                   "
                 >
 
-                  Get Started
+                  {translations.getStarted ||
+                    "Get Started"}
 
                 </button>
 
@@ -154,7 +218,8 @@ export default function AppDevelopment() {
                   "
                 >
 
-                  View Portfolio
+                  {translations.viewPortfolio ||
+                    "View Portfolio"}
 
                 </button>
 
@@ -166,7 +231,14 @@ export default function AppDevelopment() {
 
                 {stats.map((item, index) => (
 
-                  <div key={index}>
+                  <div
+                    key={index}
+                    className={
+                      isRTL
+                        ? "text-right"
+                        : "text-left"
+                    }
+                  >
 
                     <h2 className="text-4xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
 
@@ -208,22 +280,34 @@ export default function AppDevelopment() {
 
                   <FeatureCard
                     icon={<Cpu size={35} />}
-                    title="AI Integration"
+                    title={
+                      translations.aiIntegration ||
+                      "AI Integration"
+                    }
                   />
 
                   <FeatureCard
                     icon={<Cloud size={35} />}
-                    title="Cloud Ready"
+                    title={
+                      translations.cloudReady ||
+                      "Cloud Ready"
+                    }
                   />
 
                   <FeatureCard
                     icon={<ShieldCheck size={35} />}
-                    title="Secure Apps"
+                    title={
+                      translations.secureApps ||
+                      "Secure Apps"
+                    }
                   />
 
                   <FeatureCard
                     icon={<Rocket size={35} />}
-                    title="Fast Performance"
+                    title={
+                      translations.fastPerformance ||
+                      "Fast Performance"
+                    }
                   />
 
                 </div>
@@ -242,19 +326,26 @@ export default function AppDevelopment() {
 
           <div className="max-w-7xl mx-auto">
 
-            <div className="text-center mb-20">
+            <div className={`
+              mb-20
+              ${
+                isRTL
+                  ? "text-right"
+                  : "text-center"
+              }
+            `}>
 
               <h2 className="text-5xl font-black mb-6">
 
-                Why Choose Our Apps?
+                {translations.whyChooseOurApps ||
+                  "Why Choose Our Apps?"}
 
               </h2>
 
               <p className="dark:text-gray-400 text-gray-600 text-lg max-w-3xl mx-auto leading-8">
 
-                Enterprise-grade mobile applications designed for
-                scalability, security, automation, and exceptional
-                user experience across all platforms.
+                {translations.appFeaturesDesc ||
+                  "Enterprise-grade mobile applications designed for scalability, security, automation, and exceptional user experience across all platforms."}
 
               </p>
 
@@ -302,7 +393,16 @@ export default function AppDevelopment() {
 
                   </div>
 
-                  <h3 className="text-2xl font-bold leading-10">
+                  <h3 className={`
+                    text-2xl
+                    font-bold
+                    leading-10
+                    ${
+                      isRTL
+                        ? "text-right"
+                        : "text-left"
+                    }
+                  `}>
 
                     {feature}
 
@@ -311,118 +411,6 @@ export default function AppDevelopment() {
                 </div>
 
               ))}
-
-            </div>
-
-          </div>
-
-        </section>
-
-        {/* TECHNOLOGIES */}
-
-        <section className="px-6 pb-28">
-
-          <div className="max-w-7xl mx-auto">
-
-            <div className="text-center mb-20">
-
-              <h2 className="text-5xl font-black mb-6">
-
-                Technologies We Use
-
-              </h2>
-
-              <p className="dark:text-gray-400 text-gray-600 text-lg">
-
-                Modern technologies powering enterprise mobile systems.
-
-              </p>
-
-            </div>
-
-            <div className="grid md:grid-cols-4 gap-8">
-
-              {technologies.map((tech, index) => (
-
-                <div
-                  key={index}
-                  className="
-                    bg-[#111c38]
-                    text-white
-                    rounded-3xl
-                    p-10
-                    border
-                    border-cyan-500/10
-                    hover:border-cyan-400/40
-                    transition-all
-                    duration-500
-                    text-center
-                  "
-                >
-
-                  <h3 className="text-2xl font-bold">
-
-                    {tech}
-
-                  </h3>
-
-                </div>
-
-              ))}
-
-            </div>
-
-          </div>
-
-        </section>
-
-        {/* PROCESS */}
-
-        <section className="px-6 pb-32">
-
-          <div className="max-w-7xl mx-auto">
-
-            <div className="text-center mb-20">
-
-              <h2 className="text-5xl font-black mb-6">
-
-                Development Process
-
-              </h2>
-
-              <p className="dark:text-gray-400 text-gray-600 text-lg">
-
-                Modern agile workflow for scalable applications.
-
-              </p>
-
-            </div>
-
-            <div className="grid md:grid-cols-4 gap-10">
-
-              <ProcessCard
-                number="01"
-                title="Planning"
-                desc="Requirement gathering and business analysis."
-              />
-
-              <ProcessCard
-                number="02"
-                title="Design"
-                desc="Premium UI/UX design and wireframing."
-              />
-
-              <ProcessCard
-                number="03"
-                title="Development"
-                desc="Agile coding with modern technologies."
-              />
-
-              <ProcessCard
-                number="04"
-                title="Deployment"
-                desc="Testing, launch, and support systems."
-              />
 
             </div>
 
@@ -487,55 +475,6 @@ function FeatureCard({
         {title}
 
       </h3>
-
-    </div>
-
-  );
-
-}
-
-/* PROCESS CARD */
-
-function ProcessCard({
-  number,
-  title,
-  desc,
-}) {
-
-  return (
-
-    <div
-      className="
-        bg-[#111c38]
-        border
-        border-cyan-500/10
-        rounded-3xl
-        p-10
-        hover:border-cyan-400/30
-        hover:-translate-y-2
-        transition-all
-        duration-500
-        text-white
-      "
-    >
-
-      <div className="text-5xl font-black text-cyan-400 mb-6">
-
-        {number}
-
-      </div>
-
-      <h3 className="text-3xl font-bold mb-5">
-
-        {title}
-
-      </h3>
-
-      <p className="text-gray-400 leading-8 text-lg">
-
-        {desc}
-
-      </p>
 
     </div>
 

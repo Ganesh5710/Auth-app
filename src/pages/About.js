@@ -3,6 +3,12 @@ import React from "react";
 import GlobalLayout from "../components/GlobalLayout";
 
 import {
+  useLanguage,
+} from "../context/LanguageContext";
+
+import translationsData from "../utils/translations";
+
+import {
   Brain,
   Globe,
   ShieldCheck,
@@ -17,16 +23,39 @@ import {
 
 export default function About() {
 
+  const {
+    language,
+    isRTL,
+  } = useLanguage();
+
+  const translations =
+    translationsData[language];
+
   const values = [
 
-    "Innovation & Creativity",
-    "Enterprise Security",
-    "AI Powered Solutions",
-    "Customer Success",
-    "Scalable Architecture",
-    "Modern Technologies",
-    "24/7 Technical Support",
-    "Global Digital Transformation",
+    translations.innovationCreativity ||
+      "Innovation & Creativity",
+
+    translations.enterpriseSecurity ||
+      "Enterprise Security",
+
+    translations.aiPoweredSolutions ||
+      "AI Powered Solutions",
+
+    translations.customerSuccess ||
+      "Customer Success",
+
+    translations.scalableArchitecture ||
+      "Scalable Architecture",
+
+    translations.modernTechnologies ||
+      "Modern Technologies",
+
+    translations.support247 ||
+      "24/7 Technical Support",
+
+    translations.globalDigitalTransformation ||
+      "Global Digital Transformation",
 
   ];
 
@@ -34,22 +63,30 @@ export default function About() {
 
     {
       number: "250+",
-      title: "Projects Delivered",
+      title:
+        translations.projectsDelivered ||
+        "Projects Delivered",
     },
 
     {
       number: "120+",
-      title: "Global Clients",
+      title:
+        translations.globalClients ||
+        "Global Clients",
     },
 
     {
       number: "99%",
-      title: "Client Satisfaction",
+      title:
+        translations.clientSatisfaction ||
+        "Client Satisfaction",
     },
 
     {
       number: "24/7",
-      title: "Support System",
+      title:
+        translations.supportSystem ||
+        "Support System",
     },
 
   ];
@@ -58,16 +95,19 @@ export default function About() {
 
     <GlobalLayout>
 
-      <div className="
-        min-h-screen
-        bg-white
-        dark:bg-[#071028]
-        text-black
-        dark:text-white
-        transition-all
-        duration-500
-        overflow-hidden
-      ">
+      <div
+        dir={isRTL ? "rtl" : "ltr"}
+        className="
+          min-h-screen
+          bg-white
+          dark:bg-[#071028]
+          text-black
+          dark:text-white
+          transition-all
+          duration-500
+          overflow-hidden
+        "
+      >
 
         {/* HERO */}
 
@@ -78,8 +118,6 @@ export default function About() {
           px-6
           overflow-hidden
         ">
-
-          {/* BLUR EFFECTS */}
 
           <div className="
             absolute
@@ -103,15 +141,19 @@ export default function About() {
             rounded-full
           "></div>
 
-          <div className="
+          <div className={`
             relative
             z-10
             max-w-7xl
             mx-auto
-            text-center
-          ">
+            ${
+              isRTL
+                ? "text-right"
+                : "text-center"
+            }
+          `}>
 
-            <div className="
+            <div className={`
               inline-flex
               items-center
               gap-3
@@ -123,11 +165,17 @@ export default function About() {
               border-cyan-500/20
               text-cyan-400
               mb-10
-            ">
+              ${
+                isRTL
+                  ? "flex-row-reverse"
+                  : ""
+              }
+            `}>
 
               <Sparkles size={18} />
 
-              AI Powered Digital Transformation
+              {translations.aiPoweredTransformation ||
+                "AI Powered Digital Transformation"}
 
             </div>
 
@@ -139,7 +187,8 @@ export default function About() {
               mb-10
             ">
 
-              About
+              {translations.about ||
+                "About"}
 
               <span className="
                 bg-gradient-to-r
@@ -165,12 +214,8 @@ export default function About() {
               leading-10
             ">
 
-              Enkonix is a next-generation technology company delivering
-              AI-powered digital transformation solutions,
-              enterprise software systems,
-              cloud infrastructure,
-              cybersecurity,
-              and scalable applications for modern businesses.
+              {translations.aboutDescription ||
+                "Enkonix is a next-generation technology company delivering AI-powered digital transformation solutions, enterprise software systems, cloud infrastructure, cybersecurity, and scalable applications for modern businesses."}
 
             </p>
 
@@ -259,36 +304,38 @@ export default function About() {
 
           <AboutCard
             icon={<Rocket size={36} />}
-            title="Our Mission"
-            text="
-            Deliver innovative AI-driven software
-            solutions that empower businesses globally,
-            enhance digital experiences,
-            and accelerate enterprise transformation.
-            "
+            title={
+              translations.ourMission ||
+              "Our Mission"
+            }
+            text={
+              translations.ourMissionDesc ||
+              "Deliver innovative AI-driven software solutions that empower businesses globally, enhance digital experiences, and accelerate enterprise transformation."
+            }
           />
 
           <AboutCard
             icon={<Globe size={36} />}
-            title="Our Vision"
-            text="
-            Become the world’s leading intelligent
-            technology transformation company
-            delivering futuristic digital platforms
-            and enterprise AI ecosystems.
-            "
+            title={
+              translations.ourVision ||
+              "Our Vision"
+            }
+            text={
+              translations.ourVisionDesc ||
+              "Become the world’s leading intelligent technology transformation company delivering futuristic digital platforms and enterprise AI ecosystems."
+            }
           />
 
           <AboutCard
             icon={<Users size={36} />}
-            title="Our Team"
-            text="
-            Skilled engineers,
-            AI experts,
-            cloud architects,
-            and designers building
-            next-generation enterprise platforms globally.
-            "
+            title={
+              translations.ourTeam ||
+              "Our Team"
+            }
+            text={
+              translations.ourTeamDesc ||
+              "Skilled engineers, AI experts, cloud architects, and designers building next-generation enterprise platforms globally."
+            }
           />
 
         </section>
@@ -307,7 +354,8 @@ export default function About() {
                 mb-6
               ">
 
-                Core Values
+                {translations.coreValues ||
+                  "Core Values"}
 
               </h2>
 
@@ -319,10 +367,8 @@ export default function About() {
                 mx-auto
               ">
 
-                Enterprise values that drive innovation,
-                scalability,
-                customer success,
-                and technology excellence.
+                {translations.coreValuesDesc ||
+                  "Enterprise values that drive innovation, scalability, customer success, and technology excellence."}
 
               </p>
 
@@ -416,7 +462,7 @@ export default function About() {
 
               <div>
 
-                <div className="
+                <div className={`
                   inline-flex
                   items-center
                   gap-3
@@ -428,11 +474,17 @@ export default function About() {
                   border-cyan-500/20
                   text-cyan-400
                   mb-8
-                ">
+                  ${
+                    isRTL
+                      ? "flex-row-reverse"
+                      : ""
+                  }
+                `}>
 
                   <Brain size={18} />
 
-                  Why Businesses Choose Enkonix
+                  {translations.whyChooseEnkonix ||
+                    "Why Businesses Choose Enkonix"}
 
                 </div>
 
@@ -442,8 +494,8 @@ export default function About() {
                   mb-8
                 ">
 
-                  Building The Future
-                  Of Enterprise Technology
+                  {translations.buildingFuture ||
+                    "Building The Future Of Enterprise Technology"}
 
                 </h2>
 
@@ -455,16 +507,12 @@ export default function About() {
                   mb-10
                 ">
 
-                  We combine Artificial Intelligence,
-                  Cloud Infrastructure,
-                  Cyber Security,
-                  Enterprise Applications,
-                  and Modern UI/UX Design
-                  to build scalable digital ecosystems.
+                  {translations.futureDescription ||
+                    "We combine Artificial Intelligence, Cloud Infrastructure, Cyber Security, Enterprise Applications, and Modern UI/UX Design to build scalable digital ecosystems."}
 
                 </p>
 
-                <button className="
+                <button className={`
                   inline-flex
                   items-center
                   gap-3
@@ -479,9 +527,15 @@ export default function About() {
                   hover:scale-105
                   transition-all
                   duration-300
-                ">
+                  ${
+                    isRTL
+                      ? "flex-row-reverse"
+                      : ""
+                  }
+                `}>
 
-                  Explore Services
+                  {translations.exploreServices ||
+                    "Explore Services"}
 
                   <ArrowRight size={22} />
 
@@ -493,22 +547,34 @@ export default function About() {
 
                 <FeatureCard
                   icon={<Cloud size={36} />}
-                  title="Cloud Systems"
+                  title={
+                    translations.cloudSystems ||
+                    "Cloud Systems"
+                  }
                 />
 
                 <FeatureCard
                   icon={<ShieldCheck size={36} />}
-                  title="Cyber Security"
+                  title={
+                    translations.cyberSecurity ||
+                    "Cyber Security"
+                  }
                 />
 
                 <FeatureCard
                   icon={<BarChart3 size={36} />}
-                  title="Business Analytics"
+                  title={
+                    translations.businessAnalytics ||
+                    "Business Analytics"
+                  }
                 />
 
                 <FeatureCard
                   icon={<Brain size={36} />}
-                  title="AI Solutions"
+                  title={
+                    translations.aiSolutions ||
+                    "AI Solutions"
+                  }
                 />
 
               </div>

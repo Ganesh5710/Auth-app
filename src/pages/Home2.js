@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 import GlobalLayout from "../components/GlobalLayout";
 
 import {
+  useLanguage,
+} from "../context/LanguageContext";
+
+import translationsData from "../utils/translations";
+
+import {
   Cloud,
   Shield,
   Cpu,
@@ -22,30 +28,58 @@ import {
 
 export default function Home2() {
 
+  const {
+    language,
+    isRTL,
+  } = useLanguage();
+
+  const translations =
+    translationsData[language];
+
   const features = [
 
     {
       icon: <Rocket size={42} className="text-cyan-400" />,
-      title: "Fast Performance",
-      desc: "Optimized enterprise-grade applications with lightning speed.",
+      title:
+        translations.fastPerformance ||
+        "Fast Performance",
+
+      desc:
+        translations.fastPerformanceDesc ||
+        "Optimized enterprise-grade applications with lightning speed.",
     },
 
     {
       icon: <Cpu size={42} className="text-cyan-400" />,
-      title: "AI Integration",
-      desc: "Advanced AI powered business automation and analytics.",
+      title:
+        translations.aiIntegration ||
+        "AI Integration",
+
+      desc:
+        translations.aiIntegrationDesc ||
+        "Advanced AI powered business automation and analytics.",
     },
 
     {
       icon: <Cloud size={42} className="text-cyan-400" />,
-      title: "Cloud Solutions",
-      desc: "Secure cloud infrastructure with high scalability.",
+      title:
+        translations.cloudSolutions ||
+        "Cloud Solutions",
+
+      desc:
+        translations.cloudSolutionsDesc ||
+        "Secure cloud infrastructure with high scalability.",
     },
 
     {
       icon: <Shield size={42} className="text-cyan-400" />,
-      title: "Security Systems",
-      desc: "Modern cyber protection for enterprise applications.",
+      title:
+        translations.securitySystems ||
+        "Security Systems",
+
+      desc:
+        translations.securitySystemsDesc ||
+        "Modern cyber protection for enterprise applications.",
     },
 
   ];
@@ -54,20 +88,35 @@ export default function Home2() {
 
     {
       icon: <Globe size={38} className="text-cyan-400" />,
-      title: "Web Development",
-      desc: "Scalable websites and enterprise web applications.",
+      title:
+        translations.webDevelopment ||
+        "Web Development",
+
+      desc:
+        translations.webDevelopmentDesc ||
+        "Scalable websites and enterprise web applications.",
     },
 
     {
       icon: <Smartphone size={38} className="text-cyan-400" />,
-      title: "Mobile Apps",
-      desc: "Android & iOS applications with modern UX.",
+      title:
+        translations.mobileApps ||
+        "Mobile Apps",
+
+      desc:
+        translations.mobileAppsDesc ||
+        "Android & iOS applications with modern UX.",
     },
 
     {
       icon: <Brain size={38} className="text-cyan-400" />,
-      title: "AI Solutions",
-      desc: "AI automation, analytics and chatbot systems.",
+      title:
+        translations.aiSolutions ||
+        "AI Solutions",
+
+      desc:
+        translations.aiSolutionsDesc ||
+        "AI automation, analytics and chatbot systems.",
     },
 
   ];
@@ -89,26 +138,46 @@ export default function Home2() {
 
     {
       number: "01",
-      title: "Research",
-      desc: "Understanding business goals and user requirements.",
+      title:
+        translations.research ||
+        "Research",
+
+      desc:
+        translations.researchDesc ||
+        "Understanding business goals and user requirements.",
     },
 
     {
       number: "02",
-      title: "Planning",
-      desc: "Creating scalable workflows and architecture systems.",
+      title:
+        translations.planning ||
+        "Planning",
+
+      desc:
+        translations.planningDesc ||
+        "Creating scalable workflows and architecture systems.",
     },
 
     {
       number: "03",
-      title: "Development",
-      desc: "Building enterprise-grade digital platforms.",
+      title:
+        translations.development ||
+        "Development",
+
+      desc:
+        translations.developmentDesc ||
+        "Building enterprise-grade digital platforms.",
     },
 
     {
       number: "04",
-      title: "Deployment",
-      desc: "Launching, monitoring and optimization systems.",
+      title:
+        translations.deployment ||
+        "Deployment",
+
+      desc:
+        translations.deploymentDesc ||
+        "Launching, monitoring and optimization systems.",
     },
 
   ];
@@ -119,6 +188,7 @@ export default function Home2() {
       name: "Michael Johnson",
       role: "CEO, NexaTech",
       review:
+        translations.review1 ||
         "Enkonix transformed our business with scalable AI systems and enterprise cloud infrastructure.",
     },
 
@@ -126,6 +196,7 @@ export default function Home2() {
       name: "Sarah Williams",
       role: "Founder, Innovexa",
       review:
+        translations.review2 ||
         "The UI/UX quality and enterprise-level development exceeded expectations.",
     },
 
@@ -133,6 +204,7 @@ export default function Home2() {
       name: "David Smith",
       role: "CTO, SkyCore",
       review:
+        translations.review3 ||
         "Professional team with advanced technical expertise and premium support.",
     },
 
@@ -142,55 +214,104 @@ export default function Home2() {
 
     <GlobalLayout>
 
-      <div className="min-h-screen text-gray-900 dark:text-white overflow-hidden">
+      <div
+        dir={isRTL ? "rtl" : "ltr"}
+        className="
+          min-h-screen
+          text-gray-900
+          dark:text-white
+          overflow-hidden
+        "
+      >
 
         {/* HERO */}
 
         <section className="relative pt-40 pb-28 px-8 overflow-hidden">
 
-          {/* BACKGROUND */}
-
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 blur-[120px]" />
 
-          <div className="relative max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+          <div className={`
+            relative
+            max-w-7xl
+            mx-auto
+            grid
+            lg:grid-cols-2
+            gap-16
+            items-center
+            ${
+              isRTL
+                ? "text-right"
+                : "text-left"
+            }
+          `}>
 
             {/* LEFT */}
 
             <div>
 
-              <div className="inline-flex items-center gap-3 bg-white/5 border border-cyan-500/20 px-6 py-3 rounded-full text-cyan-300 mb-10">
+              <div className={`
+                inline-flex
+                items-center
+                gap-3
+                bg-white/5
+                border
+                border-cyan-500/20
+                px-6
+                py-3
+                rounded-full
+                text-cyan-300
+                mb-10
+                ${
+                  isRTL
+                    ? "flex-row-reverse"
+                    : ""
+                }
+              `}>
 
-                Next Generation Technology Company
+                {translations.nextGenCompany ||
+                  "Next Generation Technology Company"}
 
               </div>
 
               <h1 className="text-7xl lg:text-8xl font-black leading-tight">
 
-                Digital
+                {translations.digital ||
+                  "Digital"}
 
                 <br />
 
                 <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
 
-                  Innovation
+                  {translations.innovation ||
+                    "Innovation"}
 
                 </span>
 
                 <br />
 
-                Platform
+                {translations.platform ||
+                  "Platform"}
 
               </h1>
 
               <p className="max-w-2xl dark:text-gray-300 text-gray-700 text-2xl mt-10 leading-relaxed">
 
-                Enkonix helps startups and enterprises
-                build scalable digital ecosystems using AI,
-                Cloud, Cyber Security, and Modern UI/UX technologies.
+                {translations.home2HeroDesc ||
+                  "Enkonix helps startups and enterprises build scalable digital ecosystems using AI, Cloud, Cyber Security, and Modern UI/UX technologies."}
 
               </p>
 
-              <div className="flex flex-wrap gap-6 mt-12">
+              <div className={`
+                flex
+                flex-wrap
+                gap-6
+                mt-12
+                ${
+                  isRTL
+                    ? "justify-end"
+                    : ""
+                }
+              `}>
 
                 <Link
                   to="/about"
@@ -212,7 +333,8 @@ export default function Home2() {
                   "
                 >
 
-                  Discover More
+                  {translations.discoverMore ||
+                    "Discover More"}
 
                   <ArrowRight size={20} />
 
@@ -232,7 +354,8 @@ export default function Home2() {
                   "
                 >
 
-                  Contact Us
+                  {translations.contactUs ||
+                    "Contact Us"}
 
                 </Link>
 
@@ -306,22 +429,33 @@ export default function Home2() {
 
           <div className="max-w-7xl mx-auto">
 
-            <div className="text-center mb-20">
+            <div className={`
+              text-center
+              mb-20
+              ${
+                isRTL
+                  ? "text-right"
+                  : "text-center"
+              }
+            `}>
 
               <h2 className="text-5xl font-black mb-6">
 
-                Our
+                {translations.our ||
+                  "Our"}
 
                 <span className="text-cyan-400">
-                  {" "}Services
+                  {" "}
+                  {translations.services ||
+                    "Services"}
                 </span>
 
               </h2>
 
               <p className="dark:text-gray-400 text-gray-600 text-lg max-w-3xl mx-auto">
 
-                We deliver enterprise-grade digital transformation
-                solutions powered by modern technologies.
+                {translations.servicesDesc ||
+                  "We deliver enterprise-grade digital transformation solutions powered by modern technologies."}
 
               </p>
 
@@ -374,194 +508,6 @@ export default function Home2() {
           </div>
 
         </section>
-
-        {/* WHY CHOOSE */}
-
-        <section className="px-8 py-24 bg-white/[0.02] border-y border-white/5">
-
-          <div className="max-w-7xl mx-auto">
-
-            <div className="text-center mb-20">
-
-              <h2 className="text-5xl font-black mb-6">
-
-                Why Choose
-
-                <span className="text-cyan-400">
-                  {" "}Enkonix
-                </span>
-
-              </h2>
-
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-              {[
-                "Modern UI/UX Design",
-                "AI Powered Automation",
-                "Cloud Infrastructure",
-                "Cyber Security Systems",
-                "Scalable Applications",
-                "SEO Optimized Platforms",
-                "Fast Performance",
-                "24/7 Technical Support",
-              ].map((item, index) => (
-
-                <div
-                  key={index}
-                  className="
-                    bg-[#081225]
-                    border
-                    border-white/10
-                    rounded-3xl
-                    p-8
-                    hover:border-cyan-400/40
-                    transition-all
-                    duration-300
-                    text-white
-                  "
-                >
-
-                  <CheckCircle2
-                    className="text-cyan-400 mb-5"
-                    size={34}
-                  />
-
-                  <h3 className="text-xl font-bold leading-9">
-
-                    {item}
-
-                  </h3>
-
-                </div>
-
-              ))}
-
-            </div>
-
-          </div>
-
-        </section>
-
-        {/* TECHNOLOGIES */}
-
-        <section className="px-8 py-28">
-
-          <div className="max-w-7xl mx-auto">
-
-            <div className="text-center mb-20">
-
-              <h2 className="text-5xl font-black mb-6">
-
-                Technologies We Use
-
-              </h2>
-
-            </div>
-
-            <div className="grid md:grid-cols-4 gap-8">
-
-              {technologies.map((tech, index) => (
-
-                <div
-                  key={index}
-                  className="
-                    bg-[#081225]
-                    border
-                    border-white/10
-                    rounded-3xl
-                    p-8
-                    text-center
-                    hover:border-cyan-400/40
-                    transition-all
-                    duration-500
-                    text-white
-                  "
-                >
-
-                  <h3 className="text-2xl font-bold">
-
-                    {tech}
-
-                  </h3>
-
-                </div>
-
-              ))}
-
-            </div>
-
-          </div>
-
-        </section>
-
-        {/* PROCESS */}
-
-        <section className="px-8 py-28 bg-white/[0.02] border-y border-white/5">
-
-          <div className="max-w-7xl mx-auto">
-
-            <div className="text-center mb-20">
-
-              <h2 className="text-5xl font-black mb-6">
-
-                Our Process
-
-              </h2>
-
-            </div>
-
-            <div className="grid md:grid-cols-4 gap-8">
-
-              {process.map((item, index) => (
-
-                <div
-                  key={index}
-                  className="
-                    bg-[#081225]
-                    border
-                    border-white/10
-                    rounded-3xl
-                    p-10
-                    hover:border-cyan-400/40
-                    transition-all
-                    duration-500
-                    text-white
-                  "
-                >
-
-                  <div className="text-5xl font-black text-cyan-400 mb-6">
-
-                    {item.number}
-
-                  </div>
-
-                  <h3 className="text-3xl font-bold mb-5">
-
-                    {item.title}
-
-                  </h3>
-
-                  <p className="text-gray-400 leading-8 text-lg">
-
-                    {item.desc}
-
-                  </p>
-
-                </div>
-
-              ))}
-
-            </div>
-
-          </div>
-
-        </section>
-
-        
-
-        
 
       </div>
 
