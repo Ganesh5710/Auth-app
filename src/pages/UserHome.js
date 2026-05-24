@@ -11,6 +11,8 @@ import {
   useLanguage,
 } from "../context/LanguageContext";
 
+import translationsData from "../utils/translations";
+
 import {
   useTheme,
 } from "../context/ThemeContext";
@@ -29,9 +31,12 @@ export default function UserHome() {
   const navigate = useNavigate();
 
   const {
-    translations = {},
+    language,
     isRTL,
   } = useLanguage();
+
+  const translations =
+    translationsData[language];
 
   const {
     theme,
@@ -74,7 +79,7 @@ export default function UserHome() {
     if (storedUser.blocked) {
 
       alert(
-        translations?.accountBlocked ||
+        translations.accountBlocked ||
         "Your account has been blocked"
       );
 
@@ -107,9 +112,10 @@ export default function UserHome() {
     <GlobalLayout>
 
       <div
-        dir={isRTL ? "rtl" : "ltr"}
-        className={`
-          min-h-screen
+  dir={isRTL ? "rtl" : "ltr"}
+  className={`
+    min-h-screen
+    pt-[130px]
           px-4
           sm:px-6
           lg:px-10
@@ -134,9 +140,15 @@ export default function UserHome() {
 
         <div className="mb-12">
 
-          <h1 className="text-4xl md:text-6xl font-black leading-tight">
+          <h1 className="
+            text-4xl
+            md:text-6xl
+            font-black
+            leading-tight
+          ">
 
-            Welcome Back,{" "}
+            {translations.welcomeBack ||
+              "Welcome Back"},{" "}
 
             <span className="
               bg-gradient-to-r
@@ -162,7 +174,8 @@ export default function UserHome() {
             }
           `}>
 
-            Manage your profile and account settings.
+            {translations.manageProfile ||
+              "Manage your profile and account settings."}
 
           </p>
 
@@ -184,14 +197,22 @@ export default function UserHome() {
           }
         `}>
 
-          <div className="
+          <div className={`
             flex
             flex-col
-            md:flex-row
+            lg:flex-row
             items-center
-            md:items-start
-            gap-8
-          ">
+            justify-between
+            gap-10
+            w-full
+            ${
+              isRTL
+                ? "lg:flex-row-reverse"
+                : ""
+            }
+          `}>
+
+            {/* AVATAR */}
 
             <div
               className="
@@ -208,6 +229,7 @@ export default function UserHome() {
                 font-black
                 text-white
                 shadow-2xl
+                shrink-0
               "
             >
 
@@ -217,9 +239,26 @@ export default function UserHome() {
 
             </div>
 
-            <div className="flex-1">
+            {/* USER INFO */}
 
-              <h2 className="text-4xl font-bold mb-4">
+            <div className={`
+              flex-1
+              flex
+              flex-col
+              justify-center
+              gap-4
+              ${
+                isRTL
+                  ? "items-end text-right"
+                  : "items-start text-left"
+              }
+            `}>
+
+              <h2 className="
+                text-4xl
+                font-bold
+                break-words
+              ">
 
                 {user.name}
 
@@ -227,7 +266,7 @@ export default function UserHome() {
 
               <p className={`
                 text-lg
-                mb-6
+                break-all
                 ${
                   darkMode
                     ? "text-gray-400"
@@ -247,9 +286,13 @@ export default function UserHome() {
                 text-green-400
                 border
                 border-green-500/20
+                inline-flex
+                items-center
+                justify-center
               ">
 
-                Active User
+                {translations.activeUser ||
+                  "Active User"}
 
               </span>
 
@@ -264,22 +307,33 @@ export default function UserHome() {
         <div className="
           grid
           grid-cols-1
-          sm:grid-cols-2
-          xl:grid-cols-4
+          sm:grid-cols-1
+          xl:grid-cols-2
           gap-6
-          mb-12
+          mb-3
         ">
 
           <StatCard
             darkMode={darkMode}
-            title="Account"
-            value="Active"
+            isRTL={isRTL}
+            title={
+              translations.account ||
+              "Account"
+            }
+            value={
+              translations.active ||
+              "Active"
+            }
             icon={<ShieldCheck />}
           />
 
           <StatCard
             darkMode={darkMode}
-            title="Registered"
+            isRTL={isRTL}
+            title={
+              translations.registered ||
+              "Registered"
+            }
             value={
               user.registeredAt ||
               "2026"
@@ -289,7 +343,11 @@ export default function UserHome() {
 
           <StatCard
             darkMode={darkMode}
-            title="Last Login"
+            isRTL={isRTL}
+            title={
+              translations.lastLogin ||
+              "Last Login"
+            }
             value={
               user.lastLogin ||
               "Today"
@@ -299,8 +357,15 @@ export default function UserHome() {
 
           <StatCard
             darkMode={darkMode}
-            title="Plan"
-            value="Premium"
+            isRTL={isRTL}
+            title={
+              translations.plan ||
+              "Plan"
+            }
+            value={
+              translations.premium ||
+              "Premium"
+            }
             icon={<ShieldCheck />}
           />
 
@@ -321,9 +386,14 @@ export default function UserHome() {
           }
         `}>
 
-          <h2 className="text-3xl font-bold mb-10">
+          <h2 className="
+            text-3xl
+            font-bold
+            mb-10
+          ">
 
-            Quick Actions
+            {translations.quickActions ||
+              "Quick Actions"}
 
           </h2>
 
@@ -337,9 +407,13 @@ export default function UserHome() {
             <ActionCard
               darkMode={darkMode}
               icon={<Edit />}
-              title="Edit Profile"
+              title={
+                translations.editProfile ||
+                "Edit Profile"
+              }
               onClick={() =>
                 alert(
+                  translations.profileComingSoon ||
                   "Profile Editing Coming Soon"
                 )
               }
@@ -348,9 +422,13 @@ export default function UserHome() {
             <ActionCard
               darkMode={darkMode}
               icon={<ShieldCheck />}
-              title="Account Status"
+              title={
+                translations.accountStatus ||
+                "Account Status"
+              }
               onClick={() =>
                 alert(
+                  translations.accountActive ||
                   "Your Account is Active"
                 )
               }
@@ -368,13 +446,12 @@ export default function UserHome() {
 
 }
 
-/* STAT CARD */
-
 function StatCard({
   title,
   value,
   icon,
   darkMode,
+  isRTL,
 }) {
 
   return (
@@ -431,7 +508,15 @@ function StatCard({
 
       </div>
 
-      <h2 className="text-3xl font-bold">
+      <h2 className={`
+        text-3xl
+        font-bold
+        ${
+          isRTL
+            ? "text-right"
+            : "text-left"
+        }
+      `}>
 
         {value}
 
@@ -442,8 +527,6 @@ function StatCard({
   );
 
 }
-
-/* ACTION CARD */
 
 function ActionCard({
   icon,
@@ -493,7 +576,10 @@ function ActionCard({
 
       </div>
 
-      <h3 className="text-lg font-semibold">
+      <h3 className="
+        text-lg
+        font-semibold
+      ">
 
         {title}
 

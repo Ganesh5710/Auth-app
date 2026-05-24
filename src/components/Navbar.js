@@ -14,6 +14,8 @@ import {
 import { useLanguage } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
 
+import translationsData from "../utils/translations";
+
 export default function Navbar() {
 
   const navigate = useNavigate();
@@ -29,6 +31,9 @@ export default function Navbar() {
     theme,
     toggleTheme,
   } = useTheme();
+
+  const translations =
+    translationsData[language];
 
   const [servicesOpen, setServicesOpen] =
     useState(false);
@@ -108,38 +113,52 @@ export default function Navbar() {
   const services = [
 
     {
-      title: "Web Development",
-      path: "/services/web-development",
+      title:
+        translations.webDevelopment,
+      path:
+        "/services/web-development",
     },
 
     {
-      title: "AI Solutions",
-      path: "/services/ai-solutions",
+      title:
+        translations.aiSolutions,
+      path:
+        "/services/ai-solutions",
     },
 
     {
-      title: "Cloud Services",
-      path: "/services/cloud-services",
+      title:
+        translations.cloudServices,
+      path:
+        "/services/cloud-services",
     },
 
     {
-      title: "App Development",
-      path: "/services/app-development",
+      title:
+        translations.appDevelopment,
+      path:
+        "/services/app-development",
     },
 
     {
-      title: "Digital Marketing",
-      path: "/services/digital-marketing",
+      title:
+        translations.digitalMarketing,
+      path:
+        "/services/digital-marketing",
     },
 
     {
-      title: "UI/UX Design",
-      path: "/services/uiux-design",
+      title:
+        translations.uiuxDesign,
+      path:
+        "/services/uiux-design",
     },
 
     {
-      title: "Cyber Security",
-      path: "/services/cyber-security",
+      title:
+        translations.cyberSecurity,
+      path:
+        "/services/cyber-security",
     },
 
   ];
@@ -238,7 +257,7 @@ export default function Navbar() {
             hidden
             xl:flex
             items-center
-            gap-10
+            gap-4
           ">
 
             {/* HOME */}
@@ -261,7 +280,7 @@ export default function Navbar() {
                 "
               >
 
-                Home
+                {translations.home}
 
                 <ChevronDown
                   size={18}
@@ -310,7 +329,7 @@ export default function Navbar() {
                       "
                     >
 
-                      Home 1
+                      {translations.home} 1
 
                     </button>
 
@@ -331,7 +350,7 @@ export default function Navbar() {
                       "
                     >
 
-                      Home 2
+                      {translations.home} 2
 
                     </button>
 
@@ -358,7 +377,7 @@ export default function Navbar() {
               "
             >
 
-              About Us
+              {translations.about}
 
             </button>
 
@@ -382,7 +401,7 @@ export default function Navbar() {
                 "
               >
 
-                Services
+                {translations.services}
 
                 <ChevronDown
                   size={18}
@@ -471,7 +490,7 @@ export default function Navbar() {
               "
             >
 
-              Blog
+              {translations.blog}
 
             </button>
 
@@ -490,7 +509,7 @@ export default function Navbar() {
               "
             >
 
-              Contact Us
+              {translations.contact}
 
             </button>
 
@@ -641,7 +660,7 @@ export default function Navbar() {
               "
             >
 
-              Back To Admin
+              {translations.dashboard}
 
             </button>
 
@@ -670,13 +689,13 @@ export default function Navbar() {
 
             <LogOut size={19} />
 
-            Logout
+            {translations.logout}
 
           </button>
 
         </div>
 
-        {/* MOBILE MENU BUTTON */}
+        {/* MOBILE */}
 
         <button
           onClick={() =>
