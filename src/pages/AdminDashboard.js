@@ -1,59 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import Navbar from "../components/Navbar";
 
 import {
   FaUsers,
   FaUserCheck,
   FaUserSlash,
   FaChartLine,
-  FaBell,
-  FaSearch,
   FaTrash,
-  FaSignOutAlt,
-  FaChartBar,
+  FaBan,
+  FaCheck,
+  FaDollarSign,
+  FaBell,
+  FaEye,
   FaDownload,
+  FaUserClock,
+  FaSearch,
+ 
+  FaCloud,
+  FaRobot,
 } from "react-icons/fa";
 
-
 import {
-  LineChart,
-  Line,
+  ResponsiveContainer,
+
   XAxis,
   YAxis,
   Tooltip,
-  ResponsiveContainer,
+  CartesianGrid,
   PieChart,
   Pie,
   Cell,
-  CartesianGrid,
+  BarChart,
+  Bar,
+  AreaChart,
+  Area,
 } from "recharts";
 
-import { useNavigate } from "react-router-dom";
+export default function AdminDashboard() {
 
-function AdminDashboard() {
-
-  const navigate = useNavigate();
-
-  const [users, setUsers] =
-    useState([]);
-
-  const [activeMenu,
-    setActiveMenu] =
-    useState("dashboard");
-
-  const [search,
-    setSearch] =
-    useState("");
-
-  const [showNotifications,
-    setShowNotifications] =
-    useState(false);
-
-  // LOAD USERS
+  const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
+  const [recentActivities, setRecentActivities] = useState([]);
+ 
+  const [onlineUsers, setOnlineUsers] = useState(0);
 
   useEffect(() => {
-
     loadUsers();
-
   }, []);
 
   const loadUsers = () => {
@@ -62,14 +54,15 @@ function AdminDashboard() {
 
     Object.keys(localStorage).forEach((key) => {
 
-      const ignore = [
+      const ignored = [
         "isAdmin",
         "isUser",
         "loggedInUser",
+        "theme",
+        "language",
       ];
 
-      if (ignore.includes(key))
-        return;
+      if (ignored.includes(key)) return;
 
       try {
 
@@ -82,7 +75,6 @@ function AdminDashboard() {
           user.email &&
           user.password
         ) {
-
           allUsers.push(user);
         }
 
@@ -91,137 +83,168 @@ function AdminDashboard() {
     });
 
     setUsers(allUsers);
+
+    setOnlineUsers(
+      Math.floor(allUsers.length * 0.7)
+    );
+
+    setRecentActivities([
+      "AI Analytics Updated",
+      "Cloud Infrastructure Synced",
+      "New User Registered",
+      "Security Scan Completed",
+      "Admin Logged In",
+    ]);
+
   };
 
-  // COUNTS
+  const totalUsers = users.length;
 
-  const totalUsers =
-    users.length;
+  const activeUsers = users.filter(
+    (u) => !u.blocked
+  ).length;
 
-  const activeUsers =
-    users.filter(
-      (u) => !u.blocked
-    ).length;
+  const blockedUsers = users.filter(
+    (u) => u.blocked
+  ).length;
 
-  const blockedUsers =
-    users.filter(
-      (u) => u.blocked
-    ).length;
+  const revenue =
+    totalUsers * 1500;
+
+  const visitors =
+    totalUsers * 320;
 
   const growth =
     totalUsers > 0
       ? Math.round(
-          (activeUsers /
-            totalUsers) *
-            100
+          (activeUsers / totalUsers) * 100
         )
       : 0;
 
-  // SEARCH
+  const filteredUsers = useMemo(() => {
 
-  const filteredUsers =
-    users.filter((u) =>
+    return users.filter((u) =>
       u.email
-        .toLowerCase()
-        .includes(
-          search.toLowerCase()
-        )
+        ?.toLowerCase()
+        .includes(search.toLowerCase())
     );
 
-  // BLOCK USER
+  }, [users, search]);
 
-  const toggleBlock = (
-    email
-  ) => {
+  const toggleBlock = (email) => {
 
-    const updated =
-      users.map((u) => {
+    const updated = users.map((u) => {
 
-        if (
-          u.email === email
-        ) {
+      if (u.email === email) {
 
-          const updatedUser = {
-            ...u,
-            blocked:
-              !u.blocked,
-          };
+        const updatedUser = {
+          ...u,
+          blocked: !u.blocked,
+        };
 
-          localStorage.setItem(
-            email,
-            JSON.stringify(
-              updatedUser
-            )
-          );
+        localStorage.setItem(
+          email,
+          JSON.stringify(updatedUser)
+        );
 
-          return updatedUser;
-        }
+        setRecentActivities((prev) => [
+          `${updatedUser.blocked ? "Blocked" : "Unblocked"} ${email}`,
+          ...prev,
+        ]);
 
-        return u;
-      });
+        return updatedUser;
+      }
+
+      return u;
+
+    });
 
     setUsers(updated);
+
   };
 
-  // DELETE USER
+  const deleteUser = (email) => {
 
-  const deleteUser = (
-    email
-  ) => {
+    localStorage.removeItem(email);
 
-    localStorage.removeItem(
-      email
-    );
-
-    const updated =
+    setUsers(
       users.filter(
-        (u) =>
-          u.email !== email
-      );
-
-    setUsers(updated);
-  };
-
-  // LOGOUT
-
-  const handleLogout = () => {
-
-    localStorage.removeItem(
-      "isAdmin"
+        (u) => u.email !== email
+      )
     );
 
-    navigate(
-      "/admin-login"
-    );
+    setRecentActivities((prev) => [
+      `Deleted ${email}`,
+      ...prev,
+    ]);
+
   };
 
-  // CHART DATA
+  const exportReport = () => {
 
-  const chartData = [
+    const report = {
+      totalUsers,
+      activeUsers,
+      blockedUsers,
+      revenue,
+      visitors,
+      users,
+    };
 
+    const blob = new Blob(
+      [JSON.stringify(report, null, 2)],
+      {
+        type: "application/json",
+      }
+    );
+
+    const url =
+      URL.createObjectURL(blob);
+
+    const a =
+      document.createElement("a");
+
+    a.href = url;
+    a.download =
+      "enkonix-dashboard-report.json";
+
+    a.click();
+
+  };
+
+  const userGrowthData = [
+    { month: "Jan", users: 12 },
+    { month: "Feb", users: 22 },
+    { month: "Mar", users: 40 },
+    { month: "Apr", users: 60 },
+    { month: "May", users: 85 },
+    { month: "Jun", users: totalUsers },
+  ];
+
+  const servicesData = [
     {
-      name: "Total",
-      users: totalUsers,
+      name: "AI",
+      value: totalUsers * 2,
     },
-
     {
-      name: "Active",
-      users: activeUsers,
+      name: "Cloud",
+      value: totalUsers + 8,
     },
-
     {
-      name: "Blocked",
-      users: blockedUsers,
+      name: "Security",
+      value: 95,
+    },
+    {
+      name: "Apps",
+      value: visitors / 100,
     },
   ];
 
-  const pieData = [
-
+  const statusData = [
     {
       name: "Active",
       value: activeUsers,
     },
-
     {
       name: "Blocked",
       value: blockedUsers,
@@ -235,294 +258,446 @@ function AdminDashboard() {
 
   return (
 
-    <div className="min-h-screen bg-[#030712] text-white flex">
+    <div className="
+      min-h-screen
+      bg-gray-100
+      dark:bg-[#020817]
+      text-black
+      dark:text-white
+      transition-all duration-300
+    ">
 
-      {/* SIDEBAR */}
+      <Navbar />
 
-      <div className="w-[240px] bg-[#0b1120] border-r border-white/10 p-5 flex flex-col justify-between">
+      <div className="pt-[130px] px-8 pb-10">
 
-        <div>
+        {/* TOP HEADER */}
+
+        <div className="
+          flex flex-col xl:flex-row
+          items-start xl:items-center
+          justify-between
+          gap-6
+          mb-12
+        ">
 
           <div>
 
-            <h1 className="text-3xl font-black bg-gradient-to-r from-cyan-400 to-indigo-500 text-transparent bg-clip-text">
-
-              Enkonix
-
+            <h1 className="
+              text-7xl
+              font-black
+              mb-4
+            ">
+              Admin Dashboard
             </h1>
 
-            <p className="text-gray-400 text-xs mt-1">
-
-              Admin Dashboard
-
+            <p className="
+              text-gray-600
+              dark:text-gray-400
+              text-2xl
+            ">
+             Welcome back Admin
             </p>
 
           </div>
 
-          <div className="mt-10 space-y-3">
+          <div className="
+            flex flex-wrap gap-4
+          ">
 
-            <SidebarButton
-              active={
-                activeMenu ===
-                "dashboard"
-              }
-              onClick={() =>
-                setActiveMenu(
-                  "dashboard"
-                )
-              }
-              icon={
-                <FaChartLine />
-              }
-              text="Dashboard"
-            />
+            <button
+              onClick={exportReport}
+              className="
+                px-7 py-4
+                rounded-2xl
+                bg-cyan-100
+                dark:bg-cyan-500/20
+                border border-cyan-300
+                dark:border-cyan-500/20
+                text-cyan-700
+                dark:text-cyan-300
+                font-bold
+                flex items-center gap-3
+                hover:scale-105
+                transition-all duration-300
+              "
+            >
 
-            <SidebarButton
-              active={
-                activeMenu ===
-                "users"
-              }
-              onClick={() =>
-                setActiveMenu(
-                  "users"
-                )
-              }
-              icon={<FaUsers />}
-              text="Users"
-            />
+              <FaDownload />
 
-            <SidebarButton
-              active={
-                activeMenu ===
-                "analytics"
-              }
-              onClick={() =>
-                setActiveMenu(
-                  "analytics"
-                )
-              }
-              icon={
-                <FaChartBar />
-              }
-              text="Analytics"
-            />
+              Export Report
+
+            </button>
+
+            <button
+              className="
+                px-7 py-4
+                rounded-2xl
+                bg-pink-100
+                dark:bg-pink-500/20
+                border border-pink-300
+                dark:border-pink-500/20
+                text-pink-700
+                dark:text-pink-300
+                font-bold
+                flex items-center gap-3
+                hover:scale-105
+                transition-all duration-300
+              "
+            >
+
+              <FaBell />
+
+             
+
+            </button>
 
           </div>
 
         </div>
 
-        <button
-          onClick={
-            handleLogout
-          }
-          className="w-full py-3 rounded-2xl bg-gradient-to-r from-red-500 to-pink-500 text-sm font-semibold flex items-center justify-center gap-3"
-        >
+        {/* TOP STATS */}
 
-          <FaSignOutAlt />
+        <div className="
+          grid
+          grid-cols-1
+          md:grid-cols-2
+          xl:grid-cols-5
+          gap-8
+          mb-10
+        ">
 
-          Logout
+          <StatsCard
+            title="Total Users"
+            value={totalUsers}
+            icon={<FaUsers />}
+          />
 
-        </button>
+          <StatsCard
+            title="Active Users"
+            value={activeUsers}
+            icon={<FaUserCheck />}
+          />
 
-      </div>
+          <StatsCard
+            title="Blocked Users"
+            value={blockedUsers}
+            icon={<FaUserSlash />}
+          />
 
-      {/* MAIN */}
+          <StatsCard
+            title="Revenue"
+            value={`$${revenue}`}
+            icon={<FaDollarSign />}
+          />
 
-      <div className="flex-1 p-6 overflow-y-auto">
+          <StatsCard
+            title="Growth"
+            value={`${growth}%`}
+            icon={<FaChartLine />}
+          />
 
-        {/* TOPBAR */}
+        </div>
 
-        <div className="flex flex-col lg:flex-row justify-between gap-5">
+        {/* SECOND ROW */}
 
-          <div>
+        <div className="
+          grid
+          grid-cols-1
+          md:grid-cols-2
+          xl:grid-cols-4
+          gap-8
+          mb-10
+        ">
 
-            <h1 className="text-3xl font-black">
+          <MiniCard
+            title="Visitors"
+            value={`${visitors}+`}
+            icon={<FaEye />}
+          />
 
-              {activeMenu ===
-                "dashboard" &&
-                "Dashboard"}
+          <MiniCard
+            title="Online Users"
+            value={onlineUsers}
+            icon={<FaUserClock />}
+          />
 
-              {activeMenu ===
-                "users" &&
-                "Users"}
+          <MiniCard
+            title="Cloud Servers"
+            value="12"
+            icon={<FaCloud />}
+          />
 
-              {activeMenu ===
-                "analytics" &&
-                "Analytics"}
+          <MiniCard
+            title="AI Requests"
+            value="9.8K"
+            icon={<FaRobot />}
+          />
 
-            </h1>
+        </div>
 
-            <p className="text-gray-400 text-sm mt-2">
+        {/* CHARTS */}
 
-              Welcome back Admin 
+        <div className="
+          grid
+          grid-cols-1
+          xl:grid-cols-3
+          gap-8
+          mb-10
+        ">
 
-            </p>
+          {/* USER GROWTH */}
 
-          </div>
+          <div className="
+            xl:col-span-2
+            bg-white
+            dark:bg-[#081225]
+            border border-cyan-200
+            dark:border-cyan-500/20
+            rounded-[32px]
+            p-8
+            shadow-lg
+          ">
 
-          <div className="flex items-center gap-4">
+            <h2 className="
+              text-4xl font-black mb-8
+            ">
+              User Growth Analytics
+            </h2>
 
-            {/* SEARCH */}
+            <div className="h-[350px]">
 
-            <div className="flex items-center bg-[#111827] px-4 py-3 rounded-2xl w-[260px]">
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+              >
 
-              <FaSearch className="text-gray-400 text-sm" />
+                <AreaChart data={userGrowthData}>
 
-              <input
-                type="text"
-                placeholder="Search users..."
-                value={search}
-                onChange={(e) =>
-                  setSearch(
-                    e.target.value
-                  )
-                }
-                className="bg-transparent outline-none ml-3 text-sm w-full"
-              />
+                  <defs>
+
+                    <linearGradient
+                      id="colorUsers"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+
+                      <stop
+                        offset="5%"
+                        stopColor="#06b6d4"
+                        stopOpacity={0.8}
+                      />
+
+                      <stop
+                        offset="95%"
+                        stopColor="#06b6d4"
+                        stopOpacity={0}
+                      />
+
+                    </linearGradient>
+
+                  </defs>
+
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="#1e293b"
+                  />
+
+                  <XAxis
+                    dataKey="month"
+                    stroke="#94a3b8"
+                  />
+
+                  <YAxis
+                    stroke="#94a3b8"
+                  />
+
+                  <Tooltip />
+
+                  <Area
+                    type="monotone"
+                    dataKey="users"
+                    stroke="#06b6d4"
+                    fillOpacity={1}
+                    fill="url(#colorUsers)"
+                  />
+
+                </AreaChart>
+
+              </ResponsiveContainer>
 
             </div>
 
-            {/* NOTIFICATION PANEL */}
+          </div>
 
-            <div className="relative">
+          {/* PIE */}
 
-              <button
-                onClick={() =>
-                  setShowNotifications(
-                    !showNotifications
-                  )
-                }
-                className="w-11 h-11 rounded-2xl bg-[#111827] flex items-center justify-center relative"
+          <div className="
+            bg-white
+            dark:bg-[#081225]
+            border border-cyan-200
+            dark:border-cyan-500/20
+            rounded-[32px]
+            p-8
+            shadow-lg
+          ">
+
+            <h2 className="
+              text-4xl font-black mb-8
+            ">
+              User Status
+            </h2>
+
+            <div className="h-[350px]">
+
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
               >
 
-                <FaBell />
+                <PieChart>
 
-                {users.length > 0 && (
+                  <Pie
+                    data={statusData}
+                    dataKey="value"
+                    outerRadius={120}
+                  >
 
-                  <div className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></div>
+                    {statusData.map(
+                      (entry, index) => (
 
-                )}
+                        <Cell
+                          key={index}
+                          fill={COLORS[index]}
+                        />
 
-              </button>
-
-              {showNotifications && (
-
-                <div className="absolute right-0 mt-3 w-[320px] bg-[#0f172a] border border-white/10 rounded-3xl shadow-2xl p-5 z-50">
-
-                  <div className="flex items-center justify-between mb-5">
-
-                    <h2 className="text-lg font-bold">
-
-                      Notifications
-
-                    </h2>
-
-                    <span className="text-xs text-cyan-400">
-
-                      {users.length}
-                      {" "}
-                      Updates
-
-                    </span>
-
-                  </div>
-
-                  <div className="space-y-4 max-h-[350px] overflow-y-auto">
-
-                    {users.length > 0 ? (
-
-                      users
-                        .slice()
-                        .reverse()
-                        .slice(0, 8)
-                        .map(
-                          (
-                            user,
-                            index
-                          ) => (
-
-                            <div
-                              key={index}
-                              className="bg-[#111827] rounded-2xl p-4 hover:bg-white/5 transition"
-                            >
-
-                              <div className="flex items-start gap-3">
-
-                                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 flex items-center justify-center text-sm font-bold">
-
-                                  {user.name
-                                    ?.charAt(
-                                      0
-                                    )
-                                    ?.toUpperCase()}
-
-                                </div>
-
-                                <div className="flex-1">
-
-                                  <h3 className="text-sm font-semibold">
-
-                                    {user.name ||
-                                      "User"}
-
-                                  </h3>
-
-                                  <p className="text-xs text-gray-400 mt-1">
-
-                                    {
-                                      user.email
-                                    }
-
-                                  </p>
-
-                                  <div className="flex items-center justify-between mt-3">
-
-                                    <span
-                                      className={`text-[10px] px-2 py-1 rounded-full ${
-                                        user.blocked
-                                          ? "bg-red-500/20 text-red-400"
-                                          : "bg-green-500/20 text-green-400"
-                                      }`}
-                                    >
-
-                                      {user.blocked
-                                        ? "Blocked"
-                                        : "Active"}
-
-                                    </span>
-
-                                    <span className="text-[10px] text-gray-500">
-
-                                      {user.registeredAt ||
-                                        "Recently"}
-
-                                    </span>
-
-                                  </div>
-
-                                </div>
-
-                              </div>
-
-                            </div>
-
-                          )
-                        )
-
-                    ) : (
-
-                      <div className="text-center py-10 text-gray-400 text-sm">
-
-                        No Notifications
-
-                      </div>
-
+                      )
                     )}
 
+                  </Pie>
+
+                  <Tooltip />
+
+                </PieChart>
+
+              </ResponsiveContainer>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* SERVICES + ACTIVITIES */}
+
+        <div className="
+          grid
+          grid-cols-1
+          xl:grid-cols-3
+          gap-8
+          mb-10
+        ">
+
+          <div className="
+            xl:col-span-2
+            bg-white
+            dark:bg-[#081225]
+            border border-cyan-200
+            dark:border-cyan-500/20
+            rounded-[32px]
+            p-8
+            shadow-lg
+          ">
+
+            <h2 className="
+              text-4xl font-black mb-8
+            ">
+              Service Performance
+            </h2>
+
+            <div className="h-[350px]">
+
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+              >
+
+                <BarChart data={servicesData}>
+
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="#1e293b"
+                  />
+
+                  <XAxis
+                    dataKey="name"
+                    stroke="#94a3b8"
+                  />
+
+                  <YAxis
+                    stroke="#94a3b8"
+                  />
+
+                  <Tooltip />
+
+                  <Bar
+                    dataKey="value"
+                    fill="#06b6d4"
+                    radius={[10, 10, 0, 0]}
+                  />
+
+                </BarChart>
+
+              </ResponsiveContainer>
+
+            </div>
+
+          </div>
+
+          {/* ACTIVITIES */}
+
+          <div className="
+            bg-white
+            dark:bg-[#081225]
+            border border-cyan-200
+            dark:border-cyan-500/20
+            rounded-[32px]
+            p-8
+            shadow-lg
+          ">
+
+            <h2 className="
+              text-4xl font-black mb-8
+            ">
+              Recent Activities
+            </h2>
+
+            <div className="
+              space-y-4
+            ">
+
+              {recentActivities.map(
+                (activity, index) => (
+
+                  <div
+                    key={index}
+                    className="
+                      bg-gray-100
+                      dark:bg-[#0f172a]
+                      border border-cyan-200
+                      dark:border-cyan-500/10
+                      rounded-2xl
+                      p-5
+                    "
+                  >
+
+                    {activity}
+
                   </div>
 
-                </div>
-
+                )
               )}
 
             </div>
@@ -531,225 +706,112 @@ function AdminDashboard() {
 
         </div>
 
-        {/* DASHBOARD */}
+        {/* USERS TABLE */}
 
-        {activeMenu ===
-          "dashboard" && (
+        <div className="
+          bg-white
+          dark:bg-[#081225]
+          border border-cyan-200
+          dark:border-cyan-500/20
+          rounded-[32px]
+          overflow-hidden
+          shadow-lg
+        ">
 
-          <>
+          <div className="
+            p-8
+            border-b border-cyan-200
+            dark:border-cyan-500/10
+            flex flex-col xl:flex-row
+            items-start xl:items-center
+            justify-between
+            gap-5
+          ">
 
-            {/* CARDS */}
+            <div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mt-8">
+              <h2 className="
+                text-4xl font-black mb-2
+              ">
+                Registered Users
+              </h2>
 
-              <Card
-                title="Total Users"
-                value={
-                  totalUsers
-                }
-                icon={
-                  <FaUsers />
-                }
+              <p className="
+                text-gray-600
+                dark:text-gray-400
+              ">
+                Manage all users
+              </p>
+
+            </div>
+
+            {/* SEARCH */}
+
+            <div className="
+              relative
+              w-full xl:w-[320px]
+            ">
+
+              <FaSearch
+                className="
+                  absolute left-5 top-1/2
+                  -translate-y-1/2
+                  text-gray-400
+                "
               />
 
-              <Card
-                title="Active Users"
-                value={
-                  activeUsers
+              <input
+                type="text"
+                placeholder="Search users..."
+                value={search}
+                onChange={(e) =>
+                  setSearch(e.target.value)
                 }
-                icon={
-                  <FaUserCheck />
-                }
-              />
-
-              <Card
-                title="Blocked Users"
-                value={
-                  blockedUsers
-                }
-                icon={
-                  <FaUserSlash />
-                }
-              />
-
-              <Card
-                title="Growth"
-                value={`${growth}%`}
-                icon={
-                  <FaChartLine />
-                }
+                className="
+                  w-full
+                  bg-gray-100
+                  dark:bg-[#0f172a]
+                  border border-cyan-200
+                  dark:border-cyan-500/10
+                  rounded-2xl
+                  pl-14 pr-5 py-4
+                  outline-none
+                "
               />
 
             </div>
 
-            {/* CHARTS */}
+          </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 mt-8">
+          <div className="
+            overflow-x-auto
+          ">
 
-              <div className="xl:col-span-2 bg-[#0f172a] rounded-3xl p-5 border border-white/10">
+            <table className="
+              w-full
+            ">
 
-                <h2 className="text-xl font-bold mb-5">
+              <thead className="
+                bg-gray-100
+                dark:bg-[#0f172a]
+              ">
 
-                  User Growth
+                <tr>
 
-                </h2>
-
-                <div className="h-[300px]">
-
-                  <ResponsiveContainer width="100%" height="100%">
-
-                    <LineChart data={chartData}>
-
-                      <CartesianGrid
-                        strokeDasharray="3 3"
-                        stroke="#1e293b"
-                      />
-
-                      <XAxis
-                        dataKey="name"
-                        stroke="#94a3b8"
-                      />
-
-                      <YAxis
-                        stroke="#94a3b8"
-                      />
-
-                      <Tooltip />
-
-                      <Line
-                        type="monotone"
-                        dataKey="users"
-                        stroke="#06b6d4"
-                        strokeWidth={3}
-                      />
-
-                    </LineChart>
-
-                  </ResponsiveContainer>
-
-                </div>
-
-              </div>
-
-              <div className="bg-[#0f172a] rounded-3xl p-5 border border-white/10">
-
-                <h2 className="text-xl font-bold mb-5">
-
-                  User Status
-
-                </h2>
-
-                <div className="h-[300px]">
-
-                  <ResponsiveContainer width="100%" height="100%">
-
-                    <PieChart>
-
-                      <Pie
-                        data={pieData}
-                        outerRadius={100}
-                        dataKey="value"
-                      >
-
-                        {pieData.map(
-                          (
-                            entry,
-                            index
-                          ) => (
-
-                            <Cell
-                              key={index}
-                              fill={
-                                COLORS[
-                                  index
-                                ]
-                              }
-                            />
-
-                          )
-                        )}
-
-                      </Pie>
-
-                      <Tooltip />
-
-                    </PieChart>
-
-                  </ResponsiveContainer>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </>
-
-        )}
-
-        {/* USERS */}
-
-        {activeMenu ===
-          "users" && (
-
-          <div className="bg-[#0f172a] rounded-3xl p-5 border border-white/10 mt-8 overflow-x-auto">
-
-            <div className="flex justify-between items-center mb-6">
-
-              <div>
-
-                <h2 className="text-2xl font-bold">
-
-                  User Management
-
-                </h2>
-
-                <p className="text-gray-400 text-sm mt-1">
-
-                  Manage all registered users
-
-                </p>
-
-              </div>
-
-              <button className="px-4 py-2 rounded-xl bg-cyan-500 text-sm font-semibold flex items-center gap-2">
-
-                <FaDownload />
-
-                Export
-
-              </button>
-
-            </div>
-
-            <table className="w-full min-w-[800px]">
-
-              <thead>
-
-                <tr className="border-b border-white/10 text-gray-400 text-sm">
-
-                  <th className="text-left pb-4">
-
-                    User
-
+                  <th className="text-left p-6">
+                    Name
                   </th>
 
-                  <th className="text-left pb-4">
-
-                    Registered
-
+                  <th className="text-left p-6">
+                    Email
                   </th>
 
-                  <th className="text-left pb-4">
-
+                  <th className="text-left p-6">
                     Status
-
                   </th>
 
-                  <th className="text-left pb-4">
-
+                  <th className="text-left p-6">
                     Actions
-
                   </th>
 
                 </tr>
@@ -759,115 +821,102 @@ function AdminDashboard() {
               <tbody>
 
                 {filteredUsers.map(
-                  (
-                    user,
-                    index
-                  ) => (
+                  (user, index) => (
 
                     <tr
                       key={index}
-                      className="border-b border-white/5 hover:bg-white/5 transition"
+                      className="
+                        border-t
+                        border-cyan-200
+                        dark:border-cyan-500/10
+                      "
                     >
 
-                      <td className="py-5">
+                      <td className="p-6">
+                        {user.name || "User"}
+                      </td>
 
-                        <div className="flex items-center gap-3">
+                      <td className="p-6">
+                        {user.email}
+                      </td>
 
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 flex items-center justify-center font-bold text-sm">
+                      <td className="p-6">
 
-                            {user.name
-                              ?.charAt(0)
-                              ?.toUpperCase()}
+                        {user.blocked ? (
 
-                          </div>
+                          <span className="
+                            text-red-500 font-bold
+                          ">
+                            Blocked
+                          </span>
 
-                          <div>
+                        ) : (
 
-                            <h2 className="font-semibold text-sm">
+                          <span className="
+                            text-green-500 font-bold
+                          ">
+                            Active
+                          </span>
 
-                              {user.name ||
-                                "User"}
-
-                            </h2>
-
-                            <p className="text-gray-400 text-xs">
-
-                              {
-                                user.email
-                              }
-
-                            </p>
-
-                          </div>
-
-                        </div>
+                        )}
 
                       </td>
 
-                      <td className="text-xs">
+                      <td className="
+                        p-6 flex gap-4
+                      ">
 
-                        {user.registeredAt ||
-                          "N/A"}
-
-                      </td>
-
-                      <td>
-
-                        <span
-                          className={`px-3 py-2 rounded-full text-xs font-bold ${
-                            user.blocked
-                              ? "bg-red-500/20 text-red-400"
-                              : "bg-green-500/20 text-green-400"
-                          }`}
+                        <button
+                          onClick={() =>
+                            toggleBlock(user.email)
+                          }
+                          className={`
+                            px-5 py-3 rounded-2xl
+                            font-bold flex items-center gap-3
+                            transition-all duration-300
+                            ${
+                              user.blocked
+                                ? "bg-green-500 text-black"
+                                : "bg-yellow-400 text-black"
+                            }
+                          `}
                         >
 
-                          {user.blocked
-                            ? "Blocked"
-                            : "Active"}
+                          {user.blocked ? (
+                            <>
+                              <FaCheck />
+                              Unblock
+                            </>
+                          ) : (
+                            <>
+                              <FaBan />
+                              Block
+                            </>
+                          )}
 
-                        </span>
+                        </button>
 
-                      </td>
+                        <button
+                          onClick={() =>
+                            deleteUser(user.email)
+                          }
+                          className="
+                            px-5 py-3
+                            rounded-2xl
+                            bg-red-500
+                            text-white
+                            font-bold
+                            flex items-center gap-3
+                            hover:scale-105
+                            transition-all duration-300
+                          "
+                        >
 
-                      <td>
+                          <FaTrash />
 
-                        <div className="flex gap-2">
+                          Delete
 
-                          <button
-                            onClick={() =>
-                              toggleBlock(
-                                user.email
-                              )
-                            }
-                            className={`px-3 py-2 rounded-xl text-xs font-bold ${
-                              user.blocked
-                                ? "bg-green-500"
-                                : "bg-yellow-500"
-                            }`}
-                          >
-
-                            {user.blocked
-                              ? "Unblock"
-                              : "Block"}
-
-                          </button>
-
-                          <button
-                            onClick={() =>
-                              deleteUser(
-                                user.email
-                              )
-                            }
-                            className="px-3 py-2 rounded-xl bg-red-500 text-xs font-bold flex items-center gap-2"
-                          >
-
-                            <FaTrash />
-
-                            Delete
-
-                          </button>
-
-                        </div>
+                        </button>
 
                       </td>
 
@@ -882,78 +931,17 @@ function AdminDashboard() {
 
           </div>
 
-        )}
-
-        {/* ANALYTICS */}
-
-        {activeMenu ===
-          "analytics" && (
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
-
-            <AnalyticsCard
-              title="Registered Users"
-              value={totalUsers}
-            />
-
-            <AnalyticsCard
-              title="Active Users"
-              value={activeUsers}
-            />
-
-            <AnalyticsCard
-              title="Blocked Users"
-              value={blockedUsers}
-            />
-
-            <AnalyticsCard
-              title="Growth Rate"
-              value={`${growth}%`}
-            />
-
-          </div>
-
-        )}
+        </div>
 
       </div>
 
     </div>
 
   );
+
 }
 
-// SIDEBAR BUTTON
-
-function SidebarButton({
-  active,
-  onClick,
-  icon,
-  text,
-}) {
-
-  return (
-
-    <button
-      onClick={onClick}
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm transition ${
-        active
-          ? "bg-gradient-to-r from-indigo-500 to-cyan-500"
-          : "hover:bg-white/10"
-      }`}
-    >
-
-      {icon}
-
-      {text}
-
-    </button>
-
-  );
-}
-
-// CARD
-
-function Card({
+function StatsCard({
   title,
   value,
   icon,
@@ -961,27 +949,49 @@ function Card({
 
   return (
 
-    <div className="bg-[#0f172a] rounded-3xl p-5 border border-white/10 hover:scale-[1.02] transition">
+    <div className="
+      bg-white
+      dark:bg-[#081225]
+      border border-cyan-200
+      dark:border-cyan-500/20
+      rounded-[32px]
+      p-8
+      shadow-lg
+      hover:-translate-y-2
+      transition-all duration-300
+    ">
 
-      <div className="flex items-center justify-between">
+      <div className="
+        flex items-center justify-between
+      ">
 
         <div>
 
-          <p className="text-gray-400 text-sm">
-
+          <p className="
+            text-gray-600
+            dark:text-gray-400
+            text-xl mb-4
+          ">
             {title}
-
           </p>
 
-          <h1 className="text-4xl font-black mt-3">
-
+          <h2 className="
+            text-5xl font-black
+          ">
             {value}
-
-          </h1>
+          </h2>
 
         </div>
 
-        <div className="w-14 h-14 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xl">
+        <div className="
+          w-24 h-24
+          rounded-3xl
+          bg-cyan-100
+          dark:bg-cyan-500/20
+          flex items-center justify-center
+          text-cyan-500
+          text-4xl
+        ">
 
           {icon}
 
@@ -992,34 +1002,64 @@ function Card({
     </div>
 
   );
+
 }
 
-// ANALYTICS CARD
-
-function AnalyticsCard({
+function MiniCard({
   title,
   value,
+  icon,
 }) {
 
   return (
 
-    <div className="bg-[#0f172a] rounded-3xl p-6 border border-white/10">
+    <div className="
+      bg-white
+      dark:bg-[#081225]
+      border border-cyan-200
+      dark:border-cyan-500/20
+      rounded-[28px]
+      p-6
+      shadow-lg
+      hover:-translate-y-2
+      transition-all duration-300
+    ">
 
-      <p className="text-gray-400 text-sm">
+      <div className="
+        flex items-center justify-between
+      ">
 
-        {title}
+        <div>
 
-      </p>
+          <p className="
+            text-gray-600
+            dark:text-gray-400
+            mb-3
+          ">
+            {title}
+          </p>
 
-      <h1 className="text-3xl font-black mt-3">
+          <h2 className="
+            text-4xl font-black
+          ">
+            {value}
+          </h2>
 
-        {value}
+        </div>
 
-      </h1>
+        <div className="
+          text-cyan-500
+          text-3xl
+        ">
+
+          {icon}
+
+        </div>
+
+      </div>
 
     </div>
 
   );
-}
 
-export default AdminDashboard;
+}

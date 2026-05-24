@@ -1,48 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {
+  useEffect,
+  useState,
+} from "react";
 
 import {
-  UserCircle2,
-  Bell,
-  Activity,
+  useNavigate,
+} from "react-router-dom";
+
+import {
+  useLanguage,
+} from "../context/LanguageContext";
+
+import {
+  useTheme,
+} from "../context/ThemeContext";
+
+import GlobalLayout from "../components/GlobalLayout";
+
+import {
   ShieldCheck,
   CalendarDays,
   Clock3,
-  LogOut,
   Edit,
-  Lock,
-  Mail,
-  BadgeCheck,
-  X,
 } from "lucide-react";
 
 export default function UserHome() {
 
   const navigate = useNavigate();
 
+  const {
+    translations = {},
+    isRTL,
+  } = useLanguage();
+
+  const {
+    theme,
+  } = useTheme();
+
+  const darkMode =
+    theme === "dark";
+
   const [user, setUser] =
     useState(null);
-
-  const [notifications, setNotifications] =
-    useState([]);
-
-  const [showPasswordModal,
-    setShowPasswordModal] =
-    useState(false);
-
-  const [showProfileModal,
-    setShowProfileModal] =
-    useState(false);
-
-  const [newPassword,
-    setNewPassword] =
-    useState("");
-
-  const [editName,
-    setEditName] =
-    useState("");
-
-  // LOAD USER
 
   useEffect(() => {
 
@@ -54,8 +53,8 @@ export default function UserHome() {
     if (!loggedInUser) {
 
       navigate("/login");
-
       return;
+
     }
 
     const storedUser =
@@ -68,16 +67,15 @@ export default function UserHome() {
     if (!storedUser) {
 
       navigate("/login");
-
       return;
-    }
 
-    // BLOCK CHECK
+    }
 
     if (storedUser.blocked) {
 
       alert(
-        "Your account has been blocked by admin"
+        translations?.accountBlocked ||
+        "Your account has been blocked"
       );
 
       localStorage.removeItem(
@@ -91,248 +89,127 @@ export default function UserHome() {
       navigate("/login");
 
       return;
+
     }
 
     setUser(storedUser);
 
-    setEditName(
-      storedUser.name
-    );
+  }, [
+    navigate,
+    translations,
+  ]);
 
-    // LOAD NOTIFICATIONS
-
-    const savedNotifications =
-      JSON.parse(
-        localStorage.getItem(
-          `${loggedInUser}_notifications`
-        )
-      ) || [];
-
-    setNotifications(
-      savedNotifications
-    );
-
-  }, [navigate]);
-
-  // SAVE NOTIFICATION
-
-  const addNotification = (
-    message
-  ) => {
-
-    const loggedInUser =
-      localStorage.getItem(
-        "loggedInUser"
-      );
-
-    const updatedNotifications = [
-
-      {
-        message,
-        time:
-          new Date().toLocaleString(),
-      },
-
-      ...notifications,
-    ];
-
-    setNotifications(
-      updatedNotifications
-    );
-
-    localStorage.setItem(
-      `${loggedInUser}_notifications`,
-      JSON.stringify(
-        updatedNotifications
-      )
-    );
-  };
-
-  // LOGOUT
-
-  const handleLogout = () => {
-
-    const loggedInUser =
-      localStorage.getItem(
-        "loggedInUser"
-      );
-
-    const storedUser =
-      JSON.parse(
-        localStorage.getItem(
-          loggedInUser
-        )
-      );
-
-    if (storedUser) {
-
-      storedUser.lastLogout =
-        new Date().toLocaleString();
-
-      localStorage.setItem(
-        loggedInUser,
-        JSON.stringify(storedUser)
-      );
-    }
-
-    addNotification(
-      "Logged out from account"
-    );
-
-    localStorage.removeItem(
-      "isUser"
-    );
-
-    localStorage.removeItem(
-      "loggedInUser"
-    );
-
-    navigate("/login");
-  };
-
-  // CHANGE PASSWORD
-
-  const handlePasswordChange =
-    () => {
-
-      if (!newPassword) {
-
-        alert(
-          "Enter new password"
-        );
-
-        return;
-      }
-
-      const loggedInUser =
-        localStorage.getItem(
-          "loggedInUser"
-        );
-
-      const storedUser =
-        JSON.parse(
-          localStorage.getItem(
-            loggedInUser
-          )
-        );
-
-      storedUser.password =
-        newPassword;
-
-      localStorage.setItem(
-        loggedInUser,
-        JSON.stringify(
-          storedUser
-        )
-      );
-
-      setUser(storedUser);
-
-      addNotification(
-        "Password changed successfully"
-      );
-
-      alert(
-        "Password Updated"
-      );
-
-      setShowPasswordModal(
-        false
-      );
-
-      setNewPassword("");
-    };
-
-  // EDIT PROFILE
-
-  const handleProfileUpdate =
-    () => {
-
-      const loggedInUser =
-        localStorage.getItem(
-          "loggedInUser"
-        );
-
-      const storedUser =
-        JSON.parse(
-          localStorage.getItem(
-            loggedInUser
-          )
-        );
-
-      storedUser.name =
-        editName;
-
-      localStorage.setItem(
-        loggedInUser,
-        JSON.stringify(
-          storedUser
-        )
-      );
-
-      setUser(storedUser);
-
-      addNotification(
-        "Profile updated successfully"
-      );
-
-      alert(
-        "Profile Updated"
-      );
-
-      setShowProfileModal(
-        false
-      );
-    };
-
-  if (!user) return null;
+  if (!user)
+    return null;
 
   return (
 
-    <div className="min-h-screen bg-[#020617] text-white p-4 sm:p-6 lg:p-10">
+    <GlobalLayout>
 
-      {/* TOPBAR */}
+      <div
+        dir={isRTL ? "rtl" : "ltr"}
+        className={`
+          min-h-screen
+          px-4
+          sm:px-6
+          lg:px-10
+          py-10
+          transition-all
+          duration-500
+          overflow-x-hidden
+          ${
+            darkMode
+              ? "bg-[#020617] text-white"
+              : "bg-gray-100 text-black"
+          }
+          ${
+            isRTL
+              ? "text-right"
+              : "text-left"
+          }
+        `}
+      >
 
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10">
+        {/* HEADER */}
 
-        <div>
+        <div className="mb-12">
 
-          <h1 className="text-3xl sm:text-5xl font-bold">
+          <h1 className="text-4xl md:text-6xl font-black leading-tight">
 
-            Welcome Back,
-            {" "}
-            {user.name} 
+            Welcome Back,{" "}
+
+            <span className="
+              bg-gradient-to-r
+              from-cyan-400
+              to-blue-500
+              text-transparent
+              bg-clip-text
+            ">
+
+              {user.name}
+
+            </span>
 
           </h1>
 
-         
+          <p className={`
+            mt-4
+            text-lg
+            ${
+              darkMode
+                ? "text-gray-400"
+                : "text-gray-600"
+            }
+          `}>
+
+            Manage your profile and account settings.
+
+          </p>
 
         </div>
 
-        <button
-          onClick={handleLogout}
-          className="flex items-center justify-center gap-3 bg-gradient-to-r from-red-500 to-pink-500 px-6 py-4 rounded-2xl font-bold"
-        >
-
-          <LogOut size={22} />
-
-          Logout
-
-        </button>
-
-      </div>
-
-      {/* PROFILE + NOTIFICATIONS */}
-
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-10">
-
         {/* PROFILE */}
 
-        <div className="xl:col-span-2 bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
+        <div className={`
+          rounded-[35px]
+          p-8
+          mb-12
+          border
+          transition-all
+          duration-300
+          ${
+            darkMode
+              ? "bg-white/5 border-white/10"
+              : "bg-white border-gray-200 shadow-lg"
+          }
+        `}>
 
-          <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+          <div className="
+            flex
+            flex-col
+            md:flex-row
+            items-center
+            md:items-start
+            gap-8
+          ">
 
-            <div className="w-28 h-28 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 flex items-center justify-center text-5xl font-bold">
+            <div
+              className="
+                w-32
+                h-32
+                rounded-full
+                bg-gradient-to-r
+                from-cyan-500
+                to-blue-500
+                flex
+                items-center
+                justify-center
+                text-5xl
+                font-black
+                text-white
+                shadow-2xl
+              "
+            >
 
               {user.name
                 ?.charAt(0)
@@ -342,37 +219,39 @@ export default function UserHome() {
 
             <div className="flex-1">
 
-              <h2 className="text-3xl font-bold">
+              <h2 className="text-4xl font-bold mb-4">
 
                 {user.name}
 
               </h2>
 
-              <p className="text-gray-400 mt-2">
+              <p className={`
+                text-lg
+                mb-6
+                ${
+                  darkMode
+                    ? "text-gray-400"
+                    : "text-gray-600"
+                }
+              `}>
 
                 {user.email}
 
               </p>
 
-              <div className="mt-5 flex flex-wrap gap-3">
+              <span className="
+                px-5
+                py-2
+                rounded-full
+                bg-green-500/20
+                text-green-400
+                border
+                border-green-500/20
+              ">
 
-                <span className="px-4 py-2 rounded-xl bg-green-500/20 text-green-400 flex items-center gap-2">
+                Active User
 
-                  <ShieldCheck size={18} />
-
-                  Active Account
-
-                </span>
-
-                <span className="px-4 py-2 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center gap-2">
-
-                  <BadgeCheck size={18} />
-
-                  Verified User
-
-                </span>
-
-              </div>
+              </span>
 
             </div>
 
@@ -380,199 +259,99 @@ export default function UserHome() {
 
         </div>
 
-        {/* NOTIFICATIONS */}
+        {/* STATS */}
 
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+        <div className="
+          grid
+          grid-cols-1
+          sm:grid-cols-2
+          xl:grid-cols-4
+          gap-6
+          mb-12
+        ">
 
-          <div className="flex items-center gap-3 mb-6">
+          <StatCard
+            darkMode={darkMode}
+            title="Account"
+            value="Active"
+            icon={<ShieldCheck />}
+          />
 
-            <Bell size={24} />
+          <StatCard
+            darkMode={darkMode}
+            title="Registered"
+            value={
+              user.registeredAt ||
+              "2026"
+            }
+            icon={<CalendarDays />}
+          />
 
-            <h2 className="text-2xl font-bold">
+          <StatCard
+            darkMode={darkMode}
+            title="Last Login"
+            value={
+              user.lastLogin ||
+              "Today"
+            }
+            icon={<Clock3 />}
+          />
 
-              Notifications
-
-            </h2>
-
-          </div>
-
-          <div className="space-y-4 max-h-[350px] overflow-auto">
-
-            {notifications.length >
-            0 ? (
-
-              notifications.map(
-                (
-                  note,
-                  index
-                ) => (
-
-                  <div
-                    key={index}
-                    className="p-4 rounded-2xl bg-white/5 border border-white/10"
-                  >
-
-                    <p>
-                      {
-                        note.message
-                      }
-                    </p>
-
-                    <p className="text-sm text-gray-400 mt-2">
-
-                      {note.time}
-
-                    </p>
-
-                  </div>
-
-                )
-              )
-
-            ) : (
-
-              <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-
-                No notifications
-
-              </div>
-
-            )}
-
-          </div>
+          <StatCard
+            darkMode={darkMode}
+            title="Plan"
+            value="Premium"
+            icon={<ShieldCheck />}
+          />
 
         </div>
 
-      </div>
+        {/* QUICK ACTIONS */}
 
-      {/* ANALYTICS */}
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
-
-        <StatCard
-          title="Account Status"
-          value="Active"
-          icon={<ShieldCheck />}
-        />
-
-        <StatCard
-          title="Registered"
-          value={
-            user.registeredAt
-              ?.split(",")[0]
+        <div className={`
+          rounded-[35px]
+          p-8
+          border
+          transition-all
+          duration-300
+          ${
+            darkMode
+              ? "bg-white/5 border-white/10"
+              : "bg-white border-gray-200 shadow-lg"
           }
-          icon={<CalendarDays />}
-        />
+        `}>
 
-        <StatCard
-          title="Last Login"
-          value={
-            user.lastLogin
-              ?.split(",")[0]
-          }
-          icon={<Clock3 />}
-        />
-
-        <StatCard
-          title="Security"
-          value="Protected"
-          icon={<Lock />}
-        />
-
-      </div>
-
-      {/* QUICK ACTIONS */}
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
-
-        {/* PROFILE */}
-
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
-
-          <h2 className="text-3xl font-bold mb-8">
-
-            Profile Details
-
-          </h2>
-
-          <div className="space-y-5">
-
-            <ProfileItem
-              icon={<UserCircle2 />}
-              title="Full Name"
-              value={user.name}
-            />
-
-            <ProfileItem
-              icon={<Mail />}
-              title="Email"
-              value={user.email}
-            />
-
-            <ProfileItem
-              icon={<Lock />}
-              title="Security Question"
-              value={
-                user.securityQuestion ||
-                "Not Available"
-              }
-            />
-
-            <ProfileItem
-              icon={<Activity />}
-              title="Last Logout"
-              value={
-                user.lastLogout ||
-                "Never"
-              }
-            />
-
-          </div>
-
-        </div>
-
-        {/* ACTIONS */}
-
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
-
-          <h2 className="text-3xl font-bold mb-8">
+          <h2 className="text-3xl font-bold mb-10">
 
             Quick Actions
 
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="
+            grid
+            grid-cols-1
+            sm:grid-cols-2
+            gap-6
+          ">
 
             <ActionCard
+              darkMode={darkMode}
               icon={<Edit />}
               title="Edit Profile"
               onClick={() =>
-                setShowProfileModal(
-                  true
+                alert(
+                  "Profile Editing Coming Soon"
                 )
               }
             />
 
-            
-
             <ActionCard
-              icon={<Bell />}
-              title="Notifications"
+              darkMode={darkMode}
+              icon={<ShieldCheck />}
+              title="Account Status"
               onClick={() =>
-                window.scrollTo({
-                  top: 0,
-                  behavior:
-                    "smooth",
-                })
-              }
-            />
-
-            <ActionCard
-              icon={<Activity />}
-              title="Activity Logs"
-              onClick={() =>
-                addNotification(
-                  "Viewed activity logs"
+                alert(
+                  "Your Account is Active"
                 )
               }
             />
@@ -583,157 +362,10 @@ export default function UserHome() {
 
       </div>
 
-      {/* TIMELINE */}
-
-      <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
-
-        <h2 className="text-3xl font-bold mb-8">
-
-          Recent Activity
-
-        </h2>
-
-        <div className="space-y-5">
-
-          <TimelineItem
-            text="Logged into account"
-            time={user.lastLogin}
-          />
-
-          <TimelineItem
-            text="Account created"
-            time={user.registeredAt}
-          />
-
-          <TimelineItem
-            text="Last logout"
-            time={user.lastLogout}
-          />
-
-        </div>
-
-      </div>
-
-      {/* PASSWORD MODAL */}
-
-      {showPasswordModal && (
-
-        <Modal
-          title="Change Password"
-          onClose={() =>
-            setShowPasswordModal(
-              false
-            )
-          }
-        >
-
-          <input
-            type="password"
-            placeholder="New Password"
-            value={newPassword}
-            onChange={(e) =>
-              setNewPassword(
-                e.target.value
-              )
-            }
-            className="w-full bg-[#0F172A] border border-white/10 p-4 rounded-2xl outline-none mb-6"
-          />
-
-          <button
-            onClick={
-              handlePasswordChange
-            }
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-cyan-500 font-bold"
-          >
-
-            Update Password
-
-          </button>
-
-        </Modal>
-
-      )}
-
-      {/* PROFILE MODAL */}
-
-      {showProfileModal && (
-
-        <Modal
-          title="Edit Profile"
-          onClose={() =>
-            setShowProfileModal(
-              false
-            )
-          }
-        >
-
-          <input
-            type="text"
-            value={editName}
-            onChange={(e) =>
-              setEditName(
-                e.target.value
-              )
-            }
-            className="w-full bg-[#0F172A] border border-white/10 p-4 rounded-2xl outline-none mb-6"
-          />
-
-          <button
-            onClick={
-              handleProfileUpdate
-            }
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-cyan-500 font-bold"
-          >
-
-            Save Changes
-
-          </button>
-
-        </Modal>
-
-      )}
-
-    </div>
+    </GlobalLayout>
 
   );
-}
 
-/* MODAL */
-
-function Modal({
-  title,
-  children,
-  onClose,
-}) {
-
-  return (
-
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-
-      <div className="bg-[#111827] border border-white/10 rounded-3xl p-8 w-full max-w-md relative">
-
-        <button
-          onClick={onClose}
-          className="absolute top-5 right-5"
-        >
-
-          <X size={24} />
-
-        </button>
-
-        <h2 className="text-3xl font-bold mb-8">
-
-          {title}
-
-        </h2>
-
-        {children}
-
-      </div>
-
-    </div>
-
-  );
 }
 
 /* STAT CARD */
@@ -742,21 +374,56 @@ function StatCard({
   title,
   value,
   icon,
+  darkMode,
 }) {
 
   return (
 
-    <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+    <div className={`
+      rounded-[30px]
+      p-6
+      border
+      transition-all
+      duration-300
+      hover:-translate-y-1
+      ${
+        darkMode
+          ? "bg-white/5 border-white/10"
+          : "bg-white border-gray-200 shadow-lg"
+      }
+    `}>
 
-      <div className="flex items-center justify-between mb-5">
+      <div className="
+        flex
+        items-center
+        justify-between
+        mb-5
+      ">
 
-        <p className="text-gray-400">
+        <p className={`
+          ${
+            darkMode
+              ? "text-gray-400"
+              : "text-gray-600"
+          }
+        `}>
 
           {title}
 
         </p>
 
-        <div className="p-3 rounded-2xl bg-gradient-to-r from-indigo-500 to-cyan-500">
+        <div className="
+          w-14
+          h-14
+          rounded-2xl
+          bg-gradient-to-r
+          from-cyan-500
+          to-blue-500
+          flex
+          items-center
+          justify-center
+          text-white
+        ">
 
           {icon}
 
@@ -764,7 +431,7 @@ function StatCard({
 
       </div>
 
-      <h2 className="text-2xl font-bold break-words">
+      <h2 className="text-3xl font-bold">
 
         {value}
 
@@ -773,45 +440,7 @@ function StatCard({
     </div>
 
   );
-}
 
-/* PROFILE ITEM */
-
-function ProfileItem({
-  icon,
-  title,
-  value,
-}) {
-
-  return (
-
-    <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-2xl p-5">
-
-      <div className="p-3 rounded-2xl bg-gradient-to-r from-indigo-500 to-cyan-500">
-
-        {icon}
-
-      </div>
-
-      <div>
-
-        <p className="text-gray-400 text-sm">
-
-          {title}
-
-        </p>
-
-        <h3 className="font-semibold break-words">
-
-          {value}
-
-        </h3>
-
-      </div>
-
-    </div>
-
-  );
 }
 
 /* ACTION CARD */
@@ -820,22 +449,51 @@ function ActionCard({
   icon,
   title,
   onClick,
+  darkMode,
 }) {
 
   return (
 
     <button
       onClick={onClick}
-      className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition flex flex-col items-center justify-center gap-4"
+      className={`
+        rounded-3xl
+        p-8
+        transition-all
+        duration-300
+        flex
+        flex-col
+        items-center
+        justify-center
+        gap-5
+        hover:-translate-y-1
+        border
+        ${
+          darkMode
+            ? "bg-white/5 border-white/10 hover:bg-white/10"
+            : "bg-white border-gray-200 hover:bg-gray-100 shadow-lg"
+        }
+      `}
     >
 
-      <div className="p-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-cyan-500">
+      <div className="
+        w-16
+        h-16
+        rounded-2xl
+        bg-gradient-to-r
+        from-cyan-500
+        to-blue-500
+        flex
+        items-center
+        justify-center
+        text-white
+      ">
 
         {icon}
 
       </div>
 
-      <h3 className="font-semibold">
+      <h3 className="text-lg font-semibold">
 
         {title}
 
@@ -844,38 +502,5 @@ function ActionCard({
     </button>
 
   );
-}
 
-/* TIMELINE */
-
-function TimelineItem({
-  text,
-  time,
-}) {
-
-  return (
-
-    <div className="flex items-start gap-4">
-
-      <div className="w-4 h-4 rounded-full bg-cyan-400 mt-2"></div>
-
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-5 w-full">
-
-        <h3 className="font-semibold">
-
-          {text}
-
-        </h3>
-
-        <p className="text-gray-400 mt-2 text-sm">
-
-          {time || "N/A"}
-
-        </p>
-
-      </div>
-
-    </div>
-
-  );
 }
