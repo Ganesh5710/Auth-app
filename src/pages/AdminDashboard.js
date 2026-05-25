@@ -20,17 +20,9 @@ import {
   FaTrash,
   FaBan,
   FaCheck,
-  FaDollarSign,
-  FaBell,
-  FaEye,
-  FaDownload,
-  FaUserClock,
   FaSearch,
-  FaCloud,
-  FaRobot,
-  FaServer,
-  FaGlobe,
-  FaShieldAlt,
+ 
+ 
 } from "react-icons/fa";
 
 import {
@@ -42,8 +34,8 @@ import {
   PieChart,
   Pie,
   Cell,
-  BarChart,
-  Bar,
+ 
+  
   AreaChart,
   Area,
 } from "recharts";
@@ -441,54 +433,6 @@ export default function AdminDashboard() {
                 : ""
             }
           `}>
-
-            <button
-              onClick={exportReport}
-              className={`
-                px-6 py-4
-                rounded-2xl
-                bg-cyan-500
-                text-white
-                font-bold
-                flex items-center gap-3
-                hover:scale-105
-                transition-all
-                ${
-                  isRTL
-                    ? "flex-row-reverse"
-                    : ""
-                }
-              `}
-            >
-
-              <FaDownload />
-
-              {t.exportReport ||
-                "Export Report"}
-
-            </button>
-
-            <button className={`
-              px-6 py-4
-              rounded-2xl
-              bg-pink-500
-              text-white
-              font-bold
-              flex items-center gap-3
-              ${
-                isRTL
-                  ? "flex-row-reverse"
-                  : ""
-              }
-            `}>
-
-              <FaBell />
-
-              {
-                notifications.length
-              }
-
-            </button>
 
           </div>
 
