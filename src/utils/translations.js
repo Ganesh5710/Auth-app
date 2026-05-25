@@ -1259,6 +1259,122 @@ faq4Question:
 
 faq4Answer:
   "Yes. We provide continuous support and maintenance plans.",
+  adminDashboard:
+  "Admin Dashboard",
+
+welcomeBackAdmin:
+  "Welcome back Admin",
+
+exportReport:
+  "Export Report",
+
+notifications:
+  "Notifications",
+
+totalUsers:
+  "Total Users",
+
+activeUsers:
+  "Active Users",
+
+blockedUsers:
+  "Blocked Users",
+
+revenue:
+  "Revenue",
+
+growth:
+  "Growth",
+
+visitors:
+  "Visitors",
+
+onlineUsers:
+  "Online Users",
+
+cloudServers:
+  "Cloud Servers",
+
+aiRequests:
+  "AI Requests",
+
+registeredUsers:
+  "Registered Users",
+
+manageAllUsers:
+  "Manage all users",
+
+searchUsers:
+  "Search users...",
+
+name:
+  "Name",
+
+email:
+  "Email",
+
+status:
+  "Status",
+
+actions:
+  "Actions",
+
+active:
+  "Active",
+
+blocked:
+  "Blocked",
+
+block:
+  "Block",
+
+unblock:
+  "Unblock",
+
+delete:
+  "Delete",
+
+securityAlert:
+  "Security Alert",
+
+newUserJoined:
+  "New User Joined",
+
+serverRunning:
+  "Servers Running",
+
+userGrowthAnalytics:
+  "User Growth Analytics",
+
+userStatus:
+  "User Status",
+
+aiAnalyticsUpdated:
+  "AI Analytics Updated",
+
+cloudInfrastructureSynced:
+  "Cloud Infrastructure Synced",
+
+newUserRegistered:
+  "New User Registered",
+
+securityScanCompleted:
+  "Security Scan Completed",
+
+adminLoggedIn:
+  "Admin Logged In",
+
+ai:
+  "AI",
+
+cloud:
+  "Cloud",
+
+security:
+  "Security",
+
+apps:
+  "Apps",
 
   },
 
@@ -2517,6 +2633,122 @@ faq4Question:
 
 faq4Answer:
   "نعم. نقدم خطط دعم وصيانة مستمرة.",
+  adminDashboard:
+  "لوحة تحكم المسؤول",
+
+welcomeBackAdmin:
+  "مرحبًا بعودتك أيها المسؤول",
+
+exportReport:
+  "تصدير التقرير",
+
+notifications:
+  "الإشعارات",
+
+totalUsers:
+  "إجمالي المستخدمين",
+
+activeUsers:
+  "المستخدمون النشطون",
+
+blockedUsers:
+  "المستخدمون المحظورون",
+
+revenue:
+  "الإيرادات",
+
+growth:
+  "النمو",
+
+visitors:
+  "الزوار",
+
+onlineUsers:
+  "المستخدمون المتصلون",
+
+cloudServers:
+  "الخوادم السحابية",
+
+aiRequests:
+  "طلبات الذكاء الاصطناعي",
+
+registeredUsers:
+  "المستخدمون المسجلون",
+
+manageAllUsers:
+  "إدارة جميع المستخدمين",
+
+searchUsers:
+  "البحث عن المستخدمين...",
+
+name:
+  "الاسم",
+
+email:
+  "البريد الإلكتروني",
+
+status:
+  "الحالة",
+
+actions:
+  "الإجراءات",
+
+active:
+  "نشط",
+
+blocked:
+  "محظور",
+
+block:
+  "حظر",
+
+unblock:
+  "إلغاء الحظر",
+
+delete:
+  "حذف",
+
+securityAlert:
+  "تنبيه أمني",
+
+newUserJoined:
+  "انضم مستخدم جديد",
+
+serverRunning:
+  "الخوادم تعمل",
+
+userGrowthAnalytics:
+  "تحليلات نمو المستخدمين",
+
+userStatus:
+  "حالة المستخدمين",
+
+aiAnalyticsUpdated:
+  "تم تحديث تحليلات الذكاء الاصطناعي",
+
+cloudInfrastructureSynced:
+  "تمت مزامنة البنية السحابية",
+
+newUserRegistered:
+  "تم تسجيل مستخدم جديد",
+
+securityScanCompleted:
+  "اكتمل فحص الأمان",
+
+adminLoggedIn:
+  "تم تسجيل دخول المسؤول",
+
+ai:
+  "الذكاء الاصطناعي",
+
+cloud:
+  "السحابة",
+
+security:
+  "الأمان",
+
+apps:
+  "التطبيقات",
   },
 
   he: {
@@ -3772,6 +4004,122 @@ faq4Question:
 
 faq4Answer:
   "כן. אנו מספקים תוכניות תחזוקה ותמיכה שוטפת.",
+  adminDashboard:
+  "לוח ניהול",
+
+welcomeBackAdmin:
+  "ברוך שובך מנהל",
+
+exportReport:
+  "ייצוא דוח",
+
+notifications:
+  "התראות",
+
+totalUsers:
+  "סה״כ משתמשים",
+
+activeUsers:
+  "משתמשים פעילים",
+
+blockedUsers:
+  "משתמשים חסומים",
+
+revenue:
+  "הכנסות",
+
+growth:
+  "צמיחה",
+
+visitors:
+  "מבקרים",
+
+onlineUsers:
+  "משתמשים מחוברים",
+
+cloudServers:
+  "שרתי ענן",
+
+aiRequests:
+  "בקשות AI",
+
+registeredUsers:
+  "משתמשים רשומים",
+
+manageAllUsers:
+  "ניהול כל המשתמשים",
+
+searchUsers:
+  "חיפוש משתמשים...",
+
+name:
+  "שם",
+
+email:
+  "אימייל",
+
+status:
+  "סטטוס",
+
+actions:
+  "פעולות",
+
+active:
+  "פעיל",
+
+blocked:
+  "חסום",
+
+block:
+  "חסום",
+
+unblock:
+  "בטל חסימה",
+
+delete:
+  "מחק",
+
+securityAlert:
+  "התראת אבטחה",
+
+newUserJoined:
+  "משתמש חדש הצטרף",
+
+serverRunning:
+  "השרתים פועלים",
+
+userGrowthAnalytics:
+  "אנליטיקת צמיחת משתמשים",
+
+userStatus:
+  "סטטוס משתמשים",
+
+aiAnalyticsUpdated:
+  "אנליטיקת AI עודכנה",
+
+cloudInfrastructureSynced:
+  "תשתית הענן סונכרנה",
+
+newUserRegistered:
+  "משתמש חדש נרשם",
+
+securityScanCompleted:
+  "סריקת אבטחה הושלמה",
+
+adminLoggedIn:
+  "המנהל התחבר",
+
+ai:
+  "AI",
+
+cloud:
+  "ענן",
+
+security:
+  "אבטחה",
+
+apps:
+  "אפליקציות",
   },
 };
 

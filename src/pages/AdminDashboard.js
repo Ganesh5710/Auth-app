@@ -1,5 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
 import Navbar from "../components/Navbar";
+
+import {
+  useLanguage,
+} from "../context/LanguageContext";
+
+import translationsData from "../utils/translations";
 
 import {
   FaUsers,
@@ -15,14 +26,15 @@ import {
   FaDownload,
   FaUserClock,
   FaSearch,
- 
   FaCloud,
   FaRobot,
+  FaServer,
+  FaGlobe,
+  FaShieldAlt,
 } from "react-icons/fa";
 
 import {
   ResponsiveContainer,
-
   XAxis,
   YAxis,
   Tooltip,
@@ -38,11 +50,34 @@ import {
 
 export default function AdminDashboard() {
 
-  const [users, setUsers] = useState([]);
-  const [search, setSearch] = useState("");
-  const [recentActivities, setRecentActivities] = useState([]);
- 
-  const [onlineUsers, setOnlineUsers] = useState(0);
+  const {
+    language,
+    isRTL,
+  } = useLanguage();
+
+  const t =
+    translationsData[language];
+
+  const [users, setUsers] =
+    useState([]);
+
+  const [search, setSearch] =
+    useState("");
+
+  const [
+    recentActivities,
+    setRecentActivities,
+  ] = useState([]);
+
+  const [
+    notifications,
+    setNotifications,
+  ] = useState([]);
+
+  const [
+    onlineUsers,
+    setOnlineUsers,
+  ] = useState(0);
 
   useEffect(() => {
     loadUsers();
@@ -52,61 +87,99 @@ export default function AdminDashboard() {
 
     const allUsers = [];
 
-    Object.keys(localStorage).forEach((key) => {
+    Object.keys(localStorage).forEach(
+      (key) => {
 
-      const ignored = [
-        "isAdmin",
-        "isUser",
-        "loggedInUser",
-        "theme",
-        "language",
-      ];
-
-      if (ignored.includes(key)) return;
-
-      try {
-
-        const user = JSON.parse(
-          localStorage.getItem(key)
-        );
+        const ignored = [
+          "isAdmin",
+          "isUser",
+          "loggedInUser",
+          "theme",
+          "language",
+        ];
 
         if (
-          user &&
-          user.email &&
-          user.password
-        ) {
-          allUsers.push(user);
-        }
+          ignored.includes(key)
+        )
+          return;
 
-      } catch {}
+        try {
 
-    });
+          const user =
+            JSON.parse(
+              localStorage.getItem(
+                key
+              )
+            );
+
+          if (
+            user &&
+            user.email &&
+            user.password
+          ) {
+
+            allUsers.push({
+              ...user,
+              joined:
+                user.joined ||
+                new Date().toLocaleDateString(),
+            });
+
+          }
+
+        } catch {}
+
+      }
+    );
 
     setUsers(allUsers);
 
     setOnlineUsers(
-      Math.floor(allUsers.length * 0.7)
+      Math.floor(
+        allUsers.length * 0.7
+      )
     );
 
+    setNotifications([
+      t.securityAlert ||
+        "Security Alert",
+      t.newUserJoined ||
+        "New User Joined",
+      t.serverRunning ||
+        "Servers Running",
+    ]);
+
     setRecentActivities([
-      "AI Analytics Updated",
-      "Cloud Infrastructure Synced",
-      "New User Registered",
-      "Security Scan Completed",
-      "Admin Logged In",
+      t.aiAnalyticsUpdated ||
+        "AI Analytics Updated",
+
+      t.cloudInfrastructureSynced ||
+        "Cloud Infrastructure Synced",
+
+      t.newUserRegistered ||
+        "New User Registered",
+
+      t.securityScanCompleted ||
+        "Security Scan Completed",
+
+      t.adminLoggedIn ||
+        "Admin Logged In",
     ]);
 
   };
 
-  const totalUsers = users.length;
+  const totalUsers =
+    users.length;
 
-  const activeUsers = users.filter(
-    (u) => !u.blocked
-  ).length;
+  const activeUsers =
+    users.filter(
+      (u) => !u.blocked
+    ).length;
 
-  const blockedUsers = users.filter(
-    (u) => u.blocked
-  ).length;
+  const blockedUsers =
+    users.filter(
+      (u) => u.blocked
+    ).length;
 
   const revenue =
     totalUsers * 1500;
@@ -117,66 +190,93 @@ export default function AdminDashboard() {
   const growth =
     totalUsers > 0
       ? Math.round(
-          (activeUsers / totalUsers) * 100
+          (activeUsers /
+            totalUsers) *
+            100
         )
       : 0;
 
-  const filteredUsers = useMemo(() => {
+  const filteredUsers =
+    useMemo(() => {
 
-    return users.filter((u) =>
-      u.email
-        ?.toLowerCase()
-        .includes(search.toLowerCase())
-    );
+      return users.filter((u) =>
+        u.email
+          ?.toLowerCase()
+          .includes(
+            search.toLowerCase()
+          )
+      );
 
-  }, [users, search]);
+    }, [users, search]);
 
-  const toggleBlock = (email) => {
+  const toggleBlock = (
+    email
+  ) => {
 
-    const updated = users.map((u) => {
+    const updated = users.map(
+      (u) => {
 
-      if (u.email === email) {
+        if (u.email === email) {
 
-        const updatedUser = {
-          ...u,
-          blocked: !u.blocked,
-        };
+          const updatedUser = {
+            ...u,
+            blocked:
+              !u.blocked,
+          };
 
-        localStorage.setItem(
-          email,
-          JSON.stringify(updatedUser)
-        );
+          localStorage.setItem(
+            email,
+            JSON.stringify(
+              updatedUser
+            )
+          );
 
-        setRecentActivities((prev) => [
-          `${updatedUser.blocked ? "Blocked" : "Unblocked"} ${email}`,
-          ...prev,
-        ]);
+          setRecentActivities(
+            (prev) => [
+              `${
+                updatedUser.blocked
+                  ? t.blocked ||
+                    "Blocked"
+                  : t.unblock ||
+                    "Unblock"
+              } ${email}`,
+              ...prev,
+            ]
+          );
 
-        return updatedUser;
+          return updatedUser;
+        }
+
+        return u;
+
       }
-
-      return u;
-
-    });
+    );
 
     setUsers(updated);
 
   };
 
-  const deleteUser = (email) => {
+  const deleteUser = (
+    email
+  ) => {
 
-    localStorage.removeItem(email);
+    localStorage.removeItem(
+      email
+    );
 
     setUsers(
       users.filter(
-        (u) => u.email !== email
+        (u) =>
+          u.email !== email
       )
     );
 
-    setRecentActivities((prev) => [
-      `Deleted ${email}`,
-      ...prev,
-    ]);
+    setRecentActivities(
+      (prev) => [
+        `${t.delete || "Delete"} ${email}`,
+        ...prev,
+      ]
+    );
 
   };
 
@@ -192,19 +292,30 @@ export default function AdminDashboard() {
     };
 
     const blob = new Blob(
-      [JSON.stringify(report, null, 2)],
+      [
+        JSON.stringify(
+          report,
+          null,
+          2
+        ),
+      ],
       {
         type: "application/json",
       }
     );
 
     const url =
-      URL.createObjectURL(blob);
+      URL.createObjectURL(
+        blob
+      );
 
     const a =
-      document.createElement("a");
+      document.createElement(
+        "a"
+      );
 
     a.href = url;
+
     a.download =
       "enkonix-dashboard-report.json";
 
@@ -213,41 +324,46 @@ export default function AdminDashboard() {
   };
 
   const userGrowthData = [
-    { month: "Jan", users: 12 },
-    { month: "Feb", users: 22 },
-    { month: "Mar", users: 40 },
-    { month: "Apr", users: 60 },
-    { month: "May", users: 85 },
-    { month: "Jun", users: totalUsers },
-  ];
-
-  const servicesData = [
     {
-      name: "AI",
-      value: totalUsers * 2,
+      month: "Jan",
+      users: 12,
     },
     {
-      name: "Cloud",
-      value: totalUsers + 8,
+      month: "Feb",
+      users: 22,
     },
     {
-      name: "Security",
-      value: 95,
+      month: "Mar",
+      users: 40,
     },
     {
-      name: "Apps",
-      value: visitors / 100,
+      month: "Apr",
+      users: 60,
+    },
+    {
+      month: "May",
+      users: 85,
+    },
+    {
+      month: "Jun",
+      users: totalUsers,
     },
   ];
 
   const statusData = [
     {
-      name: "Active",
-      value: activeUsers,
+      name:
+        t.active ||
+        "Active",
+      value:
+        activeUsers,
     },
     {
-      name: "Blocked",
-      value: blockedUsers,
+      name:
+        t.blocked ||
+        "Blocked",
+      value:
+        blockedUsers,
     },
   ];
 
@@ -258,97 +374,119 @@ export default function AdminDashboard() {
 
   return (
 
-    <div className="
-      min-h-screen
-      bg-gray-100
-      dark:bg-[#020817]
-      text-black
-      dark:text-white
-      transition-all duration-300
-    ">
+    <div
+      dir={
+        isRTL
+          ? "rtl"
+          : "ltr"
+      }
+      className="
+        min-h-screen
+        bg-gray-100
+        dark:bg-[#020817]
+        text-black
+        dark:text-white
+        transition-all duration-300
+      "
+    >
 
       <Navbar />
 
-      <div className="pt-[130px] px-8 pb-10">
+      <div className="pt-[120px] px-6 lg:px-10 pb-12">
 
-        {/* TOP HEADER */}
+        {/* HEADER */}
 
-        <div className="
+        <div className={`
           flex flex-col xl:flex-row
-          items-start xl:items-center
           justify-between
-          gap-6
-          mb-12
-        ">
+          items-start xl:items-center
+          gap-6 mb-10
+          ${
+            isRTL
+              ? "text-right"
+              : "text-left"
+          }
+        `}>
 
           <div>
 
             <h1 className="
-              text-7xl
-              font-black
-              mb-4
+              text-5xl md:text-7xl
+              font-black mb-4
             ">
-              Admin Dashboard
+
+              {t.adminDashboard ||
+                "Admin Dashboard"}
+
             </h1>
 
             <p className="
+              text-xl
               text-gray-600
               dark:text-gray-400
-              text-2xl
             ">
-             Welcome back Admin
+
+              {t.welcomeBackAdmin ||
+                "Welcome back Admin"}
+
             </p>
 
           </div>
 
-          <div className="
+          <div className={`
             flex flex-wrap gap-4
-          ">
+            ${
+              isRTL
+                ? "justify-end"
+                : ""
+            }
+          `}>
 
             <button
               onClick={exportReport}
-              className="
-                px-7 py-4
+              className={`
+                px-6 py-4
                 rounded-2xl
-                bg-cyan-100
-                dark:bg-cyan-500/20
-                border border-cyan-300
-                dark:border-cyan-500/20
-                text-cyan-700
-                dark:text-cyan-300
+                bg-cyan-500
+                text-white
                 font-bold
                 flex items-center gap-3
                 hover:scale-105
-                transition-all duration-300
-              "
+                transition-all
+                ${
+                  isRTL
+                    ? "flex-row-reverse"
+                    : ""
+                }
+              `}
             >
 
               <FaDownload />
 
-              Export Report
+              {t.exportReport ||
+                "Export Report"}
 
             </button>
 
-            <button
-              className="
-                px-7 py-4
-                rounded-2xl
-                bg-pink-100
-                dark:bg-pink-500/20
-                border border-pink-300
-                dark:border-pink-500/20
-                text-pink-700
-                dark:text-pink-300
-                font-bold
-                flex items-center gap-3
-                hover:scale-105
-                transition-all duration-300
-              "
-            >
+            <button className={`
+              px-6 py-4
+              rounded-2xl
+              bg-pink-500
+              text-white
+              font-bold
+              flex items-center gap-3
+              ${
+                isRTL
+                  ? "flex-row-reverse"
+                  : ""
+              }
+            `}>
 
               <FaBell />
 
-             
+              {
+                notifications.length
+              }
 
             </button>
 
@@ -356,351 +494,220 @@ export default function AdminDashboard() {
 
         </div>
 
-        {/* TOP STATS */}
+        {/* STATS */}
 
         <div className="
           grid
           grid-cols-1
-          md:grid-cols-2
+          sm:grid-cols-2
           xl:grid-cols-5
-          gap-8
-          mb-10
+          gap-6 mb-10
         ">
 
           <StatsCard
-            title="Total Users"
+            title={
+              t.totalUsers ||
+              "Total Users"
+            }
             value={totalUsers}
             icon={<FaUsers />}
           />
 
           <StatsCard
-            title="Active Users"
+            title={
+              t.activeUsers ||
+              "Active Users"
+            }
             value={activeUsers}
             icon={<FaUserCheck />}
           />
 
           <StatsCard
-            title="Blocked Users"
+            title={
+              t.blockedUsers ||
+              "Blocked Users"
+            }
             value={blockedUsers}
             icon={<FaUserSlash />}
           />
 
-          <StatsCard
-            title="Revenue"
-            value={`$${revenue}`}
-            icon={<FaDollarSign />}
-          />
+          
 
           <StatsCard
-            title="Growth"
+            title={
+              t.growth ||
+              "Growth"
+            }
             value={`${growth}%`}
             icon={<FaChartLine />}
           />
 
         </div>
 
-        {/* SECOND ROW */}
-
-        <div className="
-          grid
-          grid-cols-1
-          md:grid-cols-2
-          xl:grid-cols-4
-          gap-8
-          mb-10
-        ">
-
-          <MiniCard
-            title="Visitors"
-            value={`${visitors}+`}
-            icon={<FaEye />}
-          />
-
-          <MiniCard
-            title="Online Users"
-            value={onlineUsers}
-            icon={<FaUserClock />}
-          />
-
-          <MiniCard
-            title="Cloud Servers"
-            value="12"
-            icon={<FaCloud />}
-          />
-
-          <MiniCard
-            title="AI Requests"
-            value="9.8K"
-            icon={<FaRobot />}
-          />
-
-        </div>
+       
 
         {/* CHARTS */}
 
         <div className="
           grid
           grid-cols-1
-          xl:grid-cols-3
-          gap-8
-          mb-10
+          xl:grid-cols-2
+          gap-8 mb-10
         ">
 
-          {/* USER GROWTH */}
-
-          <div className="
-            xl:col-span-2
-            bg-white
-            dark:bg-[#081225]
-            border border-cyan-200
-            dark:border-cyan-500/20
-            rounded-[32px]
-            p-8
-            shadow-lg
-          ">
-
-            <h2 className="
-              text-4xl font-black mb-8
-            ">
-              User Growth Analytics
-            </h2>
-
-            <div className="h-[350px]">
-
-              <ResponsiveContainer
-                width="100%"
-                height="100%"
-              >
-
-                <AreaChart data={userGrowthData}>
-
-                  <defs>
-
-                    <linearGradient
-                      id="colorUsers"
-                      x1="0"
-                      y1="0"
-                      x2="0"
-                      y2="1"
-                    >
-
-                      <stop
-                        offset="5%"
-                        stopColor="#06b6d4"
-                        stopOpacity={0.8}
-                      />
-
-                      <stop
-                        offset="95%"
-                        stopColor="#06b6d4"
-                        stopOpacity={0}
-                      />
-
-                    </linearGradient>
-
-                  </defs>
-
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    stroke="#1e293b"
-                  />
-
-                  <XAxis
-                    dataKey="month"
-                    stroke="#94a3b8"
-                  />
-
-                  <YAxis
-                    stroke="#94a3b8"
-                  />
-
-                  <Tooltip />
-
-                  <Area
-                    type="monotone"
-                    dataKey="users"
-                    stroke="#06b6d4"
-                    fillOpacity={1}
-                    fill="url(#colorUsers)"
-                  />
-
-                </AreaChart>
-
-              </ResponsiveContainer>
-
-            </div>
-
-          </div>
-
-          {/* PIE */}
+          {/* AREA CHART */}
 
           <div className="
             bg-white
             dark:bg-[#081225]
-            border border-cyan-200
-            dark:border-cyan-500/20
             rounded-[32px]
             p-8
-            shadow-lg
+            shadow-xl
           ">
 
             <h2 className="
-              text-4xl font-black mb-8
+              text-3xl
+              font-black
+              mb-8
             ">
-              User Status
+
+              {t.userGrowthAnalytics ||
+                "User Growth Analytics"}
+
             </h2>
 
-            <div className="h-[350px]">
+            <ResponsiveContainer
+              width="100%"
+              height={320}
+            >
 
-              <ResponsiveContainer
-                width="100%"
-                height="100%"
+              <AreaChart
+                data={
+                  userGrowthData
+                }
               >
 
-                <PieChart>
+                <defs>
 
-                  <Pie
-                    data={statusData}
-                    dataKey="value"
-                    outerRadius={120}
+                  <linearGradient
+                    id="colorUsers"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
                   >
 
-                    {statusData.map(
-                      (entry, index) => (
+                    <stop
+                      offset="5%"
+                      stopColor="#06b6d4"
+                      stopOpacity={
+                        0.8
+                      }
+                    />
 
-                        <Cell
-                          key={index}
-                          fill={COLORS[index]}
-                        />
+                    <stop
+                      offset="95%"
+                      stopColor="#06b6d4"
+                      stopOpacity={
+                        0
+                      }
+                    />
 
-                      )
-                    )}
+                  </linearGradient>
 
-                  </Pie>
+                </defs>
 
-                  <Tooltip />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                />
 
-                </PieChart>
+                <XAxis
+                  dataKey="month"
+                />
 
-              </ResponsiveContainer>
+                <YAxis />
 
-            </div>
+                <Tooltip />
 
-          </div>
+                <Area
+                  type="monotone"
+                  dataKey="users"
+                  stroke="#06b6d4"
+                  fillOpacity={1}
+                  fill="url(#colorUsers)"
+                />
 
-        </div>
+              </AreaChart>
 
-        {/* SERVICES + ACTIVITIES */}
-
-        <div className="
-          grid
-          grid-cols-1
-          xl:grid-cols-3
-          gap-8
-          mb-10
-        ">
-
-          <div className="
-            xl:col-span-2
-            bg-white
-            dark:bg-[#081225]
-            border border-cyan-200
-            dark:border-cyan-500/20
-            rounded-[32px]
-            p-8
-            shadow-lg
-          ">
-
-            <h2 className="
-              text-4xl font-black mb-8
-            ">
-              Service Performance
-            </h2>
-
-            <div className="h-[350px]">
-
-              <ResponsiveContainer
-                width="100%"
-                height="100%"
-              >
-
-                <BarChart data={servicesData}>
-
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    stroke="#1e293b"
-                  />
-
-                  <XAxis
-                    dataKey="name"
-                    stroke="#94a3b8"
-                  />
-
-                  <YAxis
-                    stroke="#94a3b8"
-                  />
-
-                  <Tooltip />
-
-                  <Bar
-                    dataKey="value"
-                    fill="#06b6d4"
-                    radius={[10, 10, 0, 0]}
-                  />
-
-                </BarChart>
-
-              </ResponsiveContainer>
-
-            </div>
+            </ResponsiveContainer>
 
           </div>
 
-          {/* ACTIVITIES */}
+          {/* PIE CHART */}
 
           <div className="
             bg-white
             dark:bg-[#081225]
-            border border-cyan-200
-            dark:border-cyan-500/20
             rounded-[32px]
             p-8
-            shadow-lg
+            shadow-xl
           ">
 
             <h2 className="
-              text-4xl font-black mb-8
+              text-3xl
+              font-black
+              mb-8
             ">
-              Recent Activities
+
+              {t.userStatus ||
+                "User Status"}
+
             </h2>
 
-            <div className="
-              space-y-4
-            ">
+            <ResponsiveContainer
+              width="100%"
+              height={320}
+            >
 
-              {recentActivities.map(
-                (activity, index) => (
+              <PieChart>
 
-                  <div
-                    key={index}
-                    className="
-                      bg-gray-100
-                      dark:bg-[#0f172a]
-                      border border-cyan-200
-                      dark:border-cyan-500/10
-                      rounded-2xl
-                      p-5
-                    "
-                  >
+                <Pie
+                  data={
+                    statusData
+                  }
+                  dataKey="value"
+                  outerRadius={
+                    120
+                  }
+                  label
+                >
 
-                    {activity}
+                  {statusData.map(
+                    (
+                      entry,
+                      index
+                    ) => (
 
-                  </div>
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={
+                          COLORS[
+                            index %
+                              COLORS.length
+                          ]
+                        }
+                      />
 
-                )
-              )}
+                    )
+                  )}
 
-            </div>
+                </Pie>
+
+                <Tooltip />
+
+              </PieChart>
+
+            </ResponsiveContainer>
 
           </div>
 
@@ -711,107 +718,135 @@ export default function AdminDashboard() {
         <div className="
           bg-white
           dark:bg-[#081225]
-          border border-cyan-200
-          dark:border-cyan-500/20
           rounded-[32px]
-          overflow-hidden
-          shadow-lg
+          p-8
+          shadow-xl
         ">
 
-          <div className="
-            p-8
-            border-b border-cyan-200
-            dark:border-cyan-500/10
+          <div className={`
             flex flex-col xl:flex-row
-            items-start xl:items-center
             justify-between
-            gap-5
-          ">
+            items-start xl:items-center
+            gap-6 mb-8
+            ${
+              isRTL
+                ? "text-right"
+                : "text-left"
+            }
+          `}>
 
             <div>
 
               <h2 className="
-                text-4xl font-black mb-2
+                text-4xl
+                font-black
+                mb-2
               ">
-                Registered Users
+
+                {t.registeredUsers ||
+                  "Registered Users"}
+
               </h2>
 
               <p className="
                 text-gray-600
                 dark:text-gray-400
               ">
-                Manage all users
+
+                {t.manageAllUsers ||
+                  "Manage all users"}
+
               </p>
 
             </div>
 
-            {/* SEARCH */}
-
             <div className="
               relative
-              w-full xl:w-[320px]
+              w-full
+              xl:w-[350px]
             ">
 
               <FaSearch
-                className="
-                  absolute left-5 top-1/2
+                className={`
+                  absolute
+                  top-1/2
                   -translate-y-1/2
                   text-gray-400
-                "
+                  ${
+                    isRTL
+                      ? "right-5"
+                      : "left-5"
+                  }
+                `}
               />
 
               <input
                 type="text"
-                placeholder="Search users..."
                 value={search}
                 onChange={(e) =>
-                  setSearch(e.target.value)
+                  setSearch(
+                    e.target.value
+                  )
                 }
-                className="
+                placeholder={
+                  t.searchUsers ||
+                  "Search users..."
+                }
+                className={`
                   w-full
+                  py-4
+                  rounded-2xl
                   bg-gray-100
                   dark:bg-[#0f172a]
-                  border border-cyan-200
-                  dark:border-cyan-500/10
-                  rounded-2xl
-                  pl-14 pr-5 py-4
+                  border
+                  border-gray-200
+                  dark:border-white/10
                   outline-none
-                "
+                  ${
+                    isRTL
+                      ? "pr-14 pl-5 text-right"
+                      : "pl-14 pr-5 text-left"
+                  }
+                `}
               />
 
             </div>
 
           </div>
 
-          <div className="
-            overflow-x-auto
-          ">
+          <div className="overflow-x-auto">
 
             <table className="
               w-full
+              min-w-[900px]
             ">
 
-              <thead className="
-                bg-gray-100
-                dark:bg-[#0f172a]
-              ">
+              <thead>
 
-                <tr>
+                <tr className="
+                  border-b
+                  border-gray-200
+                  dark:border-white/10
+                ">
 
-                  <th className="text-left p-6">
-                    Name
+                  <th className="py-5">
+                    {t.name || "Name"}
                   </th>
 
-                  <th className="text-left p-6">
-                    Email
+                  <th className="py-5">
+                    {t.email || "Email"}
                   </th>
 
-                  <th className="text-left p-6">
-                    Status
+                  <th className="py-5">
+                    {t.status || "Status"}
                   </th>
 
-                  <th className="text-left p-6">
-                    Actions
+                  <th className="py-5">
+                    Joined
+                  </th>
+
+                  <th className="py-5">
+                    {t.actions || "Actions"}
                   </th>
 
                 </tr>
@@ -821,102 +856,136 @@ export default function AdminDashboard() {
               <tbody>
 
                 {filteredUsers.map(
-                  (user, index) => (
+                  (
+                    user,
+                    index
+                  ) => (
 
                     <tr
                       key={index}
                       className="
-                        border-t
-                        border-cyan-200
-                        dark:border-cyan-500/10
+                        border-b
+                        border-gray-100
+                        dark:border-white/5
                       "
                     >
 
-                      <td className="p-6">
-                        {user.name || "User"}
+                      <td className="py-5 font-bold">
+
+                        {
+                          user.name ||
+                          "User"
+                        }
+
                       </td>
 
-                      <td className="p-6">
+                      <td className="py-5">
+
                         {user.email}
-                      </td>
-
-                      <td className="p-6">
-
-                        {user.blocked ? (
-
-                          <span className="
-                            text-red-500 font-bold
-                          ">
-                            Blocked
-                          </span>
-
-                        ) : (
-
-                          <span className="
-                            text-green-500 font-bold
-                          ">
-                            Active
-                          </span>
-
-                        )}
 
                       </td>
 
-                      <td className="
-                        p-6 flex gap-4
-                      ">
+                      <td className="py-5">
 
-                        <button
-                          onClick={() =>
-                            toggleBlock(user.email)
+                        <span className={`
+                          px-4 py-2
+                          rounded-full
+                          text-sm
+                          font-bold
+                          ${
+                            user.blocked
+                              ? "bg-red-500/20 text-red-400"
+                              : "bg-green-500/20 text-green-400"
                           }
-                          className={`
-                            px-5 py-3 rounded-2xl
-                            font-bold flex items-center gap-3
-                            transition-all duration-300
-                            ${
-                              user.blocked
-                                ? "bg-green-500 text-black"
-                                : "bg-yellow-400 text-black"
+                        `}>
+
+                          {user.blocked
+                            ? t.blocked ||
+                              "Blocked"
+                            : t.active ||
+                              "Active"}
+
+                        </span>
+
+                      </td>
+
+                      <td className="py-5">
+
+                        {
+                          user.joined
+                        }
+
+                      </td>
+
+                      <td className="py-5">
+
+                        <div className={`
+                          flex gap-3
+                          ${
+                            isRTL
+                              ? "justify-end"
+                              : ""
+                          }
+                        `}>
+
+                          <button
+                            onClick={() =>
+                              toggleBlock(
+                                user.email
+                              )
                             }
-                          `}
-                        >
+                            className={`
+                              px-5 py-3
+                              rounded-xl
+                              text-white
+                              font-bold
+                              flex items-center gap-2
+                              ${
+                                user.blocked
+                                  ? "bg-green-500"
+                                  : "bg-blue-500"
+                              }
+                            `}
+                          >
 
-                          {user.blocked ? (
-                            <>
+                            {user.blocked ? (
                               <FaCheck />
-                              Unblock
-                            </>
-                          ) : (
-                            <>
+                            ) : (
                               <FaBan />
-                              Block
-                            </>
-                          )}
+                            )}
 
-                        </button>
+                            {user.blocked
+                              ? t.unblock ||
+                                "Unblock"
+                              : t.block ||
+                                "Block"}
 
-                        <button
-                          onClick={() =>
-                            deleteUser(user.email)
-                          }
-                          className="
-                            px-5 py-3
-                            rounded-2xl
-                            bg-red-500
-                            text-white
-                            font-bold
-                            flex items-center gap-3
-                            hover:scale-105
-                            transition-all duration-300
-                          "
-                        >
+                          </button>
 
-                          <FaTrash />
+                          <button
+                            onClick={() =>
+                              deleteUser(
+                                user.email
+                              )
+                            }
+                            className="
+                              px-5 py-3
+                              rounded-xl
+                              bg-red-500
+                              text-white
+                              font-bold
+                              flex items-center gap-2
+                            "
+                          >
 
-                          Delete
+                            <FaTrash />
 
-                        </button>
+                            {t.delete ||
+                              "Delete"}
+
+                          </button>
+
+                        </div>
 
                       </td>
 
@@ -952,11 +1021,9 @@ function StatsCard({
     <div className="
       bg-white
       dark:bg-[#081225]
-      border border-cyan-200
-      dark:border-cyan-500/20
-      rounded-[32px]
-      p-8
-      shadow-lg
+      rounded-[30px]
+      p-7
+      shadow-xl
       hover:-translate-y-2
       transition-all duration-300
     ">
@@ -968,28 +1035,29 @@ function StatsCard({
         <div>
 
           <p className="
-            text-gray-600
-            dark:text-gray-400
-            text-xl mb-4
+            text-gray-500
+            mb-3
           ">
             {title}
           </p>
 
           <h2 className="
-            text-5xl font-black
+            text-5xl
+            font-black
           ">
+
             {value}
+
           </h2>
 
         </div>
 
         <div className="
-          w-24 h-24
+          w-20 h-20
           rounded-3xl
-          bg-cyan-100
-          dark:bg-cyan-500/20
+          bg-cyan-500/20
           flex items-center justify-center
-          text-cyan-500
+          text-cyan-400
           text-4xl
         ">
 
@@ -1016,43 +1084,48 @@ function MiniCard({
     <div className="
       bg-white
       dark:bg-[#081225]
-      border border-cyan-200
-      dark:border-cyan-500/20
-      rounded-[28px]
-      p-6
-      shadow-lg
+      rounded-[30px]
+      p-7
+      shadow-xl
       hover:-translate-y-2
       transition-all duration-300
     ">
 
       <div className="
-        flex items-center justify-between
+        flex items-center gap-5
       ">
 
-        <div>
-
-          <p className="
-            text-gray-600
-            dark:text-gray-400
-            mb-3
-          ">
-            {title}
-          </p>
-
-          <h2 className="
-            text-4xl font-black
-          ">
-            {value}
-          </h2>
-
-        </div>
-
         <div className="
-          text-cyan-500
+          w-16 h-16
+          rounded-2xl
+          bg-pink-500/20
+          flex items-center justify-center
+          text-pink-400
           text-3xl
         ">
 
           {icon}
+
+        </div>
+
+        <div>
+
+          <h3 className="
+            text-3xl
+            font-black
+          ">
+
+            {value}
+
+          </h3>
+
+          <p className="
+            text-gray-500
+          ">
+
+            {title}
+
+          </p>
 
         </div>
 
