@@ -336,6 +336,7 @@ export default function Blog() {
                   to-blue-500
                   text-transparent
                   bg-clip-text
+                  pb-10
                 ">
 
                   {translations.techBlog ||
@@ -366,7 +367,7 @@ export default function Blog() {
         </section>
 {/* FEATURED */}
 
-<section className="px-6 lg:px-20 pb-28">
+<section className="px-6 lg:px-20 pb-28 mt-5">
 
   <div className="max-w-7xl mx-auto">
 

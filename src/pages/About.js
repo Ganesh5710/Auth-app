@@ -225,7 +225,7 @@ export default function About() {
 
         {/* STATS */}
 
-        <section className="px-6 pb-24">
+        <section className="px-6 pb-24 mt-4">
 
           <div className="
             max-w-7xl
@@ -253,7 +253,7 @@ export default function About() {
                   hover:border-cyan-400/40
                   hover:-translate-y-2
                   transition-all
-                  duration-500
+                  duration-200
                 "
               >
 

@@ -178,6 +178,8 @@ export default function Navbar() {
         backdrop-blur-2xl
         border-b
         border-cyan-500/10
+        transition-all
+        duration-500
       "
     >
 
@@ -524,6 +526,7 @@ export default function Navbar() {
           xl:flex
           items-center
           gap-4
+          transition-all
         ">
 
           {/* THEME */}
@@ -538,6 +541,7 @@ export default function Navbar() {
               dark:bg-[#0d1529]
               border
               border-cyan-500/20
+              transition-all
               flex
               items-center
               justify-center
