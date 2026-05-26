@@ -24,8 +24,6 @@ import {
   ArrowRight,
   PenTool,
   Eye,
-  Sun,
-  Moon,
   PlayCircle,
   Users,
   Star,
@@ -150,47 +148,7 @@ export default function UIUXDesign() {
         "
       >
 
-        {/* THEME TOGGLE */}
-
-        <button
-          onClick={() =>
-            setDarkMode(!darkMode)
-          }
-          className="
-            fixed
-            top-6
-            right-6
-            z-50
-            p-4
-            rounded-full
-            bg-white
-            dark:bg-[#111c38]
-            border
-            border-pink-500/20
-            shadow-lg
-            hover:scale-110
-            transition-all
-            duration-300
-          "
-        >
-
-          {darkMode ? (
-
-            <Sun
-              size={24}
-              className="text-yellow-400"
-            />
-
-          ) : (
-
-            <Moon
-              size={24}
-              className="text-pink-500"
-            />
-
-          )}
-
-        </button>
+        
 
         {/* SECTION 1 HERO */}
 

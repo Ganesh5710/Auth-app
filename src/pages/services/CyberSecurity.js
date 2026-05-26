@@ -602,46 +602,273 @@ export default function CyberSecurity() {
 
         {/* SECTION 5 IMAGES */}
 
-        <section className="
-          px-6
-          py-28
-          bg-gray-100
-          dark:bg-[#081225]
-        ">
+        {/* SECTION 5 ADVANCED SECURITY GALLERY */}
+
+<section className="
+  px-6
+  py-28
+  bg-gray-100
+  dark:bg-[#081225]
+">
+
+  <div className="max-w-7xl mx-auto">
+
+    <div className="text-center mb-20">
+
+      <h2 className="
+        text-6xl
+        font-black
+        mb-6
+      ">
+
+        Enterprise Security Infrastructure
+
+      </h2>
+
+      <p className="
+        text-xl
+        leading-10
+        text-gray-700
+        dark:text-gray-400
+        max-w-4xl
+        mx-auto
+      ">
+
+        Powerful enterprise cybersecurity solutions with AI-powered monitoring,
+        cloud infrastructure protection, advanced threat detection, secure
+        enterprise systems and real-time security intelligence.
+
+      </p>
+
+    </div>
+
+    <div className="
+      grid
+      lg:grid-cols-3
+      gap-10
+    ">
+
+      {/* CARD 1 */}
+
+      <div className="
+        bg-white
+        dark:bg-[#111c38]
+        rounded-[36px]
+        overflow-hidden
+        border
+        border-cyan-500/20
+        hover:-translate-y-3
+        hover:border-cyan-400/40
+        transition-all
+        duration-500
+      ">
+
+        <img
+          src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1400&auto=format&fit=crop"
+          alt="Threat Detection"
+          className="
+            w-full
+            h-[280px]
+            object-cover
+          "
+        />
+
+        <div className="p-10">
 
           <div className="
-            max-w-7xl
-            mx-auto
-            grid
-            md:grid-cols-2
-            gap-10
+            w-16
+            h-16
+            rounded-2xl
+            bg-gradient-to-r
+            from-cyan-500
+            to-blue-500
+            flex
+            items-center
+            justify-center
+            text-white
+            mb-6
           ">
 
-            <img
-              src="https://images.unsplash.com/photo-1510511459019-5dda7724fd87?q=80&w=1400&auto=format&fit=crop"
-              alt="Cyber Security"
-              className="
-                w-full
-                h-[450px]
-                object-cover
-                rounded-[32px]
-              "
-            />
-
-            <img
-              src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1400&auto=format&fit=crop"
-              alt="Security"
-              className="
-                w-full
-                h-[450px]
-                object-cover
-                rounded-[32px]
-              "
-            />
+            <ShieldCheck size={34} />
 
           </div>
 
-        </section>
+          <h3 className="
+            text-3xl
+            font-black
+            mb-5
+          ">
+
+            AI Threat Detection
+
+          </h3>
+
+          <p className="
+            text-lg
+            leading-9
+            text-gray-700
+            dark:text-gray-400
+          ">
+
+            Detect and prevent enterprise cyber threats using intelligent AI-powered
+            monitoring systems, automated threat analysis and real-time attack
+            prevention infrastructure.
+
+          </p>
+
+        </div>
+
+      </div>
+
+      {/* CARD 2 */}
+
+      <div className="
+        bg-white
+        dark:bg-[#111c38]
+        rounded-[36px]
+        overflow-hidden
+        border
+        border-cyan-500/20
+        hover:-translate-y-3
+        hover:border-cyan-400/40
+        transition-all
+        duration-500
+      ">
+
+        <img
+          src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400&auto=format&fit=crop"
+          alt="Cloud Security"
+          className="
+            w-full
+            h-[280px]
+            object-cover
+          "
+        />
+
+        <div className="p-10">
+
+          <div className="
+            w-16
+            h-16
+            rounded-2xl
+            bg-gradient-to-r
+            from-cyan-500
+            to-blue-500
+            flex
+            items-center
+            justify-center
+            text-white
+            mb-6
+          ">
+
+            <Cloud size={34} />
+
+          </div>
+
+          <h3 className="
+            text-3xl
+            font-black
+            mb-5
+          ">
+
+            Cloud Infrastructure Security
+
+          </h3>
+
+          <p className="
+            text-lg
+            leading-9
+            text-gray-700
+            dark:text-gray-400
+          ">
+
+            Secure enterprise cloud environments with encrypted infrastructure,
+            secure authentication systems, access management and enterprise-level
+            compliance monitoring.
+
+          </p>
+
+        </div>
+
+      </div>
+
+      {/* CARD 3 */}
+
+      <div className="
+        bg-white
+        dark:bg-[#111c38]
+        rounded-[36px]
+        overflow-hidden
+        border
+        border-cyan-500/20
+        hover:-translate-y-3
+        hover:border-cyan-400/40
+        transition-all
+        duration-500
+      ">
+
+        <img
+          src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1400&auto=format&fit=crop"
+          alt="Enterprise Monitoring"
+          className="
+            w-full
+            h-[280px]
+            object-cover
+          "
+        />
+
+        <div className="p-10">
+
+          <div className="
+            w-16
+            h-16
+            rounded-2xl
+            bg-gradient-to-r
+            from-cyan-500
+            to-blue-500
+            flex
+            items-center
+            justify-center
+            text-white
+            mb-6
+          ">
+
+            <Eye size={34} />
+
+          </div>
+
+          <h3 className="
+            text-3xl
+            font-black
+            mb-5
+          ">
+
+            24/7 Enterprise Monitoring
+
+          </h3>
+
+          <p className="
+            text-lg
+            leading-9
+            text-gray-700
+            dark:text-gray-400
+          ">
+
+            Monitor enterprise systems continuously with intelligent dashboards,
+            automated alerts, infrastructure analytics and real-time cybersecurity
+            visibility solutions.
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
 
         {/* SECTION 6 PROCESS */}
 
