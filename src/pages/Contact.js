@@ -113,7 +113,7 @@ export default function Contact() {
               bg-cyan-500/10
               border
               border-cyan-500/20
-              text-cyan-300
+              text-cyan-500
               mb-8
               ${
                 isRTL
@@ -122,7 +122,7 @@ export default function Contact() {
               }
             `}>
 
-              <MessageSquare size={18} />
+              <MessageSquare size={38} />
 
               <span>
                 {translations.customerSupport ||

@@ -1375,7 +1375,110 @@ security:
 
 apps:
   "Apps",
+whyChooseEnkonix:
+  "Why Choose Enkonix",
 
+fastPerformance:
+  "Fast Performance",
+
+enterpriseSecurity:
+  "Enterprise Security",
+
+cloudInfrastructure:
+  "Cloud Infrastructure",
+
+support247:
+  "24/7 Support",
+
+technologiesWeUse:
+  "Technologies We Use",
+
+ourProcess:
+  "Our Process",
+
+research:
+  "Research",
+
+researchDesc:
+  "Understanding business requirements and strategy.",
+
+planning:
+  "Planning",
+
+planningDesc:
+  "Building scalable workflows and architecture.",
+
+development:
+  "Development",
+
+developmentDesc:
+  "Developing enterprise-grade digital systems.",
+
+deployment:
+  "Deployment",
+
+deploymentDesc:
+  "Launch, monitoring and performance optimization.",
+
+smartAISystems:
+  "Smart AI Systems",
+
+nextGenerationAI:
+  "Next Generation AI Solutions",
+
+nextGenerationAIDesc:
+  "AI-powered enterprise systems designed for automation, analytics and scalable digital transformation.",
+
+aiAutomation:
+  "AI Automation",
+
+predictiveAnalytics:
+  "Predictive Analytics",
+
+workflowIntelligence:
+  "Workflow Intelligence",
+
+smartMonitoring:
+  "Smart Monitoring",
+
+bigData:
+  "Big Data",
+
+automation:
+  "Automation",
+
+scalability:
+  "Scalability",
+
+enterprise:
+  "Enterprise",
+
+clientTestimonials:
+  "Client Testimonials",
+
+testimonialDesc:
+  "Enkonix delivered outstanding enterprise solutions with modern UI, AI systems and cloud infrastructure.",
+
+modernUIUX:
+  "Modern UI/UX",
+
+cloudHosting:
+  "Cloud Hosting",
+
+businessGrowth:
+  "Business Growth",
+
+premiumQuality:
+  "Premium Quality",
+
+readyToBuild:
+  "Ready To Build Your Future?",
+
+readyToBuildDesc:
+  "Start your enterprise digital transformation journey with Enkonix today.",
+
+contactUs:
+  "Contact Us",
   },
 
   ar: {
@@ -2749,6 +2852,110 @@ security:
 
 apps:
   "التطبيقات",
+  whyChooseEnkonix:
+  "لماذا تختار Enkonix",
+
+fastPerformance:
+  "أداء سريع",
+
+enterpriseSecurity:
+  "أمان المؤسسات",
+
+cloudInfrastructure:
+  "البنية التحتية السحابية",
+
+support247:
+  "دعم 24/7",
+
+technologiesWeUse:
+  "التقنيات التي نستخدمها",
+
+ourProcess:
+  "عمليتنا",
+
+research:
+  "البحث",
+
+researchDesc:
+  "فهم متطلبات واستراتيجية الأعمال.",
+
+planning:
+  "التخطيط",
+
+planningDesc:
+  "بناء سير عمل وبنية قابلة للتوسع.",
+
+development:
+  "التطوير",
+
+developmentDesc:
+  "تطوير أنظمة رقمية متقدمة للمؤسسات.",
+
+deployment:
+  "النشر",
+
+deploymentDesc:
+  "الإطلاق والمراقبة وتحسين الأداء.",
+
+smartAISystems:
+  "أنظمة ذكاء اصطناعي ذكية",
+
+nextGenerationAI:
+  "حلول الذكاء الاصطناعي من الجيل القادم",
+
+nextGenerationAIDesc:
+  "أنظمة مؤسسات مدعومة بالذكاء الاصطناعي للأتمتة والتحليلات والتحول الرقمي.",
+
+aiAutomation:
+  "أتمتة الذكاء الاصطناعي",
+
+predictiveAnalytics:
+  "التحليلات التنبؤية",
+
+workflowIntelligence:
+  "ذكاء سير العمل",
+
+smartMonitoring:
+  "المراقبة الذكية",
+
+bigData:
+  "البيانات الضخمة",
+
+automation:
+  "الأتمتة",
+
+scalability:
+  "القابلية للتوسع",
+
+enterprise:
+  "المؤسسات",
+
+clientTestimonials:
+  "آراء العملاء",
+
+testimonialDesc:
+  "قدمت Enkonix حلول مؤسسات متميزة مع واجهات حديثة وأنظمة ذكاء اصطناعي وبنية سحابية قوية.",
+
+modernUIUX:
+  "واجهة وتجربة مستخدم حديثة",
+
+cloudHosting:
+  "الاستضافة السحابية",
+
+businessGrowth:
+  "نمو الأعمال",
+
+premiumQuality:
+  "جودة عالية",
+
+readyToBuild:
+  "هل أنت مستعد لبناء مستقبلك؟",
+
+readyToBuildDesc:
+  "ابدأ رحلة التحول الرقمي مع Enkonix اليوم.",
+
+contactUs:
+  "تواصل معنا",
   },
 
   he: {
@@ -4120,6 +4327,110 @@ security:
 
 apps:
   "אפליקציות",
+  whyChooseEnkonix:
+  "למה לבחור ב-Enkonix",
+
+fastPerformance:
+  "ביצועים מהירים",
+
+enterpriseSecurity:
+  "אבטחת ארגון",
+
+cloudInfrastructure:
+  "תשתית ענן",
+
+support247:
+  "תמיכה 24/7",
+
+technologiesWeUse:
+  "הטכנולוגיות בהן אנו משתמשים",
+
+ourProcess:
+  "תהליך העבודה שלנו",
+
+research:
+  "מחקר",
+
+researchDesc:
+  "הבנת דרישות ואסטרטגיית העסק.",
+
+planning:
+  "תכנון",
+
+planningDesc:
+  "בניית תהליכים וארכיטקטורה מדרגית.",
+
+development:
+  "פיתוח",
+
+developmentDesc:
+  "פיתוח מערכות דיגיטליות ארגוניות מתקדמות.",
+
+deployment:
+  "פריסה",
+
+deploymentDesc:
+  "השקה, ניטור ואופטימיזציית ביצועים.",
+
+smartAISystems:
+  "מערכות AI חכמות",
+
+nextGenerationAI:
+  "פתרונות AI מהדור הבא",
+
+nextGenerationAIDesc:
+  "מערכות ארגוניות מבוססות AI לאוטומציה, אנליטיקה וטרנספורמציה דיגיטלית.",
+
+aiAutomation:
+  "אוטומציית AI",
+
+predictiveAnalytics:
+  "אנליטיקה חזויה",
+
+workflowIntelligence:
+  "אינטליגנציית תהליכים",
+
+smartMonitoring:
+  "ניטור חכם",
+
+bigData:
+  "ביג דאטה",
+
+automation:
+  "אוטומציה",
+
+scalability:
+  "מדרגיות",
+
+enterprise:
+  "ארגון",
+
+clientTestimonials:
+  "המלצות לקוחות",
+
+testimonialDesc:
+  "Enkonix סיפקה פתרונות ארגוניים מתקדמים עם UI מודרני, מערכות AI ותשתית ענן.",
+
+modernUIUX:
+  "UI/UX מודרני",
+
+cloudHosting:
+  "אחסון ענן",
+
+businessGrowth:
+  "צמיחה עסקית",
+
+premiumQuality:
+  "איכות פרימיום",
+
+readyToBuild:
+  "מוכן לבנות את העתיד שלך?",
+
+readyToBuildDesc:
+  "התחל את מסע הטרנספורמציה הדיגיטלית שלך עם Enkonix עוד היום.",
+
+contactUs:
+  "צור קשר",
   },
 };
 

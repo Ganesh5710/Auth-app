@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
 
 import GlobalLayout from "../components/GlobalLayout";
@@ -11,7 +10,6 @@ import {
 import translationsData from "../utils/translations";
 
 import {
-  Search,
   ArrowRight,
   Calendar,
   Clock3,
@@ -25,6 +23,14 @@ import {
   BarChart3,
   User,
   Sparkles,
+  CheckCircle2,
+  Bot,
+  Database,
+  Rocket,
+  Layers3,
+  Star,
+  PlayCircle,
+  Cpu,
 } from "lucide-react";
 
 export default function Blog() {
@@ -40,31 +46,28 @@ export default function Blog() {
   const featuredPost = {
 
     title:
-      translations.featuredBlogTitle ||
-      "How AI Agents Are Replacing Traditional Business Automation Systems",
+      "How AI Agents Are Transforming Enterprise Operations",
 
     category:
-      translations.artificialIntelligence ||
       "Artificial Intelligence",
 
     author:
-      translations.admin ||
       "Admin",
 
-    date: "May 22, 2026",
+    date:
+      "May 22, 2026",
 
     readTime:
-      translations.read12 ||
       "12 min read",
 
-    views: "48.5K",
+    views:
+      "48.5K",
 
     image:
       "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1400&auto=format&fit=crop",
 
     desc:
-      translations.featuredBlogDesc ||
-      "AI agents are transforming enterprise operations by automating workflows, customer support, analytics, and intelligent decision-making systems.",
+      "AI agents are replacing traditional workflows with autonomous systems capable of automation, analytics, customer support and enterprise intelligence.",
 
   };
 
@@ -72,181 +75,181 @@ export default function Blog() {
 
     {
       title:
-        translations.cloudInfraTitle ||
         "Future Of Cloud Infrastructure In Enterprise Platforms",
 
       category:
-        translations.cloudComputing ||
         "Cloud Computing",
 
-      author: "Michael Brown",
+      author:
+        "Michael Brown",
 
-      date: "May 20, 2026",
+      date:
+        "May 20, 2026",
 
       readTime:
-        translations.read8 ||
         "8 min read",
 
-      views: "12K",
+      views:
+        "12K",
 
       image:
         "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
 
-      icon: <Cloud size={28} className="text-cyan-400" />,
+      icon:
+        <Cloud size={28} className="text-cyan-400" />,
 
       desc:
-        translations.cloudInfraDesc ||
-        "Modern cloud infrastructure helps enterprises achieve scalability, security, automation, and global deployment systems.",
+        "Modern cloud infrastructure helps enterprises achieve scalability and secure deployments.",
 
     },
 
     {
       title:
-        translations.cyberSecurityTitle ||
         "Cyber Security Trends Every Company Should Prepare For",
 
       category:
-        translations.cyberSecurity ||
         "Cyber Security",
 
-      author: "Sophia Carter",
+      author:
+        "Sophia Carter",
 
-      date: "May 18, 2026",
+      date:
+        "May 18, 2026",
 
       readTime:
-        translations.read10 ||
         "10 min read",
 
-      views: "18K",
+      views:
+        "18K",
 
       image:
         "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?q=80&w=1200&auto=format&fit=crop",
 
-      icon: <ShieldCheck size={28} className="text-cyan-400" />,
+      icon:
+        <ShieldCheck size={28} className="text-cyan-400" />,
 
       desc:
-        translations.cyberSecurityDesc ||
-        "Cyber threats continue evolving rapidly with ransomware, AI attacks, cloud vulnerabilities, and enterprise security breaches.",
+        "Cyber threats continue evolving rapidly with AI attacks and cloud vulnerabilities.",
 
     },
 
     {
       title:
-        translations.flutterTitle ||
-        "Why Flutter Is Dominating Cross Platform App Development",
+        "Why Flutter Is Dominating Cross Platform Development",
 
       category:
-        translations.mobileDevelopment ||
         "Mobile Development",
 
-      author: "David Wilson",
+      author:
+        "David Wilson",
 
-      date: "May 16, 2026",
+      date:
+        "May 16, 2026",
 
       readTime:
-        translations.read7 ||
         "7 min read",
 
-      views: "9.8K",
+      views:
+        "9.8K",
 
       image:
         "https://images.unsplash.com/photo-1522199755839-a2bacb67c546?q=80&w=1200&auto=format&fit=crop",
 
-      icon: <Smartphone size={28} className="text-cyan-400" />,
+      icon:
+        <Smartphone size={28} className="text-cyan-400" />,
 
       desc:
-        translations.flutterDesc ||
-        "Flutter provides smooth UI rendering, scalable architecture, and enterprise-grade performance for mobile applications.",
+        "Flutter provides scalable architecture and enterprise-grade performance for mobile apps.",
+
+    },
+
+     {
+      title:
+        " A style that breaks standard UI rules to stand out.",
+
+      category:
+        "UI/UX Design",
+
+      author:
+        "Don  Lee",
+
+      date:
+        "May 22, 2026",
+
+      readTime:
+        "10 min read",
+
+      views:
+        "14K",
+
+      image:
+        "https://cdn.dribbble.com/userupload/45001160/file/98a165fd75923f93d3473d2277b75b4a.png?resize=752x&vertical=center",
+
+      icon:
+        <Globe size={28} className="text-cyan-400" />,
+
+      desc:
+        "Modern enterprise interfaces focus on accessibility, AI interactions and immersive experiences.",
 
     },
 
     {
       title:
-        translations.webTechTitle ||
-        "Modern Web Technologies Reshaping Enterprise Platforms",
+        "Top Enterprise UI/UX Trends In 2026",
 
       category:
-        translations.webDevelopment ||
-        "Web Development",
+        "UI/UX Design",
 
-      author: "Emma Thomas",
+      author:
+        "Jessica Lee",
 
-      date: "May 12, 2026",
+      date:
+        "May 12, 2026",
 
       readTime:
-        translations.read9 ||
-        "9 min read",
+        "6 min read",
 
-      views: "15K",
+      views:
+        "14K",
 
       image:
         "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
 
-      icon: <Globe size={28} className="text-cyan-400" />,
+      icon:
+        <Globe size={28} className="text-cyan-400" />,
 
       desc:
-        translations.webTechDesc ||
-        "React.js, AI integrations, serverless systems, and cloud-native architectures are shaping next-generation web platforms.",
+        "Modern enterprise interfaces focus on accessibility, AI interactions and immersive experiences.",
 
     },
 
     {
       title:
-        translations.analyticsTitle ||
-        "Business Intelligence & Data Analytics For Modern Enterprises",
+        "Big Data Analytics For Modern Businesses",
 
       category:
-        translations.analytics ||
         "Analytics",
 
-      author: "James Walker",
+      author:
+        "Chris Martin",
 
-      date: "May 10, 2026",
+      date:
+        "May 10, 2026",
 
       readTime:
-        translations.read11 ||
         "11 min read",
 
-      views: "20K",
+      views:
+        "16K",
 
       image:
         "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
 
-      icon: <BarChart3 size={28} className="text-cyan-400" />,
+      icon:
+        <BarChart3 size={28} className="text-cyan-400" />,
 
       desc:
-        translations.analyticsDesc ||
-        "Data analytics platforms help enterprises improve decision-making, operational efficiency, and customer insights.",
-
-    },
-
-    {
-      title:
-        translations.aiAutomationTitle ||
-        "The Rise Of AI Powered Automation Systems",
-
-      category:
-        translations.artificialIntelligence ||
-        "Artificial Intelligence",
-
-      author: "Daniel Smith",
-
-      date: "May 08, 2026",
-
-      readTime:
-        translations.read6 ||
-        "6 min read",
-
-      views: "26K",
-
-      image:
-        "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop",
-
-      icon: <Brain size={28} className="text-cyan-400" />,
-
-      desc:
-        translations.aiAutomationDesc ||
-        "AI automation systems are replacing repetitive enterprise tasks with intelligent workflows and predictive systems.",
+        "Big data analytics helps enterprises improve decision-making using AI-driven insights.",
 
     },
 
@@ -260,9 +263,13 @@ export default function Blog() {
         dir={isRTL ? "rtl" : "ltr"}
         className="
           min-h-screen
-          text-gray-900
-          dark:text-white
           overflow-hidden
+          bg-white
+          text-black
+          dark:bg-[#050b1a]
+          dark:text-white
+          transition-all
+          duration-500
         "
       >
 
@@ -271,616 +278,460 @@ export default function Blog() {
         <section className="
           relative
           pt-40
-          pb-20
+          pb-28
           px-6
           lg:px-20
           overflow-hidden
         ">
 
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-cyan-500/20 blur-[180px] rounded-full"></div>
+          <div className="
+            absolute
+            top-0
+            left-0
+            w-[600px]
+            h-[600px]
+            bg-cyan-500/20
+            blur-[180px]
+            rounded-full
+          "></div>
 
-          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-500/20 blur-[180px] rounded-full"></div>
+          <div className="
+            absolute
+            bottom-0
+            right-0
+            w-[600px]
+            h-[600px]
+            bg-blue-500/20
+            blur-[180px]
+            rounded-full
+          "></div>
 
-          <div className="relative z-10 max-w-7xl mx-auto">
+          <div className="
+            relative
+            z-10
+            max-w-7xl
+            mx-auto
+            text-center
+          ">
 
-            <div className={`
-              mb-16
-              ${
-                isRTL
-                  ? "text-right"
-                  : "text-center"
-              }
-            `}>
+            <div className="
+              inline-flex
+              items-center
+              gap-3
+              px-6
+              py-3
+              rounded-full
+              bg-cyan-500/10
+              border
+              border-cyan-500/20
+              text-cyan-400
+              mb-8
+            ">
 
-              <div className={`
-                inline-flex
-                items-center
-                gap-3
-                px-6
-                py-3
-                rounded-full
-                bg-cyan-500/10
-                border
-                border-cyan-500/20
-                text-cyan-300
-                mb-8
-                ${
-                  isRTL
-                    ? "flex-row-reverse"
-                    : ""
-                }
-              `}>
+              <Sparkles size={20} />
 
-                <Sparkles size={18} />
+              AI Integrated Enterprise Blog
 
-                {translations.enterpriseInsights ||
-                  "Enterprise Technology Insights"}
+            </div>
+
+            <h1 className="
+              text-7xl
+              lg:text-8xl
+              font-black
+              leading-tight
+              mb-8
+            ">
+
+              Future Of
+
+              <span className="
+                block
+                bg-gradient-to-r
+                from-cyan-400
+                via-blue-400
+                to-purple-500
+                text-transparent
+                bg-clip-text
+                pb-10
+              ">
+
+                Enterprise Technology
+
+              </span>
+
+            </h1>
+
+            <p className="
+              max-w-4xl
+              mx-auto
+              text-2xl
+              text-gray-700
+              dark:text-gray-300
+              leading-10
+              mb-12
+            ">
+
+              Explore enterprise AI, cloud systems, cybersecurity, automation, analytics, modern web technologies and digital transformation strategies.
+
+            </p>
+
+          </div>
+
+        </section>
+
+        {/* FEATURED */}
+
+        <section className="px-6 lg:px-20 pb-28">
+
+          <div className="max-w-7xl mx-auto">
+
+            <div className="
+              grid
+              lg:grid-cols-2
+              overflow-hidden
+              rounded-[40px]
+              bg-white
+              dark:bg-[#111c38]
+              border
+              border-cyan-500/20
+            ">
+
+              <div className="relative">
+
+                <img
+                  src={featuredPost.image}
+                  alt={featuredPost.title}
+                  className="
+                    w-full
+                    h-full
+                    object-cover
+                  "
+                />
 
               </div>
 
-              <h1 className="
-                text-6xl
-                lg:text-8xl
-                font-black
-                leading-tight
-                mb-8
+              <div className="
+                p-14
+                flex
+                flex-col
+                justify-center
               ">
 
-                {translations.modern ||
-                  "Modern"}
-
-                <span className="
-                  block
-                  bg-gradient-to-r
-                  from-cyan-400
-                  to-blue-500
-                  text-transparent
-                  bg-clip-text
-                  pb-10
+                <div className="
+                  inline-flex
+                  items-center
+                  gap-3
+                  px-5
+                  py-2
+                  rounded-full
+                  bg-cyan-500/10
+                  border
+                  border-cyan-500/20
+                  text-cyan-300
+                  mb-8
+                  w-fit
                 ">
 
-                  {translations.techBlog ||
-                    "Technology Blog"}
+                  Featured Article
 
-                </span>
+                </div>
 
-              </h1>
+                <h2 className="
+                  text-5xl
+                  font-black
+                  leading-tight
+                  mb-8
+                ">
 
-              <p className="
-                max-w-4xl
-                mx-auto
-                dark:text-gray-300
-                text-gray-700
-                text-2xl
-                leading-relaxed
-              ">
+                  {featuredPost.title}
 
-                {translations.blogHeroDesc ||
-                  "Real enterprise articles covering Artificial Intelligence, Cloud Infrastructure, Cyber Security, Web Development, Mobile Apps, and Digital Transformation."}
+                </h2>
 
-              </p>
+                <p className="
+                  text-gray-600
+                  dark:text-gray-300
+                  text-xl
+                  leading-10
+                  mb-10
+                ">
+
+                  {featuredPost.desc}
+
+                </p>
+
+                <div className="
+                  flex
+                  flex-wrap
+                  gap-8
+                  text-gray-500
+                  dark:text-gray-400
+                  mb-10
+                ">
+
+                  <div className="flex items-center gap-2">
+
+                    <User size={18} />
+
+                    {featuredPost.author}
+
+                  </div>
+
+                  <div className="flex items-center gap-2">
+
+                    <Calendar size={18} />
+
+                    {featuredPost.date}
+
+                  </div>
+
+                  <div className="flex items-center gap-2">
+
+                    <Clock3 size={18} />
+
+                    {featuredPost.readTime}
+
+                  </div>
+
+                  <div className="flex items-center gap-2">
+
+                    <Eye size={18} />
+
+                    {featuredPost.views}
+
+                  </div>
+
+                </div>
+
+                <button className="
+                  inline-flex
+                  items-center
+                  gap-3
+                  px-8
+                  py-4
+                  rounded-2xl
+                  bg-gradient-to-r
+                  from-cyan-500
+                  to-blue-600
+                  text-white
+                  font-bold
+                  hover:scale-105
+                  transition-all
+                  duration-300
+                  w-fit
+                ">
+
+                  Read Full Article
+
+                  <ArrowRight size={20} />
+
+                </button>
+
+              </div>
 
             </div>
 
           </div>
 
         </section>
-{/* FEATURED */}
 
-<section className="px-6 lg:px-20 pb-28 mt-5">
+        {/* TRENDING ARTICLES */}
 
-  <div className="max-w-7xl mx-auto">
+        <section className="px-6 lg:px-20 pb-28">
 
-    <div className={`
-      grid
-      lg:grid-cols-2
-      overflow-hidden
-      rounded-[40px]
-      bg-[#111c38]
-      border
-      border-cyan-500/20
-      shadow-2xl
-      ${
-        isRTL
-          ? "text-right"
-          : "text-left"
-      }
-    `}>
+          <div className="max-w-7xl mx-auto">
 
-      {/* IMAGE */}
+            <div className="mb-16">
 
-      <div className="overflow-hidden">
+              <h2 className="
+                text-6xl
+                font-black
+                mb-4
+              ">
 
-        <img
-          src={featuredPost.image}
-          alt={featuredPost.title}
-          className="
-            w-full
-            h-full
-            object-cover
-            hover:scale-105
-            transition-all
-            duration-700
-          "
-        />
+                Trending Articles
 
-      </div>
+              </h2>
 
-      {/* CONTENT */}
+              <p className="
+                text-gray-600
+                dark:text-gray-400
+                text-lg
+              ">
 
-      <div className="p-14 text-white flex flex-col justify-center">
+                Most viewed enterprise insights this week.
 
-        <div className={`
-          inline-flex
-          items-center
-          w-fit
-          px-5
-          py-2
-          rounded-full
-          bg-cyan-500/10
-          border
-          border-cyan-500/20
-          text-cyan-300
-          mb-8
-          ${
-            isRTL
-              ? "flex-row-reverse"
-              : ""
-          }
-        `}>
+              </p>
 
-          {translations.featuredArticle ||
-            "Featured Article"}
-
-        </div>
-
-        <h2 className="text-5xl font-black leading-tight mb-8">
-
-          {featuredPost.title}
-
-        </h2>
-
-        <p className="text-gray-300 text-xl leading-10 mb-10">
-
-          {featuredPost.desc}
-
-        </p>
-
-        {/* META */}
-
-        <div className={`
-          flex
-          flex-wrap
-          gap-8
-          text-gray-400
-          mb-12
-          ${
-            isRTL
-              ? "flex-row-reverse"
-              : ""
-          }
-        `}>
-
-          <div className={`
-            flex
-            items-center
-            gap-2
-            ${
-              isRTL
-                ? "flex-row-reverse"
-                : ""
-            }
-          `}>
-
-            <User size={18} />
-
-            {featuredPost.author}
-
-          </div>
-
-          <div className={`
-            flex
-            items-center
-            gap-2
-            ${
-              isRTL
-                ? "flex-row-reverse"
-                : ""
-            }
-          `}>
-
-            <Calendar size={18} />
-
-            {featuredPost.date}
-
-          </div>
-
-          <div className={`
-            flex
-            items-center
-            gap-2
-            ${
-              isRTL
-                ? "flex-row-reverse"
-                : ""
-            }
-          `}>
-
-            <Clock3 size={18} />
-
-            {featuredPost.readTime}
-
-          </div>
-
-          <div className={`
-            flex
-            items-center
-            gap-2
-            ${
-              isRTL
-                ? "flex-row-reverse"
-                : ""
-            }
-          `}>
-
-            <Eye size={18} />
-
-            {featuredPost.views}
-
-          </div>
-
-        </div>
-
-        <button className={`
-          inline-flex
-          items-center
-          gap-3
-          px-8
-          py-4
-          rounded-2xl
-          bg-gradient-to-r
-          from-cyan-500
-          to-blue-500
-          text-white
-          font-bold
-          hover:scale-105
-          transition-all
-          duration-300
-          w-fit
-          ${
-            isRTL
-              ? "flex-row-reverse"
-              : ""
-          }
-        `}>
-
-          {translations.readFullArticle ||
-            "Read Full Article"}
-
-          <ArrowRight size={22} />
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-{/* ARTICLES */}
-
-<section className="px-6 lg:px-20 pb-32">
-
-  <div className="max-w-7xl mx-auto">
-
-    <div className={`
-      flex
-      items-center
-      justify-between
-      mb-16
-      ${
-        isRTL
-          ? "flex-row-reverse"
-          : ""
-      }
-    `}>
-
-      <div className={`
-        ${
-          isRTL
-            ? "text-right"
-            : "text-left"
-        }
-      `}>
-
-        <h2 className="text-5xl font-black mb-4">
-
-          {translations.latestArticles ||
-            "Latest Articles"}
-
-        </h2>
-
-        <p className="dark:text-gray-400 text-gray-600 text-lg">
-
-          {translations.latestArticlesDesc ||
-            "Real enterprise technology insights & trends."}
-
-        </p>
-
-      </div>
-
-      <button className={`
-        hidden
-        lg:flex
-        items-center
-        gap-3
-        px-6
-        py-3
-        rounded-2xl
-        border
-        border-cyan-500/20
-        hover:bg-cyan-500/10
-        transition-all
-        ${
-          isRTL
-            ? "flex-row-reverse"
-            : ""
-        }
-      `}>
-
-        {translations.viewAll ||
-          "View All"}
-
-        <ArrowRight size={18} />
-
-      </button>
-
-    </div>
-
-    <div className="grid lg:grid-cols-3 gap-10">
-
-      {posts.map((post, index) => (
-
-        <article
-          key={index}
-          className="
-            overflow-hidden
-            rounded-[32px]
-            bg-[#111c38]
-            border
-            border-cyan-500/10
-            hover:border-cyan-400/40
-            hover:-translate-y-2
-            transition-all
-            duration-500
-            shadow-xl
-            text-white
-            group
-          "
-        >
-
-          {/* IMAGE */}
-
-          <div className="overflow-hidden relative">
-
-            <img
-              src={post.image}
-              alt={post.title}
-              className="
-                w-full
-                h-[260px]
-                object-cover
-                group-hover:scale-110
-                transition-all
-                duration-700
-              "
-            />
+            </div>
 
             <div className="
-              absolute
-              top-5
-              left-5
-              px-4
-              py-2
-              rounded-full
-              bg-black/40
-              backdrop-blur-lg
-              text-sm
-              border
-              border-white/10
+              grid
+              lg:grid-cols-3
+              gap-8
             ">
 
-              {post.category}
+              {posts.map((post, index) => (
+
+                <article
+                  key={index}
+                  className="
+                    overflow-hidden
+                    rounded-[32px]
+                    bg-white
+                    dark:bg-[#111c38]
+                    border
+                    border-cyan-500/20
+                    hover:border-cyan-400/40
+                    hover:-translate-y-3
+                    hover:shadow-[0_0_40px_rgba(34,211,238,0.15)]
+                    transition-all
+                    duration-500
+                    group
+                  "
+                >
+
+                  <div className="relative overflow-hidden">
+
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="
+                        w-full
+                        h-[260px]
+                        object-cover
+                        group-hover:scale-110
+                        transition-all
+                        duration-700
+                      "
+                    />
+
+                  </div>
+
+                  <div className="p-10">
+
+                    <div className="
+                      flex
+                      items-center
+                      justify-between
+                      mb-6
+                    ">
+
+                      {post.icon}
+
+                      <div className="
+                        flex
+                        items-center
+                        gap-2
+                        text-cyan-400
+                      ">
+
+                        <TrendingUp size={18} />
+
+                        Trending
+
+                      </div>
+
+                    </div>
+
+                    <h3 className="
+                      text-3xl
+                      font-black
+                      leading-tight
+                      mb-6
+                      group-hover:text-cyan-400
+                      transition-all
+                    ">
+
+                      {post.title}
+
+                    </h3>
+
+                    <p className="
+                      text-gray-600
+                      dark:text-gray-400
+                      text-lg
+                      leading-8
+                      mb-8
+                    ">
+
+                      {post.desc}
+
+                    </p>
+
+                    <div className="
+                      flex
+                      flex-wrap
+                      gap-5
+                      text-gray-500
+                      dark:text-gray-400
+                      text-sm
+                      mb-8
+                    ">
+
+                      <div className="
+                        flex
+                        items-center
+                        gap-2
+                      ">
+
+                        <User size={16} />
+
+                        {post.author}
+
+                      </div>
+
+                      <div className="
+                        flex
+                        items-center
+                        gap-2
+                      ">
+
+                        <Calendar size={16} />
+
+                        {post.date}
+
+                      </div>
+
+                      <div className="
+                        flex
+                        items-center
+                        gap-2
+                      ">
+
+                        <Eye size={16} />
+
+                        {post.views}
+
+                      </div>
+
+                    </div>
+
+                    <button className="
+                      inline-flex
+                      items-center
+                      gap-3
+                      text-cyan-400
+                      font-semibold
+                    ">
+
+                      Read More
+
+                      <ArrowRight size={18} />
+
+                    </button>
+
+                  </div>
+
+                </article>
+
+              ))}
 
             </div>
 
           </div>
 
-          {/* CONTENT */}
+        </section>
 
-          <div className={`
-            p-10
-            ${
-              isRTL
-                ? "text-right"
-                : "text-left"
-            }
-          `}>
-
-            <div className={`
-              flex
-              items-center
-              justify-between
-              mb-6
-              ${
-                isRTL
-                  ? "flex-row-reverse"
-                  : ""
-              }
-            `}>
-
-              <div>
-
-                {post.icon}
-
-              </div>
-
-              <div className={`
-                flex
-                items-center
-                gap-2
-                text-gray-400
-                text-sm
-                ${
-                  isRTL
-                    ? "flex-row-reverse"
-                    : ""
-                }
-              `}>
-
-                <TrendingUp size={16} />
-
-                {translations.trending ||
-                  "Trending"}
-
-              </div>
-
-            </div>
-
-            <h3 className="
-              text-3xl
-              font-black
-              leading-tight
-              mb-6
-              group-hover:text-cyan-400
-              transition-all
-              duration-300
-            ">
-
-              {post.title}
-
-            </h3>
-
-            <p className="
-              text-gray-400
-              leading-8
-              text-lg
-              mb-8
-            ">
-
-              {post.desc}
-
-            </p>
-
-            {/* META */}
-
-            <div className="border-t border-white/10 pt-6">
-
-              <div className={`
-                flex
-                flex-wrap
-                gap-5
-                text-gray-400
-                text-sm
-                mb-8
-                ${
-                  isRTL
-                    ? "flex-row-reverse"
-                    : ""
-                }
-              `}>
-
-                <div className={`
-                  flex
-                  items-center
-                  gap-2
-                  ${
-                    isRTL
-                      ? "flex-row-reverse"
-                      : ""
-                  }
-                `}>
-
-                  <User size={16} />
-
-                  {post.author}
-
-                </div>
-
-                <div className={`
-                  flex
-                  items-center
-                  gap-2
-                  ${
-                    isRTL
-                      ? "flex-row-reverse"
-                      : ""
-                  }
-                `}>
-
-                  <Calendar size={16} />
-
-                  {post.date}
-
-                </div>
-
-                <div className={`
-                  flex
-                  items-center
-                  gap-2
-                  ${
-                    isRTL
-                      ? "flex-row-reverse"
-                      : ""
-                  }
-                `}>
-
-                  <Eye size={16} />
-
-                  {post.views}
-
-                </div>
-
-              </div>
-
-              <button className={`
-                inline-flex
-                items-center
-                gap-3
-                text-cyan-400
-                font-semibold
-                hover:gap-5
-                transition-all
-                duration-300
-                ${
-                  isRTL
-                    ? "flex-row-reverse"
-                    : ""
-                }
-              `}>
-
-                {translations.readMore ||
-                  "Read More"}
-
-                <ArrowRight size={20} />
-
-              </button>
-
-            </div>
-
-          </div>
-
-        </article>
-
-      ))}
-
-    </div>
-
-  </div>
-
-</section>
       </div>
 
     </GlobalLayout>

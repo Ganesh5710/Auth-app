@@ -472,7 +472,7 @@ export default function About() {
                   bg-cyan-500/10
                   border
                   border-cyan-500/20
-                  text-cyan-400
+                  text-cyan-600
                   mb-8
                   ${
                     isRTL
@@ -481,7 +481,7 @@ export default function About() {
                   }
                 `}>
 
-                  <Brain size={18} />
+                  <Brain size={38} />
 
                   {translations.whyChooseEnkonix ||
                     "Why Businesses Choose Enkonix"}

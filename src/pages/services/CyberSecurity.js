@@ -1,4 +1,11 @@
-import React from "react";
+import React, {
+  useState,
+  useEffect,
+} from "react";
+
+import {
+  Link,
+} from "react-router-dom";
 
 import GlobalLayout from "../../components/GlobalLayout";
 
@@ -22,6 +29,19 @@ import {
   Cpu,
   Workflow,
   BarChart3,
+  Sun,
+  Moon,
+  PlayCircle,
+  Users,
+  Star,
+  Globe,
+  Rocket,
+  Laptop,
+  Shield,
+  ScanSearch,
+  Network,
+  AlarmClock,
+  HardDrive,
 } from "lucide-react";
 
 export default function CyberSecurity() {
@@ -34,30 +54,32 @@ export default function CyberSecurity() {
   const translations =
     translationsData[language];
 
+  const [darkMode, setDarkMode] =
+    useState(true);
+
+  useEffect(() => {
+
+    if (darkMode) {
+
+      document.documentElement.classList.add("dark");
+
+    } else {
+
+      document.documentElement.classList.remove("dark");
+
+    }
+
+  }, [darkMode]);
+
   const services = [
 
-    translations.threatDetectionService ||
     "Threat Detection",
-
-    translations.cloudSecurity ||
     "Cloud Security",
-
-    translations.networkProtection ||
     "Network Protection",
-
-    translations.dataEncryption ||
     "Data Encryption",
-
-    translations.penetrationTesting ||
     "Penetration Testing",
-
-    translations.monitoring ||
     "24/7 Monitoring",
-
-    translations.identityProtection ||
     "Identity Protection",
-
-    translations.securityAudits ||
     "Security Audits",
 
   ];
@@ -66,78 +88,50 @@ export default function CyberSecurity() {
 
     {
       number: "500+",
-      title:
-        translations.protectedSystems ||
-        "Protected Systems",
+      title: "Protected Systems",
     },
 
     {
       number: "99.99%",
-      title:
-        translations.threatDetection ||
-        "Threat Detection",
+      title: "Threat Detection",
     },
 
     {
       number: "24/7",
-      title:
-        translations.monitoring ||
-        "Monitoring",
+      title: "Monitoring",
     },
 
     {
       number: "150+",
-      title:
-        translations.enterpriseClients ||
-        "Enterprise Clients",
+      title: "Enterprise Clients",
     },
 
   ];
 
-  const features = [
+  const testimonials = [
 
     {
-      icon: <Lock size={32} />,
-      title:
-        translations.dataProtection ||
-        "Data Protection",
+      name: "Michael Johnson",
+      role: "CEO, NexaTech",
 
-      desc:
-        translations.dataProtectionDesc ||
-        "Enterprise-grade encryption and infrastructure security.",
+      review:
+        "Outstanding cybersecurity infrastructure with enterprise-grade monitoring and AI-powered protection.",
     },
 
     {
-      icon: <Fingerprint size={32} />,
-      title:
-        translations.identitySecurity ||
-        "Identity Security",
+      name: "Sarah Williams",
+      role: "Cloud Engineer",
 
-      desc:
-        translations.identitySecurityDesc ||
-        "Advanced authentication and access management systems.",
+      review:
+        "Professional cloud security systems with advanced threat detection and real-time monitoring.",
     },
 
     {
-      icon: <Bug size={32} />,
-      title:
-        translations.threatDetection ||
-        "Threat Detection",
+      name: "David Smith",
+      role: "CTO, SkyCore",
 
-      desc:
-        translations.threatDetectionDesc ||
-        "AI-powered real-time cybersecurity threat monitoring.",
-    },
-
-    {
-      icon: <Eye size={32} />,
-      title:
-        translations.monitoring ||
-        "24/7 Monitoring",
-
-      desc:
-        translations.monitoringDesc ||
-        "Continuous enterprise security infrastructure monitoring.",
+      review:
+        "Amazing enterprise protection systems with scalable infrastructure security solutions.",
     },
 
   ];
@@ -150,17 +144,61 @@ export default function CyberSecurity() {
         dir={isRTL ? "rtl" : "ltr"}
         className="
           min-h-screen
+          bg-white
           text-gray-900
+          dark:bg-[#050b1a]
           dark:text-white
           overflow-hidden
+          transition-all
+          duration-500
         "
       >
 
-        {/* HERO SECTION */}
+        {/* THEME TOGGLE */}
+
+        <button
+          onClick={() =>
+            setDarkMode(!darkMode)
+          }
+          className="
+            fixed
+            top-6
+            right-6
+            z-50
+            p-4
+            rounded-full
+            bg-white
+            dark:bg-[#111c38]
+            border
+            border-cyan-500/20
+            shadow-lg
+            hover:scale-110
+            transition-all
+            duration-300
+          "
+        >
+
+          {darkMode ? (
+
+            <Sun
+              size={24}
+              className="text-yellow-400"
+            />
+
+          ) : (
+
+            <Moon
+              size={24}
+              className="text-cyan-500"
+            />
+
+          )}
+
+        </button>
+
+        {/* SECTION 1 HERO */}
 
         <section className="relative py-32 px-6 overflow-hidden">
-
-          {/* BACKGROUND EFFECTS */}
 
           <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-cyan-500/20 blur-[160px] rounded-full"></div>
 
@@ -182,7 +220,7 @@ export default function CyberSecurity() {
             }
           `}>
 
-            {/* LEFT CONTENT */}
+            {/* LEFT */}
 
             <div>
 
@@ -196,41 +234,50 @@ export default function CyberSecurity() {
                 bg-cyan-500/10
                 border
                 border-cyan-500/20
-                text-cyan-300
+                text-cyan-500
                 mb-8
-                ${
-                  isRTL
-                    ? "flex-row-reverse"
-                    : ""
-                }
               `}>
 
-                <ShieldCheck size={20} />
+                <ShieldCheck size={30} />
 
-                {translations.enterpriseSecuritySolutions ||
-                  "Enterprise Security Solutions"}
+                Enterprise Security Solutions
 
               </div>
 
-              <h1 className="text-6xl md:text-7xl font-black leading-tight mb-8">
+              <h1 className="
+                text-6xl
+                md:text-7xl
+                font-black
+                leading-tight
+                mb-8
+              ">
 
-                {translations.advanced ||
-                  "Advanced"}
+                Advanced
 
-                <span className="bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
+                <span className="
+                  bg-gradient-to-r
+                  from-cyan-400
+                  to-blue-500
+                  text-transparent
+                  bg-clip-text
+                ">
 
                   {" "}
-                  {translations.advancedCyberSecurity ||
-                    "Cyber Security"}
+                  Cyber Security
 
                 </span>
 
               </h1>
 
-              <p className="dark:text-gray-300 text-gray-700 text-xl leading-10 max-w-2xl">
+              <p className="
+                dark:text-gray-300
+                text-gray-700
+                text-xl
+                leading-10
+                max-w-2xl
+              ">
 
-                {translations.cyberSecurityHeroDesc ||
-                  "Protect enterprise infrastructure using advanced cybersecurity, AI-powered threat intelligence, cloud security, encryption, and real-time enterprise monitoring systems."}
+                Protect enterprise infrastructure using advanced cybersecurity, AI-powered threat intelligence, encryption, cloud protection and real-time monitoring systems.
 
               </p>
 
@@ -246,36 +293,33 @@ export default function CyberSecurity() {
                 }
               `}>
 
-                <button className={`
-                  px-10
-                  py-5
-                  rounded-2xl
-                  bg-gradient-to-r
-                  from-cyan-500
-                  to-blue-500
-                  text-white
-                  font-bold
-                  hover:scale-105
-                  transition-all
-                  duration-300
-                  shadow-2xl
-                  shadow-cyan-500/20
-                  flex
-                  items-center
-                  gap-3
-                  ${
-                    isRTL
-                      ? "flex-row-reverse"
-                      : ""
-                  }
-                `}>
+                <Link
+                  to="/contact"
+                  className="
+                    px-10
+                    py-5
+                    rounded-2xl
+                    bg-gradient-to-r
+                    from-cyan-500
+                    to-blue-500
+                    text-white
+                    font-bold
+                    hover:scale-105
+                    transition-all
+                    duration-300
+                    shadow-2xl
+                    shadow-cyan-500/20
+                    inline-flex
+                    items-center
+                    gap-3
+                  "
+                >
 
-                  {translations.secureInfrastructure ||
-                    "Secure Infrastructure"}
+                  Get Started
 
                   <ArrowRight size={20} />
 
-                </button>
+                </Link>
 
                 <button className="
                   px-10
@@ -286,10 +330,14 @@ export default function CyberSecurity() {
                   hover:bg-cyan-500/10
                   transition-all
                   duration-300
+                  inline-flex
+                  items-center
+                  gap-3
                 ">
 
-                  {translations.exploreSolutions ||
-                    "Explore Solutions"}
+                  <PlayCircle size={22} />
+
+                  Explore Solutions
 
                 </button>
 
@@ -297,42 +345,37 @@ export default function CyberSecurity() {
 
             </div>
 
-            {/* RIGHT SIDE */}
+            {/* RIGHT */}
 
-            <div className="bg-[#111c38] rounded-[40px] border border-cyan-500/20 p-10">
+            <div className="
+              bg-white
+              dark:bg-[#111c38]
+              rounded-[40px]
+              border
+              border-cyan-500/20
+              p-10
+            ">
 
               <div className="grid grid-cols-2 gap-6">
 
                 <FeatureBox
                   icon={<Cloud size={32} />}
-                  title={
-                    translations.cloudSecurity ||
-                    "Cloud Security"
-                  }
+                  title="Cloud Security"
                 />
 
                 <FeatureBox
                   icon={<Database size={32} />}
-                  title={
-                    translations.dataProtection ||
-                    "Data Protection"
-                  }
+                  title="Data Protection"
                 />
 
                 <FeatureBox
                   icon={<Cpu size={32} />}
-                  title={
-                    translations.aiIntelligence ||
-                    "AI Intelligence"
-                  }
+                  title="AI Intelligence"
                 />
 
                 <FeatureBox
                   icon={<Workflow size={32} />}
-                  title={
-                    translations.automation ||
-                    "Automation"
-                  }
+                  title="Automation"
                 />
 
               </div>
@@ -343,19 +386,26 @@ export default function CyberSecurity() {
 
         </section>
 
-        {/* STATS */}
+        {/* SECTION 2 STATS */}
 
         <section className="px-6 pb-24">
 
-          <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="
+            max-w-7xl
+            mx-auto
+            grid
+            md:grid-cols-2
+            lg:grid-cols-4
+            gap-8
+          ">
 
             {stats.map((item, index) => (
 
               <div
                 key={index}
                 className="
-                  bg-[#111c38]
-                  text-white
+                  bg-white
+                  dark:bg-[#111c38]
                   rounded-3xl
                   p-10
                   border
@@ -379,7 +429,11 @@ export default function CyberSecurity() {
 
                 </h2>
 
-                <p className="text-gray-300 text-lg">
+                <p className="
+                  dark:text-gray-300
+                  text-gray-600
+                  text-lg
+                ">
 
                   {item.title}
 
@@ -388,6 +442,457 @@ export default function CyberSecurity() {
               </div>
 
             ))}
+
+          </div>
+
+        </section>
+
+        {/* SECTION 3 SERVICES */}
+
+        <section className="
+          px-6
+          py-28
+          bg-gray-100
+          dark:bg-[#081225]
+        ">
+
+          <div className="max-w-7xl mx-auto">
+
+            <div className="text-center mb-20">
+
+              <h2 className="
+                text-6xl
+                font-black
+                mb-6
+              ">
+
+                Security Services
+
+              </h2>
+
+            </div>
+
+            <div className="
+              grid
+              md:grid-cols-2
+              lg:grid-cols-4
+              gap-8
+            ">
+
+              {services.map((service, index) => (
+
+                <div
+                  key={index}
+                  className="
+                    bg-white
+                    dark:bg-[#111c38]
+                    rounded-[32px]
+                    border
+                    border-cyan-500/20
+                    p-8
+                    hover:-translate-y-2
+                    transition-all
+                    duration-500
+                  "
+                >
+
+                  <CheckCircle2
+                    size={30}
+                    className="
+                      text-cyan-400
+                      mb-5
+                    "
+                  />
+
+                  <h3 className="
+                    text-2xl
+                    font-bold
+                  ">
+
+                    {service}
+
+                  </h3>
+
+                </div>
+
+              ))}
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* SECTION 4 FEATURES */}
+
+        <section className="px-6 py-28">
+
+          <div className="
+            max-w-7xl
+            mx-auto
+            grid
+            grid-cols-2
+            md:grid-cols-4
+            gap-8
+          ">
+
+            {[
+              {
+                icon: <Lock size={38} />,
+                title: "Encryption",
+              },
+
+              {
+                icon: <Fingerprint size={38} />,
+                title: "Identity Security",
+              },
+
+              {
+                icon: <Bug size={38} />,
+                title: "Threat Detection",
+              },
+
+              {
+                icon: <Eye size={38} />,
+                title: "24/7 Monitoring",
+              },
+
+            ].map((item, index) => (
+
+              <div
+                key={index}
+                className="
+                  bg-white
+                  dark:bg-[#111c38]
+                  rounded-[32px]
+                  border
+                  border-cyan-500/20
+                  p-10
+                  text-center
+                "
+              >
+
+                <div className="
+                  flex
+                  justify-center
+                  mb-6
+                  text-cyan-400
+                ">
+
+                  {item.icon}
+
+                </div>
+
+                <h3 className="
+                  text-2xl
+                  font-bold
+                ">
+
+                  {item.title}
+
+                </h3>
+
+              </div>
+
+            ))}
+
+          </div>
+
+        </section>
+
+        {/* SECTION 5 IMAGES */}
+
+        <section className="
+          px-6
+          py-28
+          bg-gray-100
+          dark:bg-[#081225]
+        ">
+
+          <div className="
+            max-w-7xl
+            mx-auto
+            grid
+            md:grid-cols-2
+            gap-10
+          ">
+
+            <img
+              src="https://images.unsplash.com/photo-1510511459019-5dda7724fd87?q=80&w=1400&auto=format&fit=crop"
+              alt="Cyber Security"
+              className="
+                w-full
+                h-[450px]
+                object-cover
+                rounded-[32px]
+              "
+            />
+
+            <img
+              src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1400&auto=format&fit=crop"
+              alt="Security"
+              className="
+                w-full
+                h-[450px]
+                object-cover
+                rounded-[32px]
+              "
+            />
+
+          </div>
+
+        </section>
+
+        {/* SECTION 6 PROCESS */}
+
+        <section className="px-6 py-28">
+
+          <div className="max-w-7xl mx-auto text-center">
+
+            <h2 className="
+              text-6xl
+              font-black
+              mb-20
+            ">
+
+              Security Process
+
+            </h2>
+
+            <div className="
+              grid
+              md:grid-cols-4
+              gap-8
+            ">
+
+              {[
+                {
+                  icon: <ScanSearch size={32} />,
+                  title: "Analyze",
+                },
+
+                {
+                  icon: <Network size={32} />,
+                  title: "Protect",
+                },
+
+                {
+                  icon: <AlarmClock size={32} />,
+                  title: "Monitor",
+                },
+
+                {
+                  icon: <HardDrive size={32} />,
+                  title: "Recover",
+                },
+
+              ].map((item, index) => (
+
+                <div
+                  key={index}
+                  className="
+                    bg-white
+                    dark:bg-[#111c38]
+                    rounded-[32px]
+                    border
+                    border-cyan-500/20
+                    p-10
+                  "
+                >
+
+                  <div className="
+                    w-16
+                    h-16
+                    rounded-full
+                    bg-gradient-to-r
+                    from-cyan-500
+                    to-blue-500
+                    flex
+                    items-center
+                    justify-center
+                    text-white
+                    mx-auto
+                    mb-6
+                  ">
+
+                    {item.icon}
+
+                  </div>
+
+                  <h3 className="
+                    text-2xl
+                    font-bold
+                  ">
+
+                    {item.title}
+
+                  </h3>
+
+                </div>
+
+              ))}
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* SECTION 7 TESTIMONIALS */}
+
+        <section className="
+          px-6
+          py-28
+          bg-gray-100
+          dark:bg-[#081225]
+        ">
+
+          <div className="max-w-7xl mx-auto">
+
+            <div className="
+              grid
+              lg:grid-cols-3
+              gap-8
+            ">
+
+              {testimonials.map((item, index) => (
+
+                <div
+                  key={index}
+                  className="
+                    bg-white
+                    dark:bg-[#111c38]
+                    rounded-[32px]
+                    border
+                    border-cyan-500/20
+                    p-10
+                  "
+                >
+
+                  <div className="
+                    flex
+                    gap-2
+                    mb-6
+                  ">
+
+                    {[1, 2, 3, 4, 5].map((star) => (
+
+                      <Star
+                        key={star}
+                        size={20}
+                        className="
+                          text-yellow-400
+                          fill-yellow-400
+                        "
+                      />
+
+                    ))}
+
+                  </div>
+
+                  <p className="
+                    text-lg
+                    leading-8
+                    text-gray-700
+                    dark:text-gray-400
+                    mb-8
+                  ">
+
+                    {item.review}
+
+                  </p>
+
+                  <h3 className="
+                    text-2xl
+                    font-bold
+                  ">
+
+                    {item.name}
+
+                  </h3>
+
+                  <p className="
+                    text-cyan-400
+                    mt-2
+                  ">
+
+                    {item.role}
+
+                  </p>
+
+                </div>
+
+              ))}
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* SECTION 8 CTA */}
+
+        <section className="px-6 py-28">
+
+          <div className="
+            max-w-7xl
+            mx-auto
+            bg-gradient-to-r
+            from-cyan-500
+            via-blue-500
+            to-sky-500
+            rounded-[50px]
+            p-16
+            text-center
+            text-white
+          ">
+
+            <h2 className="
+              text-6xl
+              font-black
+              mb-8
+            ">
+
+              Ready To Secure Your Business?
+
+            </h2>
+
+            <p className="
+              text-2xl
+              leading-10
+              max-w-4xl
+              mx-auto
+              mb-12
+            ">
+
+              Build enterprise-grade cybersecurity systems powered by AI monitoring, encryption and cloud protection.
+
+            </p>
+
+            <Link
+              to="/contact"
+              className="
+                inline-flex
+                items-center
+                gap-3
+                px-12
+                py-6
+                bg-white
+                text-cyan-600
+                rounded-2xl
+                text-xl
+                font-black
+                hover:scale-105
+                transition-all
+                duration-300
+              "
+            >
+
+              Contact Security Team
+
+              <ArrowRight size={22} />
+
+            </Link>
 
           </div>
 

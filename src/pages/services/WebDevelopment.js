@@ -308,7 +308,7 @@ export default function WebDevelopment() {
                 bg-cyan-500/10
                 border
                 border-cyan-500/20
-                text-cyan-400
+                text-cyan-600
                 mb-8
                 ${
                   isRTL
@@ -317,7 +317,7 @@ export default function WebDevelopment() {
                 }
               `}>
 
-                <Globe size={20} />
+                <Globe size={30} />
 
                 {translations.webDevelopmentServices ||
                   "Web Development Services"}
