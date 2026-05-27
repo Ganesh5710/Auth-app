@@ -29,8 +29,6 @@ import {
   Cpu,
   Workflow,
   BarChart3,
-  Sun,
-  Moon,
   PlayCircle,
   Users,
   Star,
@@ -153,48 +151,6 @@ export default function CyberSecurity() {
           duration-500
         "
       >
-
-        {/* THEME TOGGLE */}
-
-        <button
-          onClick={() =>
-            setDarkMode(!darkMode)
-          }
-          className="
-            fixed
-            top-6
-            right-6
-            z-50
-            p-4
-            rounded-full
-            bg-white
-            dark:bg-[#111c38]
-            border
-            border-cyan-500/20
-            shadow-lg
-            hover:scale-110
-            transition-all
-            duration-300
-          "
-        >
-
-          {darkMode ? (
-
-            <Sun
-              size={24}
-              className="text-yellow-400"
-            />
-
-          ) : (
-
-            <Moon
-              size={24}
-              className="text-cyan-500"
-            />
-
-          )}
-
-        </button>
 
         {/* SECTION 1 HERO */}
 
