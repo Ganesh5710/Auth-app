@@ -67,7 +67,7 @@ export default function UIUXDesign() {
   const features = [
 
     "Modern UI Design",
-    "Responsive Layouts",
+    "Responsive                   Layouts",
     "User Experience Research",
     "Interactive Prototypes",
     "Design Systems",
