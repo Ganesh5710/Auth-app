@@ -148,7 +148,7 @@ export default function UserHome() {
           ">
 
             {translations.welcomeBack ||
-              "Welcome Back"},{" "}
+              "Welcome"},{" "}
 
             <span className="
               bg-gradient-to-r
